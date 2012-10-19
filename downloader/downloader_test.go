@@ -24,7 +24,7 @@ func TestDownload(t *testing.T) {
 	}
 	for i, b := range expect {
 		if r.Body[i] != b {
-			t.Errorf("Invalid char `%s', expected `%s'", r.Body[i], b)
+			t.Errorf("Invalid char `%d', expected `%d'", r.Body[i], b)
 		}
 	}
 }
