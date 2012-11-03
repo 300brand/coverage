@@ -21,6 +21,11 @@ func init() {
 	}
 }
 
+func TestEntries(t *testing.T) {
+	f := getFeed(t)
+	t.Log(len(f.Articles))
+}
+
 func TestInit(t *testing.T) {
 	if _, ok := decoders["Atom"]; !ok {
 		t.Error("Atom decoder not found")
@@ -28,10 +33,18 @@ func TestInit(t *testing.T) {
 }
 
 func TestTitle(t *testing.T) {
+	f := getFeed(t)
+	if f.Title == "" {
+		t.Error("Blank title")
+	}
+	t.Logf("Title: %s", f.Title)
+}
+
+func getFeed(t *testing.T) Feed {
 	a := decoders["Atom"]
 	f, err := a.Decode(atomFeed)
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("Title: %s", f.Title)
+	return f
 }
