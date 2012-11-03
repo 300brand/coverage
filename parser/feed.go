@@ -15,3 +15,9 @@ type Article struct {
 	Title     string
 	URL       url.URL
 }
+
+type Decoder interface {
+	Decode([]byte) (Feed, error)
+}
+
+var decoders = make(map[string]Decoder)
