@@ -18,6 +18,13 @@ func TestInit(t *testing.T) {
 	}
 }
 
+func TestRSSFail(t *testing.T) {
+	a := decoders["Atom"]
+	if _, err := a.Decode(testfeed.RSS); err == nil {
+		t.Error("Expected error when parsing RSS feed")
+	}
+}
+
 func TestTitle(t *testing.T) {
 	f := getFeed(t)
 	if f.Title == "" {
