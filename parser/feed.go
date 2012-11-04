@@ -17,7 +17,8 @@ type Article struct {
 }
 
 type Decoder interface {
-	Decode([]byte) (Feed, error)
+	Decode([]byte) error
+	Feed() Feed
 }
 
 var decoders = make(map[string]Decoder)
