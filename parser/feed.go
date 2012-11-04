@@ -20,5 +20,3 @@ type Decoder interface {
 	Decode([]byte) error
 	Feed() Feed
 }
-
-var decoders = make(map[string]Decoder)
