@@ -1,39 +1,34 @@
-package parser
+package atom
 
 import (
+	"git.300brand.com/coverage/parser"
 	"git.300brand.com/coverage/parser/testfeed"
 	"testing"
 )
 
-func TestAtomEntryLen(t *testing.T) {
-	f := getAtomFeed(t)
+func TestEntryLen(t *testing.T) {
+	f := getFeed(t)
 	if len(f.Articles) != 50 {
 		t.Errorf("Invalid number of entries: %d", len(f.Articles))
 	}
 }
 
-func TestAtomInit(t *testing.T) {
-	if _, ok := decoders["Atom"]; !ok {
-		t.Error("Atom decoder not found")
-	}
-}
-
-func TestAtomFail(t *testing.T) {
-	a := decoders["Atom"]
-	if _, err := a.Decode(testfeed.RSS); err == nil {
+func TestParserFail(t *testing.T) {
+	atom := Atom{}
+	if err := atom.Decode(testfeed.RSS); err == nil {
 		t.Error("Expected error when parsing RSS feed")
 	}
 }
 
-func TestAtomTitle(t *testing.T) {
-	f := getAtomFeed(t)
+func TestTitle(t *testing.T) {
+	f := getFeed(t)
 	if f.Title == "" {
 		t.Error("Blank title")
 	}
 	t.Logf("Title: %s", f.Title)
 }
 
-func TestAtomURLs(t *testing.T) {
+func TestURLs(t *testing.T) {
 	urls := []string{
 		"http://go.theregister.com/feed/www.theregister.co.uk/2012/11/02/uss_enterprise_scapped/",
 		"http://go.theregister.com/feed/www.theregister.co.uk/2012/11/02/something_for_the_weekend_we_dont_talk/",
@@ -86,7 +81,7 @@ func TestAtomURLs(t *testing.T) {
 		"http://go.theregister.com/feed/www.theregister.co.uk/2012/10/05/world_of_warcraft_colleen_lachowicz_attacked_by_republicans/",
 		"http://go.theregister.com/feed/www.theregister.co.uk/2012/10/05/steve_jobs_is_still_dead/",
 	}
-	f := getAtomFeed(t)
+	f := getFeed(t)
 	for i, e := range f.Articles {
 		if e.URL.String() != urls[i] {
 			t.Errorf("URL Mismatch:\nGOT: %s\nEXP: %s", e.URL.String(), urls[i])
@@ -94,11 +89,11 @@ func TestAtomURLs(t *testing.T) {
 	}
 }
 
-func getAtomFeed(t *testing.T) Feed {
-	a := decoders["Atom"]
-	f, err := a.Decode(testfeed.Atom)
+func getFeed(t *testing.T) parser.Feed {
+	atom := Atom{}
+	err := atom.Decode(testfeed.Atom)
 	if err != nil {
 		t.Error(err)
 	}
-	return f
+	return atom.Feed()
 }
