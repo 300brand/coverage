@@ -50,6 +50,9 @@ type Item struct {
 	Title       string    `xml:"title"`               // Required. Defines the title of the item
 }
 
+// Verify interface implementation at compile-time
+var _ parser.Decoder = &RSS{}
+
 func (rss *RSS) Decode(data []byte) (err error) {
 	rss.feed = parser.Feed{}
 	if err = xml.Unmarshal(data, rss); err != nil {
