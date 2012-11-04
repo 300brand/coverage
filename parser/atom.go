@@ -7,8 +7,7 @@ import (
 	"time"
 )
 
-type Atom struct {
-}
+type Atom struct{}
 
 // Types below from: <Go source>/src/pkg/encoding/xml/read_test.go
 type atom_Feed struct {
