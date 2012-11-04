@@ -1,31 +1,26 @@
-package parser
+package rss
 
 import (
+	"git.300brand.com/coverage/parser"
 	"git.300brand.com/coverage/parser/testfeed"
 	"testing"
 )
 
-func TestRSSEntryLen(t *testing.T) {
+func TestEntryLen(t *testing.T) {
 	f := getRSSFeed(t)
 	if len(f.Articles) != 10 {
 		t.Errorf("Invalid number of entries: %d", len(f.Articles))
 	}
 }
 
-func TestRSSInit(t *testing.T) {
-	if _, ok := decoders["Atom"]; !ok {
-		t.Error("Atom decoder not found")
-	}
-}
-
-func TestRSSFail(t *testing.T) {
-	a := decoders["RSS"]
-	if _, err := a.Decode(testfeed.Atom); err == nil {
+func TestParseFail(t *testing.T) {
+	rss := RSS{}
+	if err := rss.Decode(testfeed.Atom); err == nil {
 		t.Error("Expected error when parsing Atom feed")
 	}
 }
 
-func TestRSSTitle(t *testing.T) {
+func TestTitle(t *testing.T) {
 	f := getRSSFeed(t)
 	if f.Title == "" {
 		t.Error("Blank title")
@@ -33,7 +28,7 @@ func TestRSSTitle(t *testing.T) {
 	t.Logf("Title: %s", f.Title)
 }
 
-func TestRSSURLs(t *testing.T) {
+func TestURLs(t *testing.T) {
 	urls := []string{
 		"http://www.nasa.gov/home/hqnews/2012/oct/HQ_12-387_Mars_Atmosphere.html",
 		"http://www.nasa.gov/home/hqnews/2012/oct/HQ_12-384_Spot_Station.html",
@@ -54,11 +49,11 @@ func TestRSSURLs(t *testing.T) {
 	}
 }
 
-func getRSSFeed(t *testing.T) Feed {
-	a := decoders["RSS"]
-	f, err := a.Decode(testfeed.RSS)
+func getRSSFeed(t *testing.T) parser.Feed {
+	rss := RSS{}
+	err := rss.Decode(testfeed.RSS)
 	if err != nil {
 		t.Error(err)
 	}
-	return f
+	return rss.Feed()
 }
