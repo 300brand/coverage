@@ -10,7 +10,6 @@ import (
 
 // Types below from: <Go source>/src/pkg/encoding/xml/read_test.go
 type Atom struct {
-	feed    parser.Feed
 	XMLName xml.Name  `xml:"http://www.w3.org/2005/Atom feed"`
 	Title   string    `xml:"title"`
 	Id      string    `xml:"id"`
@@ -49,13 +48,13 @@ type Text struct {
 // Verify interface implementation at compile-time
 var _ parser.Decoder = &Atom{}
 
-func (atom *Atom) Decode(data []byte) (err error) {
-	atom.feed = parser.Feed{}
-	if err = xml.Unmarshal(data, atom); err != nil {
-		return
-	}
-	atom.feed.Title = atom.Title
-	for i, e := range atom.Entry {
+func (feed *Atom) Decode(data []byte) error {
+	return xml.Unmarshal(data, feed)
+}
+
+func (feed Atom) Feed() (f parser.Feed) {
+	f.Title = feed.Title
+	for i, e := range feed.Entry {
 		if len(e.Link) == 0 {
 			logger.Warnf("No links found for entry [%d] in %+v", i, e)
 			continue
@@ -67,15 +66,11 @@ func (atom *Atom) Decode(data []byte) (err error) {
 			continue
 		}
 
-		atom.feed.Articles = append(atom.feed.Articles, parser.Article{
+		f.Articles = append(f.Articles, parser.Article{
 			Published: e.Updated,
 			Title:     e.Title,
 			URL:       *url,
 		})
 	}
 	return
-}
-
-func (atom Atom) Feed() parser.Feed {
-	return atom.feed
 }
