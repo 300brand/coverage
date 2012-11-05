@@ -9,7 +9,6 @@ import (
 )
 
 type RSS struct {
-	feed    parser.Feed
 	XMLName xml.Name `xml:"rss"`
 	Channel Channel  `xml:"channel"`
 }
@@ -53,13 +52,13 @@ type Item struct {
 // Verify interface implementation at compile-time
 var _ parser.Decoder = &RSS{}
 
-func (rss *RSS) Decode(data []byte) (err error) {
-	rss.feed = parser.Feed{}
-	if err = xml.Unmarshal(data, rss); err != nil {
-		return
-	}
-	rss.feed.Title = rss.Channel.Title
-	for i, item := range rss.Channel.Item {
+func (doc *RSS) Decode(data []byte) error {
+	return xml.Unmarshal(data, doc)
+}
+
+func (doc RSS) Feed() (f parser.Feed) {
+	f.Title = doc.Channel.Title
+	for i, item := range doc.Channel.Item {
 		if item.Link == "" {
 			logger.Warnf("Empty link found for entry [%d] in %+v", i, item)
 			continue
@@ -71,15 +70,11 @@ func (rss *RSS) Decode(data []byte) (err error) {
 			continue
 		}
 
-		rss.feed.Articles = append(rss.feed.Articles, parser.Article{
+		f.Articles = append(f.Articles, parser.Article{
 			Published: item.PubDate,
 			Title:     item.Title,
 			URL:       *url,
 		})
 	}
 	return
-}
-
-func (rss RSS) Feed() parser.Feed {
-	return rss.feed
 }
