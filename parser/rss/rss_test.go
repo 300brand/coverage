@@ -4,6 +4,7 @@ import (
 	"git.300brand.com/coverage/parser"
 	"git.300brand.com/coverage/parser/testfeed"
 	"testing"
+	"time"
 )
 
 func TestEntryLen(t *testing.T) {
@@ -42,11 +43,37 @@ func TestURLs(t *testing.T) {
 		"http://www.nasa.gov/home/hqnews/2012/oct/HQ_12-377_NASA-WPI_2013_Robot_Competition_Registration.html",
 	}
 	f := getRSSFeed(t)
-	for i, e := range f.Articles {
-		if e.URL.String() != urls[i] {
-			t.Errorf("URL Mismatch:\nGOT: %s\nEXP: %s", e.URL.String(), urls[i])
+	for i, a := range f.Articles {
+		if a.URL.String() != urls[i] {
+			t.Errorf("URL Mismatch:\nGOT: %s\nEXP: %s", a.URL.String(), urls[i])
 		}
 	}
+}
+
+func TestTimestamps(t *testing.T) {
+	loc, err := time.LoadLocation("America/New_York")
+	if err != nil {
+		t.Error(err)
+	}
+	dates := []time.Time{
+		time.Date(2012, time.November, 02, 0, 0, 0, 0, loc),
+		time.Date(2012, time.November, 02, 0, 0, 0, 0, loc),
+		time.Date(2012, time.November, 01, 0, 0, 0, 0, loc),
+		time.Date(2012, time.November, 01, 0, 0, 0, 0, loc),
+		time.Date(2012, time.November, 01, 0, 0, 0, 0, loc),
+		time.Date(2012, time.November, 01, 0, 0, 0, 0, loc),
+		time.Date(2012, time.October, 31, 0, 0, 0, 0, loc),
+		time.Date(2012, time.October, 31, 0, 0, 0, 0, loc),
+		time.Date(2012, time.October, 31, 0, 0, 0, 0, loc),
+		time.Date(2012, time.October, 31, 0, 0, 0, 0, loc),
+	}
+	f := getRSSFeed(t)
+	for i, a := range f.Articles {
+		if !a.Published.Equal(dates[i]) {
+			t.Errorf("[%d] %s != %s", i, a.Published, dates[i])
+		}
+	}
+
 }
 
 func getRSSFeed(t *testing.T) parser.Feed {
