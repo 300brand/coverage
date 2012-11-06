@@ -1,5 +1,6 @@
 package testfeed
 
+// ORIGIN: http://www.nasa.gov/rss/breaking_news.rss
 var RSS = []byte(`<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/externalflash/NASA_Detail/NASA_Detail.xsl" type="text/xsl"?>
 <rss version="2.0">
