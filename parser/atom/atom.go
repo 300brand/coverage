@@ -29,7 +29,7 @@ type Entry struct {
 }
 
 type Link struct {
-	Rel  string `xml:"rel,attr,omitempty"`
+	Rel  string `xml:"rel,attr"`
 	Href string `xml:"href,attr"`
 }
 
@@ -41,7 +41,7 @@ type Person struct {
 }
 
 type Text struct {
-	Type string `xml:"type,attr,omitempty"`
+	Type string `xml:"type,attr"`
 	Body string `xml:",chardata"`
 }
 
