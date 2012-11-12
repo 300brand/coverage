@@ -1,4 +1,4 @@
-package strtotime
+package parser
 
 import (
 	"testing"
