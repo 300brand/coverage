@@ -26,26 +26,30 @@ var formats = []string{
 	time.Stamp,
 }
 
-// Returns the time.Time value of the string version of time. If the value is
-// invalid, a warning is pushed through the logger and the zero-time in UTC
-// returned
-func (t Time) Time() (ts time.Time) {
-	ts, err := Parse(string(t))
-	if err != nil {
-		logger.Warn(err)
-	}
-	return
-}
-
 // Parses the incoming argument into a time.Time value. Valid formats include
 // those found in the time package.
-func Parse(s string) (t time.Time, err error) {
+func (t Time) Parse() (ts time.Time, err error) {
 	for _, layout := range formats {
-		if t, err = time.Parse(layout, s); err == nil {
+		if ts, err = time.Parse(layout, string(t)); err == nil {
 			return
 		}
 	}
 	// As in time.Parse(), return UTC for the first arg, which will come out
 	// of the previous calls to time.Parse()
-	return t, errors.New("Could not parse " + s)
+	return ts, errors.New("Could not parse " + string(t))
+}
+
+func (t Time) String() string {
+	return string(t)
+}
+
+// Returns the time.Time value of the string version of time. If the value is
+// invalid, a warning is pushed through the logger and the zero-time in UTC
+// returned
+func (t Time) Time() (ts time.Time) {
+	ts, err := t.Parse()
+	if err != nil {
+		logger.Warn(err)
+	}
+	return
 }
