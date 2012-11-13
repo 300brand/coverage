@@ -13,6 +13,9 @@ type Response struct {
 }
 
 func Fetch(url string) (r Response, err error) {
+	r.OriginalURL = url
+	r.RealURL = url
+
 	client := http.Client{
 		CheckRedirect: func(req *http.Request, via []*http.Request) (err error) {
 			// Add checks to remove ?rss and other params
@@ -27,7 +30,6 @@ func Fetch(url string) (r Response, err error) {
 	}
 	defer resp.Body.Close()
 
-	r.OriginalURL = url
 	r.Code = resp.StatusCode
 	r.Body, err = ioutil.ReadAll(resp.Body)
 	return

@@ -29,6 +29,17 @@ func TestDownload(t *testing.T) {
 	}
 }
 
+func TestRealURL(t *testing.T) {
+	url := "http://httpbin.org/get"
+	r, err := Fetch(url)
+	if err != nil {
+		t.Error(err)
+	}
+	if r.RealURL == "" {
+		t.Error("RealURL not set")
+	}
+}
+
 func TestRedirect(t *testing.T) {
 	url := "http://httpbin.org/redirect/3"
 	expect := "http://httpbin.org/get"
