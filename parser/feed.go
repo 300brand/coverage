@@ -18,6 +18,7 @@ type Article struct {
 }
 
 type Decoder interface {
+	Clone() Decoder
 	Decode([]byte) error
 	Feed() Feed
 }
@@ -37,7 +38,16 @@ func RegisterDecoder(t string, d Decoder) {
 // argument may have the appropriate Decoder type to use, or a blank string to
 // automatically determine which decoder to use.
 func Parse(data []byte, t string) (f Feed, err error) {
-
+	if t == "" {
+		if t, err = Type(data); err != nil {
+			return
+		}
+	}
+	doc := decoders[t].Clone()
+	if err = doc.Decode(data); err != nil {
+		return
+	}
+	f = doc.Feed()
 	return
 }
 

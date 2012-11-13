@@ -52,6 +52,10 @@ func init() {
 	parser.RegisterDecoder("rss", &Doc{})
 }
 
+func (doc Doc) Clone() parser.Decoder {
+	return &Doc{}
+}
+
 func (doc *Doc) Decode(data []byte) error {
 	return xml.Unmarshal(data, doc)
 }

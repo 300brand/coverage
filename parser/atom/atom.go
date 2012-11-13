@@ -49,8 +49,11 @@ func init() {
 	parser.RegisterDecoder("atom", &Doc{})
 }
 
+func (doc Doc) Clone() parser.Decoder {
+	return &Doc{}
+}
+
 func (doc *Doc) Decode(data []byte) error {
-	*doc = Doc{}
 	return xml.Unmarshal(data, doc)
 }
 
