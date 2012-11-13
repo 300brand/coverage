@@ -45,10 +45,12 @@ type Text struct {
 	Body string `xml:",chardata"`
 }
 
-// Verify interface implementation at compile-time
-var _ parser.Decoder = &Doc{}
+func init() {
+	parser.RegisterDecoder("atom", &Doc{})
+}
 
 func (doc *Doc) Decode(data []byte) error {
+	*doc = Doc{}
 	return xml.Unmarshal(data, doc)
 }
 

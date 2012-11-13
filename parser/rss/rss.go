@@ -48,8 +48,9 @@ type Item struct {
 	Title       string      `xml:"title"`       // Required. Defines the title of the item
 }
 
-// Verify interface implementation at compile-time
-var _ parser.Decoder = &Doc{}
+func init() {
+	parser.RegisterDecoder("rss", &Doc{})
+}
 
 func (doc *Doc) Decode(data []byte) error {
 	return xml.Unmarshal(data, doc)

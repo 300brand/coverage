@@ -146,8 +146,9 @@ type Li struct {
 	Resource string `xml:"resource,attr"`
 }
 
-// Verify interface implementation at compile-time
-var _ parser.Decoder = &Doc{}
+func init() {
+	parser.RegisterDecoder("rdf", &Doc{})
+}
 
 func (doc *Doc) Decode(data []byte) error {
 	return xml.Unmarshal(data, doc)
