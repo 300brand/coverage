@@ -2,6 +2,7 @@ package cleanurl
 
 import (
 	"net/url"
+	"strings"
 	"testing"
 )
 
@@ -33,8 +34,8 @@ func TestNoModify(t *testing.T) {
 
 func TestNum(t *testing.T) {
 	urls := map[string]string{
-		"http://my.tld?123":     "http://my.tld?123=",
-		"http://my.tld?123&456": "http://my.tld?123=&456=",
+		"http://my.tld?123":     "http://my.tld?123",
+		"http://my.tld?123&456": "http://my.tld?123&456",
 	}
 	testURLs(t, urls)
 }
@@ -51,14 +52,38 @@ func TestUTM(t *testing.T) {
 }
 
 func testURLs(t *testing.T, urls map[string]string) {
-	for u, expect := range urls {
-		parsed, err := url.Parse(u)
+	for u, exp := range urls {
+		test, err := url.Parse(u)
 		if err != nil {
 			t.Errorf("[%s] %s", u, err)
 		}
-		cleaned := Clean(parsed).String()
-		if expect != cleaned {
-			t.Errorf("[%s] != [%s]", cleaned, expect)
+		expect, err := url.Parse(exp)
+		if err != nil {
+			t.Errorf("[%s] %s", exp, err)
+		}
+		cleaned := Clean(test)
+		// Quick equality check
+		if expect.String() == cleaned.String() {
+			continue
+		}
+		// Quick query length check
+		if len(expect.Query()) != len(cleaned.Query()) {
+			t.Errorf("[%s] invalid number of query parameters - Expect: %d; Cleaned: %d", test, len(expect.Query()), len(cleaned.Query()))
+			continue
+		}
+		t.Log("Expect:  ", expect.RawQuery)
+		t.Log("Cleaned: ", cleaned.RawQuery)
+		// Deep query equality check
+		for k, v := range expect.Query() {
+			c, ok := cleaned.Query()[k]
+			if !ok {
+				t.Errorf("[%s] Couldn't find key '%s' in cleaned", test, k)
+				continue
+			}
+			vj, cj := strings.Join(v, "&"), strings.Join(c, "&")
+			if vj != cj {
+				t.Errorf("[%s] %s != %s", test, vj, cj)
+			}
 		}
 	}
 }
