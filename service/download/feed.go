@@ -3,15 +3,15 @@ package download
 import (
 	"git.300brand.com/coverage/downloader"
 	"git.300brand.com/coverage/logger"
-	//"git.300brand.com/coverage/parser"
 	//"github.com/bketelsen/skynet"
 	"errors"
 	"time"
 )
 
 type FeedRequest struct {
+	Timeout time.Duration
+	Type    string
 	URL     string
-	Timeout int64
 }
 
 /*
@@ -20,19 +20,19 @@ func (s *DownloadService) Feed(ri *skynet.RequestInfo, req *FeedRequest, resp *p
 }
 */
 
-func downloadFeed(url string, timeout time.Duration) (downloader.Response, error) {
+func downloadFeed(req *FeedRequest) (downloader.Response, error) {
 	type pair struct {
 		downloader.Response
 		error
 	}
 	ch := make(chan pair, 1)
 	go func() {
-		r, err := downloader.Fetch(url)
+		r, err := downloader.Fetch(req.URL)
 		ch <- pair{r, err}
 	}()
 	select {
-	case <-time.After(timeout):
-		logger.Warn("DownloadService.DownloadFeed: Timeout reached when downloading ", url)
+	case <-time.After(req.Timeout):
+		logger.Warn("DownloadService.DownloadFeed: Timeout reached when downloading ", req.URL)
 		return downloader.Response{}, errors.New("Timeout reached")
 	case p := <-ch:
 		return p.Response, p.error
