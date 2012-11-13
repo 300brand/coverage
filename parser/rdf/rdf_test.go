@@ -15,8 +15,8 @@ func TestEntryLen(t *testing.T) {
 }
 
 func TestParseFail(t *testing.T) {
-	rdf := RDF{}
-	if err := rdf.Decode(testfeed.Atom); err == nil {
+	doc := Doc{}
+	if err := doc.Decode(testfeed.Atom); err == nil {
 		t.Error("Expected error when parsing Atom feed")
 	}
 }
@@ -239,7 +239,7 @@ func TestTimestamps(t *testing.T) {
 }
 
 func getFeed(t *testing.T) parser.Feed {
-	doc := RDF{}
+	doc := Doc{}
 	err := doc.Decode(testfeed.RDF)
 	if err != nil {
 		t.Error(err)

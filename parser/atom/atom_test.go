@@ -14,8 +14,8 @@ func TestEntryLen(t *testing.T) {
 }
 
 func TestParserFail(t *testing.T) {
-	atom := Atom{}
-	if err := atom.Decode(testfeed.RSS); err == nil {
+	doc := Doc{}
+	if err := doc.Decode(testfeed.RSS); err == nil {
 		t.Error("Expected error when parsing RSS feed")
 	}
 }
@@ -90,10 +90,10 @@ func TestURLs(t *testing.T) {
 }
 
 func getFeed(t *testing.T) parser.Feed {
-	atom := Atom{}
-	err := atom.Decode(testfeed.Atom)
+	doc := Doc{}
+	err := doc.Decode(testfeed.Atom)
 	if err != nil {
 		t.Error(err)
 	}
-	return atom.Feed()
+	return doc.Feed()
 }

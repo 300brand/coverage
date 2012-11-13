@@ -7,7 +7,7 @@ import (
 	"net/url"
 )
 
-type RDF struct {
+type Doc struct {
 	XMLName xml.Name `xml:"http://www.w3.org/1999/02/22-rdf-syntax-ns# RDF"`
 	Channel Channel  `xml:"channel"`
 	Item    []Item   `xml:"item"`
@@ -147,13 +147,13 @@ type Li struct {
 }
 
 // Verify interface implementation at compile-time
-var _ parser.Decoder = &RDF{}
+var _ parser.Decoder = &Doc{}
 
-func (doc *RDF) Decode(data []byte) error {
+func (doc *Doc) Decode(data []byte) error {
 	return xml.Unmarshal(data, doc)
 }
 
-func (doc RDF) Feed() (f parser.Feed) {
+func (doc Doc) Feed() (f parser.Feed) {
 	f.Title = doc.Channel.Title
 	for i, item := range doc.Item {
 		if item.Link == "" {

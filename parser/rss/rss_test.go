@@ -15,8 +15,8 @@ func TestEntryLen(t *testing.T) {
 }
 
 func TestParseFail(t *testing.T) {
-	rss := RSS{}
-	if err := rss.Decode(testfeed.Atom); err == nil {
+	doc := Doc{}
+	if err := doc.Decode(testfeed.Atom); err == nil {
 		t.Error("Expected error when parsing Atom feed")
 	}
 }
@@ -77,10 +77,10 @@ func TestTimestamps(t *testing.T) {
 }
 
 func getRSSFeed(t *testing.T) parser.Feed {
-	rss := RSS{}
-	err := rss.Decode(testfeed.RSS)
+	doc := Doc{}
+	err := doc.Decode(testfeed.RSS)
 	if err != nil {
 		t.Error(err)
 	}
-	return rss.Feed()
+	return doc.Feed()
 }

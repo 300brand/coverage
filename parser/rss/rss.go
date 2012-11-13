@@ -7,7 +7,7 @@ import (
 	"net/url"
 )
 
-type RSS struct {
+type Doc struct {
 	XMLName xml.Name `xml:"rss"`
 	Channel Channel  `xml:"channel"`
 }
@@ -49,13 +49,13 @@ type Item struct {
 }
 
 // Verify interface implementation at compile-time
-var _ parser.Decoder = &RSS{}
+var _ parser.Decoder = &Doc{}
 
-func (doc *RSS) Decode(data []byte) error {
+func (doc *Doc) Decode(data []byte) error {
 	return xml.Unmarshal(data, doc)
 }
 
-func (doc RSS) Feed() (f parser.Feed) {
+func (doc Doc) Feed() (f parser.Feed) {
 	f.Title = doc.Channel.Title
 	for i, item := range doc.Channel.Item {
 		if item.Link == "" {
