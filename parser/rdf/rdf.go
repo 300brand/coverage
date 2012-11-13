@@ -150,7 +150,7 @@ func init() {
 	parser.RegisterDecoder("rdf", &Doc{})
 }
 
-func (doc Doc) Clone() parser.Decoder {
+func (doc Doc) New() parser.Decoder {
 	return &Doc{}
 }
 

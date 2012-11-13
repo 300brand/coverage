@@ -18,7 +18,7 @@ type Article struct {
 }
 
 type Decoder interface {
-	Clone() Decoder
+	New() Decoder
 	Decode([]byte) error
 	Feed() Feed
 }
@@ -43,7 +43,7 @@ func Parse(data []byte, t string) (f Feed, err error) {
 			return
 		}
 	}
-	doc := decoders[t].Clone()
+	doc := decoders[t].New()
 	if err = doc.Decode(data); err != nil {
 		return
 	}

@@ -49,7 +49,7 @@ func init() {
 	parser.RegisterDecoder("atom", &Doc{})
 }
 
-func (doc Doc) Clone() parser.Decoder {
+func (doc Doc) New() parser.Decoder {
 	return &Doc{}
 }
 
