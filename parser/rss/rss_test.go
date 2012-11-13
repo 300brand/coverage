@@ -56,12 +56,12 @@ func TestTimestamps(t *testing.T) {
 		t.Error(err)
 	}
 	dates := []time.Time{
-		time.Date(2012, time.November, 02, 0, 0, 0, 0, loc),
-		time.Date(2012, time.November, 02, 0, 0, 0, 0, loc),
-		time.Date(2012, time.November, 01, 0, 0, 0, 0, loc),
-		time.Date(2012, time.November, 01, 0, 0, 0, 0, loc),
-		time.Date(2012, time.November, 01, 0, 0, 0, 0, loc),
-		time.Date(2012, time.November, 01, 0, 0, 0, 0, loc),
+		time.Date(2012, time.November, 2, 0, 0, 0, 0, loc),
+		time.Date(2012, time.November, 2, 0, 0, 0, 0, loc),
+		time.Date(2012, time.November, 1, 0, 0, 0, 0, loc),
+		time.Date(2012, time.November, 1, 0, 0, 0, 0, loc),
+		time.Date(2012, time.November, 1, 0, 0, 0, 0, loc),
+		time.Date(2012, time.November, 1, 0, 0, 0, 0, loc),
 		time.Date(2012, time.October, 31, 0, 0, 0, 0, loc),
 		time.Date(2012, time.October, 31, 0, 0, 0, 0, loc),
 		time.Date(2012, time.October, 31, 0, 0, 0, 0, loc),
