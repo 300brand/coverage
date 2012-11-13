@@ -8,57 +8,47 @@ import (
 	"testing"
 )
 
-func TestAtomParse(t *testing.T) {
-	f, err := parser.Parse(Atom, "atom")
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	if len(f.Articles) != 50 {
-		t.Errorf("Invalid number of articles: %d", len(f.Articles))
+var tests = []struct {
+	Data []byte
+	Type string
+	Len  int
+}{
+	{
+		Data: Atom,
+		Type: "atom",
+		Len:  50,
+	},
+	{
+		Data: RDF,
+		Type: "rdf",
+		Len:  90,
+	},
+	{
+		Data: RSS,
+		Type: "rss",
+		Len:  10,
+	},
+}
+
+func TestParse(t *testing.T) {
+	for _, test := range tests {
+		f, err := parser.Parse(test.Data, test.Type)
+		if err != nil {
+			t.Error(err)
+			continue
+		}
+		if len(f.Articles) != test.Len {
+			t.Errorf("Invalid number of articles: %d", len(f.Articles))
+		}
 	}
 }
 
-func TestAtomType(t *testing.T) {
-	if typ, err := parser.Type(Atom); err != nil || typ != "atom" {
-		t.Errorf("Expected atom, got %s", typ)
-		t.Error(err)
-	}
-}
-
-func TestRDFParse(t *testing.T) {
-	f, err := parser.Parse(RDF, "rdf")
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	if len(f.Articles) != 90 {
-		t.Errorf("Invalid number of articles: %d", len(f.Articles))
-	}
-}
-
-func TestRDFType(t *testing.T) {
-	if typ, err := parser.Type(RDF); err != nil || typ != "rdf" {
-		t.Errorf("Expected rdf, got %s", typ)
-		t.Error(err)
-	}
-}
-
-func TestRSSParse(t *testing.T) {
-	f, err := parser.Parse(RSS, "rss")
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	if len(f.Articles) != 10 {
-		t.Errorf("Invalid number of articles: %d", len(f.Articles))
-	}
-}
-
-func TestRSSType(t *testing.T) {
-	if typ, err := parser.Type(RSS); err != nil || typ != "rss" {
-		t.Errorf("Expected rss, got %s", typ)
-		t.Error(err)
+func TestType(t *testing.T) {
+	for _, test := range tests {
+		if typ, err := parser.Type(test.Data); err != nil || typ != test.Type {
+			t.Errorf("Expected %s, got %s", test.Type, typ)
+			t.Error(err)
+		}
 	}
 }
 
