@@ -1,11 +1,15 @@
-package parser
+package normalizer
 
 import (
+	"git.300brand.com/coverage/parser"
+	"git.300brand.com/coverage/parser/atom"
+	"git.300brand.com/coverage/parser/rdf"
+	"git.300brand.com/coverage/parser/rss"
 	"net/url"
 	"time"
 )
 
-type Feed struct {
+type Default struct {
 	Title    string
 	Articles []Article
 }
@@ -16,30 +20,30 @@ type Article struct {
 	URL       url.URL
 }
 
-func (f *Feed) Normalize(doc Decoder) (err error) {
+func (d *Default) Normalize(doc Decoder) (err error) {
 	switch v := doc.(type) {
 	case atom.Doc:
-		err = f.normalizeAtom(v)
+		err = d.normalizeAtom(v)
 	case rss.Doc:
-		err = f.normalizeRSS(v)
+		err = d.normalizeRSS(v)
 	case rdf.Doc:
-		err = f.normalizeRDF(v)
+		err = d.normalizeRDF(v)
 	default:
 		errors.New("Unknown Decoder type")
 	}
 	return
 }
 
-func (f *Feed) normalizeAtom(doc atom.Doc) (err error) {
-	f.Title = doc.Title
+func (d *Default) normalizeAtom(doc atom.Doc) (err error) {
+	d.Title = doc.Title
 	return
 }
 
-func (f *Feed) normalizeRDF(doc rdf.Doc) (err error) {
+func (d *Default) normalizeRDF(doc rdf.Doc) (err error) {
 	return
 }
 
-func (f *Feed) normalizeRSS(doc rss.Doc) (err error) {
-	f.Title = doc.Channel.Title
+func (d *Default) normalizeRSS(doc rss.Doc) (err error) {
+	d.Title = doc.Channel.Title
 	return
 }
