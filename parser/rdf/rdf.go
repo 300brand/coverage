@@ -2,9 +2,7 @@ package rdf
 
 import (
 	"encoding/xml"
-	"git.300brand.com/coverage/logger"
 	"git.300brand.com/coverage/parser"
-	"net/url"
 )
 
 type Doc struct {
