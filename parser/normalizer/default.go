@@ -36,6 +36,24 @@ func (d *Default) Normalize(doc Decoder) (err error) {
 
 func (d *Default) normalizeAtom(doc atom.Doc) (err error) {
 	d.Title = doc.Title
+	for i, e := range doc.Entry {
+		if len(e.Link) == 0 {
+			logger.Warnf("No links found for entry [%d] in %+v", i, e)
+			continue
+		}
+
+		url, err := url.Parse(e.Link[0].Href)
+		if err != nil {
+			logger.Warnf("Invalid URL [%s]: %v", url, err)
+			continue
+		}
+
+		d.Articles = append(d.Articles, parser.Article{
+			Published: e.Updated,
+			Title:     e.Title,
+			URL:       *url,
+		})
+	}
 	return
 }
 

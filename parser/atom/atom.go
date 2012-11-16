@@ -56,26 +56,3 @@ func (doc Doc) New() parser.Decoder {
 func (doc *Doc) Decode(data []byte) error {
 	return xml.Unmarshal(data, doc)
 }
-
-func (doc Doc) Feed() (f parser.Feed) {
-	f.Title = doc.Title
-	for i, e := range doc.Entry {
-		if len(e.Link) == 0 {
-			logger.Warnf("No links found for entry [%d] in %+v", i, e)
-			continue
-		}
-
-		url, err := url.Parse(e.Link[0].Href)
-		if err != nil {
-			logger.Warnf("Invalid URL [%s]: %v", url, err)
-			continue
-		}
-
-		f.Articles = append(f.Articles, parser.Article{
-			Published: e.Updated,
-			Title:     e.Title,
-			URL:       *url,
-		})
-	}
-	return
-}
