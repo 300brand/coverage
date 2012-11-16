@@ -1,6 +1,8 @@
 package normalizer
 
 import (
+	"errors"
+	"fmt"
 	"git.300brand.com/coverage/parser"
 	"git.300brand.com/coverage/parser/atom"
 	"git.300brand.com/coverage/parser/rdf"
@@ -38,13 +40,13 @@ func (d *Default) normalizeAtom(doc atom.Doc) (err error) {
 	d.Title = doc.Title
 	for i, e := range doc.Entry {
 		if len(e.Link) == 0 {
-			logger.Warnf("No links found for entry [%d] in %+v", i, e)
+			errors.New(fmt.Sprintf("No links found for entry [%d] in %+v", i, e))
 			continue
 		}
 
 		url, err := url.Parse(e.Link[0].Href)
 		if err != nil {
-			logger.Warnf("Invalid URL [%s]: %v", url, err)
+			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", url, err))
 			continue
 		}
 
@@ -58,10 +60,47 @@ func (d *Default) normalizeAtom(doc atom.Doc) (err error) {
 }
 
 func (d *Default) normalizeRDF(doc rdf.Doc) (err error) {
+	d.Title = doc.Channel.Title
+	for i, item := range doc.Item {
+		if item.Link == "" {
+			errors.New(fmt.Sprintf("Empty link found for entry [%d] in %+v", i, item))
+			continue
+		}
+
+		url, err := url.Parse(item.Link)
+		if err != nil {
+			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", url, err))
+			continue
+		}
+
+		d.Articles = append(d.Articles, parser.Article{
+			Published: item.Date.Time(),
+			Title:     item.Title,
+			URL:       *url,
+		})
+	}
 	return
 }
 
 func (d *Default) normalizeRSS(doc rss.Doc) (err error) {
 	d.Title = doc.Channel.Title
+	for i, item := range doc.Channel.Item {
+		if item.Link == "" {
+			errors.New(fmt.Sprintf("Empty link found for entry [%d] in %+v", i, item))
+			continue
+		}
+
+		url, err := url.Parse(item.Link)
+		if err != nil {
+			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", url, err))
+			continue
+		}
+
+		d.Articles = append(d.Articles, parser.Article{
+			Published: item.PubDate.Time(),
+			Title:     item.Title,
+			URL:       *url,
+		})
+	}
 	return
 }

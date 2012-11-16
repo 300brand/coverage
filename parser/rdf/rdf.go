@@ -157,26 +157,3 @@ func (doc Doc) New() parser.Decoder {
 func (doc *Doc) Decode(data []byte) error {
 	return xml.Unmarshal(data, doc)
 }
-
-func (doc Doc) Feed() (f parser.Feed) {
-	f.Title = doc.Channel.Title
-	for i, item := range doc.Item {
-		if item.Link == "" {
-			logger.Warnf("Empty link found for entry [%d] in %+v", i, item)
-			continue
-		}
-
-		url, err := url.Parse(item.Link)
-		if err != nil {
-			logger.Warnf("Invalid URL [%s]: %v", url, err)
-			continue
-		}
-
-		f.Articles = append(f.Articles, parser.Article{
-			Published: item.Date.Time(),
-			Title:     item.Title,
-			URL:       *url,
-		})
-	}
-	return
-}

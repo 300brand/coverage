@@ -89,7 +89,7 @@ func TestURLs(t *testing.T) {
 	}
 }
 
-func getFeed(t *testing.T) parser.Feed {
+func getFeed(t *testing.T) normalizer.Default {
 	doc := Doc{}
 	err := doc.Decode(testfeed.Atom)
 	if err != nil {

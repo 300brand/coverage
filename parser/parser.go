@@ -2,24 +2,31 @@ package parser
 
 import (
 	"errors"
-	"net/url"
-	"time"
 )
 
-// Parses the incoming bytes to spit out the appropriate Feed. The second
-// argument may have the appropriate Decoder type to use, or a blank string to
-// automatically determine which decoder to use.
-func Parse(data []byte, t string) (f Feed, err error) {
-	if t == "" {
-		if t, err = Type(data); err != nil {
-			return
-		}
-	}
-	doc := decoders[t].New()
-	if err = doc.Decode(data); err != nil {
+func Normalize(data []byte, n Normalizer) (err error) {
+	d, err := Parse(data)
+	if err != nil {
 		return
 	}
-	f = doc.Feed()
+	return n.Normalize(d)
+}
+
+func Parse(data []byte) (d Decoder, err error) {
+	t, err := Type(data)
+	if err != nil {
+		return
+	}
+	return ParseType(data, t)
+}
+
+func ParseType(data []byte, t string) (d Decoder, err error) {
+	if _, ok := decoders[t]; !ok {
+		errors.New("Unknown decoder type: " + t)
+		return
+	}
+	d = decoders[t].New()
+	err = d.Decode(data)
 	return
 }
 
