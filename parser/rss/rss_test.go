@@ -1,16 +1,18 @@
 package rss
 
 import (
-	"git.300brand.com/coverage/parser"
 	"git.300brand.com/coverage/parser/testfeed"
 	"testing"
 	"time"
 )
 
 func TestEntryLen(t *testing.T) {
-	f := getRSSFeed(t)
-	if len(f.Articles) != 10 {
-		t.Errorf("Invalid number of entries: %d", len(f.Articles))
+	doc := Doc{}
+	if err := doc.Decode(testfeed.RSS); err != nil {
+		t.Error(err)
+	}
+	if len(doc.Channel.Item) != 10 {
+		t.Errorf("Invalid number of entries: %d", len(doc.Channel.Item))
 	}
 }
 
@@ -22,11 +24,14 @@ func TestParseFail(t *testing.T) {
 }
 
 func TestTitle(t *testing.T) {
-	f := getRSSFeed(t)
-	if f.Title == "" {
+	doc := Doc{}
+	if err := doc.Decode(testfeed.RSS); err != nil {
+		t.Error(err)
+	}
+	if doc.Channel.Title == "" {
 		t.Error("Blank title")
 	}
-	t.Logf("Title: %s", f.Title)
+	t.Logf("Title: %s", doc.Channel.Title)
 }
 
 func TestURLs(t *testing.T) {
@@ -42,10 +47,17 @@ func TestURLs(t *testing.T) {
 		"http://www.nasa.gov/home/hqnews/2012/oct/HQ_M12-211_Mars_Atmosphere_Telecon.html",
 		"http://www.nasa.gov/home/hqnews/2012/oct/HQ_12-377_NASA-WPI_2013_Robot_Competition_Registration.html",
 	}
-	f := getRSSFeed(t)
-	for i, a := range f.Articles {
-		if a.URL.String() != urls[i] {
-			t.Errorf("URL Mismatch:\nGOT: %s\nEXP: %s", a.URL.String(), urls[i])
+	doc := Doc{}
+	if err := doc.Decode(testfeed.RSS); err != nil {
+		t.Error(err)
+	}
+	entries := doc.Channel.Item
+	if len(entries) == 0 {
+		t.Error("No entries found")
+	}
+	for i, e := range entries {
+		if e.Link != urls[i] {
+			t.Errorf("URL Mismatch:\nGOT: %s\nEXP: %s", e.Link, urls[i])
 		}
 	}
 }
@@ -67,20 +79,18 @@ func TestTimestamps(t *testing.T) {
 		time.Date(2012, time.October, 31, 0, 0, 0, 0, loc),
 		time.Date(2012, time.October, 31, 0, 0, 0, 0, loc),
 	}
-	f := getRSSFeed(t)
-	for i, a := range f.Articles {
-		if !a.Published.Equal(dates[i]) {
-			t.Errorf("[%d] %s != %s", i, a.Published, dates[i])
+	doc := Doc{}
+	if err := doc.Decode(testfeed.RSS); err != nil {
+		t.Error(err)
+	}
+	entries := doc.Channel.Item
+	if len(entries) == 0 {
+		t.Error("No entries found")
+	}
+	for i, e := range entries {
+		if !e.PubDate.Time().Equal(dates[i]) {
+			t.Errorf("[%d] %s != %s", i, e.PubDate, dates[i])
 		}
 	}
 
-}
-
-func getRSSFeed(t *testing.T) parser.Feed {
-	doc := Doc{}
-	err := doc.Decode(testfeed.RSS)
-	if err != nil {
-		t.Error(err)
-	}
-	return doc.Feed()
 }
