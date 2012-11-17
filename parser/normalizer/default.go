@@ -22,13 +22,13 @@ type Article struct {
 	URL       url.URL
 }
 
-func (d *Default) Normalize(doc Decoder) (err error) {
+func (d *Default) Normalize(doc parser.Decoder) (err error) {
 	switch v := doc.(type) {
-	case atom.Doc:
+	case *atom.Doc:
 		err = d.normalizeAtom(v)
-	case rss.Doc:
+	case *rss.Doc:
 		err = d.normalizeRSS(v)
-	case rdf.Doc:
+	case *rdf.Doc:
 		err = d.normalizeRDF(v)
 	default:
 		errors.New("Unknown Decoder type")
@@ -36,7 +36,7 @@ func (d *Default) Normalize(doc Decoder) (err error) {
 	return
 }
 
-func (d *Default) normalizeAtom(doc atom.Doc) (err error) {
+func (d *Default) normalizeAtom(doc *atom.Doc) (err error) {
 	d.Title = doc.Title
 	for i, e := range doc.Entry {
 		if len(e.Link) == 0 {
@@ -50,7 +50,7 @@ func (d *Default) normalizeAtom(doc atom.Doc) (err error) {
 			continue
 		}
 
-		d.Articles = append(d.Articles, parser.Article{
+		d.Articles = append(d.Articles, Article{
 			Published: e.Updated,
 			Title:     e.Title,
 			URL:       *url,
@@ -59,7 +59,7 @@ func (d *Default) normalizeAtom(doc atom.Doc) (err error) {
 	return
 }
 
-func (d *Default) normalizeRDF(doc rdf.Doc) (err error) {
+func (d *Default) normalizeRDF(doc *rdf.Doc) (err error) {
 	d.Title = doc.Channel.Title
 	for i, item := range doc.Item {
 		if item.Link == "" {
@@ -73,7 +73,7 @@ func (d *Default) normalizeRDF(doc rdf.Doc) (err error) {
 			continue
 		}
 
-		d.Articles = append(d.Articles, parser.Article{
+		d.Articles = append(d.Articles, Article{
 			Published: item.Date.Time(),
 			Title:     item.Title,
 			URL:       *url,
@@ -82,7 +82,7 @@ func (d *Default) normalizeRDF(doc rdf.Doc) (err error) {
 	return
 }
 
-func (d *Default) normalizeRSS(doc rss.Doc) (err error) {
+func (d *Default) normalizeRSS(doc *rss.Doc) (err error) {
 	d.Title = doc.Channel.Title
 	for i, item := range doc.Channel.Item {
 		if item.Link == "" {
@@ -96,7 +96,7 @@ func (d *Default) normalizeRSS(doc rss.Doc) (err error) {
 			continue
 		}
 
-		d.Articles = append(d.Articles, parser.Article{
+		d.Articles = append(d.Articles, Article{
 			Published: item.PubDate.Time(),
 			Title:     item.Title,
 			URL:       *url,

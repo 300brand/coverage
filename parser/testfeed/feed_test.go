@@ -3,6 +3,7 @@ package testfeed
 import (
 	"git.300brand.com/coverage/parser"
 	_ "git.300brand.com/coverage/parser/atom"
+	"git.300brand.com/coverage/parser/normalizer"
 	_ "git.300brand.com/coverage/parser/rdf"
 	_ "git.300brand.com/coverage/parser/rss"
 	"testing"
@@ -32,13 +33,13 @@ var tests = []struct {
 
 func TestParse(t *testing.T) {
 	for _, test := range tests {
-		f, err := parser.Parse(test.Data, test.Type)
-		if err != nil {
+		n := &normalizer.Default{}
+		if err := parser.Normalize(test.Data, n); err != nil {
 			t.Error(err)
 			continue
 		}
-		if len(f.Articles) != test.Len {
-			t.Errorf("Invalid number of articles: %d", len(f.Articles))
+		if len(n.Articles) != test.Len {
+			t.Errorf("Invalid number of articles: %d", len(n.Articles))
 		}
 	}
 }
@@ -53,7 +54,7 @@ func TestType(t *testing.T) {
 }
 
 func TestInvalidParse(t *testing.T) {
-	if _, err := parser.Parse(Atom, "rss"); err == nil {
+	if _, err := parser.ParseType(Atom, "rss"); err == nil {
 		t.Error("Expected error when using RSS decoder to parse Atom feed")
 	}
 }
