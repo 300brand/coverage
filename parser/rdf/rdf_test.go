@@ -1,16 +1,22 @@
 package rdf
 
 import (
-	"git.300brand.com/coverage/parser"
 	"git.300brand.com/coverage/parser/testfeed"
 	"testing"
 	"time"
 )
 
 func TestEntryLen(t *testing.T) {
-	f := getFeed(t)
-	if len(f.Articles) != 90 {
-		t.Errorf("Invalid number of entries: %d", len(f.Articles))
+	doc := Doc{}
+	if err := doc.Decode(testfeed.RDF); err != nil {
+		t.Error(err)
+	}
+	entries := doc.Item
+	if len(entries) == 0 {
+		t.Error("No entries found")
+	}
+	if len(entries) != 90 {
+		t.Errorf("Invalid number of entries: %d", len(entries))
 	}
 }
 
@@ -22,11 +28,14 @@ func TestParseFail(t *testing.T) {
 }
 
 func TestTitle(t *testing.T) {
-	f := getFeed(t)
-	if f.Title == "" {
+	doc := Doc{}
+	if err := doc.Decode(testfeed.RDF); err != nil {
+		t.Error(err)
+	}
+	if doc.Channel.Title == "" {
 		t.Error("Blank title")
 	}
-	t.Logf("Title: %s", f.Title)
+	t.Logf("Title: %s", doc.Channel.Title)
 }
 
 func TestURLs(t *testing.T) {
@@ -122,10 +131,17 @@ func TestURLs(t *testing.T) {
 		"http://www.networkworld.com/news/2012/110712-samsung-laying-groundwork-for-server-264053.html?source=nww_rss",
 		"http://www.networkworld.com/news/2012/110712-cloud-security-lawyers-264055.html?source=nww_rss",
 	}
-	f := getFeed(t)
-	for i, a := range f.Articles {
-		if a.URL.String() != urls[i] {
-			t.Errorf("URL Mismatch:\nGOT: %s\nEXP: %s", a.URL.String(), urls[i])
+	doc := Doc{}
+	if err := doc.Decode(testfeed.RDF); err != nil {
+		t.Error(err)
+	}
+	entries := doc.Item
+	if len(entries) == 0 {
+		t.Error("No entries found")
+	}
+	for i, e := range entries {
+		if e.Link != urls[i] {
+			t.Errorf("URL Mismatch:\nGOT: %s\nEXP: %s", e.Link, urls[i])
 		}
 	}
 }
@@ -229,20 +245,17 @@ func TestTimestamps(t *testing.T) {
 		time.Date(2012, time.November, 7, 1, 51, 0, 0, loc),
 		time.Date(2012, time.November, 7, 1, 49, 37, 0, loc),
 	}
-	f := getFeed(t)
-	for i, a := range f.Articles {
-		t.Logf("[%d] %s %v %v", i, a.Published, a.Published.Unix(), dates[i].Unix())
-		if a.Published.Unix() != dates[i].Unix() {
-			t.Errorf("[%d] %s != %s", i, a.Published, dates[i])
-		}
-	}
-}
-
-func getFeed(t *testing.T) parser.Feed {
 	doc := Doc{}
-	err := doc.Decode(testfeed.RDF)
-	if err != nil {
+	if err := doc.Decode(testfeed.RDF); err != nil {
 		t.Error(err)
 	}
-	return doc.Feed()
+	entries := doc.Item
+	if len(entries) == 0 {
+		t.Error("No entries found")
+	}
+	for i, e := range entries {
+		if e.Date.Time().Unix() != dates[i].Unix() {
+			t.Errorf("[%d] %s != %s", i, e.Date.Time(), dates[i])
+		}
+	}
 }
