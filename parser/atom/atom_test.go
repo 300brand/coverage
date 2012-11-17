@@ -1,15 +1,17 @@
 package atom
 
 import (
-	"git.300brand.com/coverage/parser"
 	"git.300brand.com/coverage/parser/testfeed"
 	"testing"
 )
 
 func TestEntryLen(t *testing.T) {
-	f := getFeed(t)
-	if len(f.Articles) != 50 {
-		t.Errorf("Invalid number of entries: %d", len(f.Articles))
+	doc := Doc{}
+	if err := doc.Decode(testfeed.Atom); err != nil {
+		t.Error(err)
+	}
+	if len(doc.Entry) != 50 {
+		t.Errorf("Invalid number of entries: %d", len(doc.Entry))
 	}
 }
 
@@ -21,11 +23,12 @@ func TestParserFail(t *testing.T) {
 }
 
 func TestTitle(t *testing.T) {
-	f := getFeed(t)
-	if f.Title == "" {
+	doc := Doc{}
+	doc.Decode(testfeed.Atom)
+	if doc.Title == "" {
 		t.Error("Blank title")
 	}
-	t.Logf("Title: %s", f.Title)
+	t.Logf("Title: %s", doc.Title)
 }
 
 func TestURLs(t *testing.T) {
@@ -81,19 +84,14 @@ func TestURLs(t *testing.T) {
 		"http://go.theregister.com/feed/www.theregister.co.uk/2012/10/05/world_of_warcraft_colleen_lachowicz_attacked_by_republicans/",
 		"http://go.theregister.com/feed/www.theregister.co.uk/2012/10/05/steve_jobs_is_still_dead/",
 	}
-	f := getFeed(t)
-	for i, e := range f.Articles {
-		if e.URL.String() != urls[i] {
-			t.Errorf("URL Mismatch:\nGOT: %s\nEXP: %s", e.URL.String(), urls[i])
+	doc := Doc{}
+	doc.Decode(testfeed.Atom)
+	if len(doc.Entry) == 0 {
+		t.Error("No entries found")
+	}
+	for i, e := range doc.Entry {
+		if e.Link[0].Href != urls[i] {
+			t.Errorf("URL Mismatch:\nGOT: %s\nEXP: %s", e.Link[0].Href, urls[i])
 		}
 	}
-}
-
-func getFeed(t *testing.T) normalizer.Default {
-	doc := Doc{}
-	err := doc.Decode(testfeed.Atom)
-	if err != nil {
-		t.Error(err)
-	}
-	return doc.Feed()
 }
