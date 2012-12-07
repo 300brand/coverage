@@ -19,12 +19,22 @@ func Clean(u *url.URL) (out *url.URL) {
 		// Remove all utm_ parameters
 		case strings.HasPrefix(k, "utm_"):
 			values.Del(k)
+		// Remove rss= parameters
+		case strings.Contains(k, "rss"):
+			values.Del(k)
 		// Get rid of source=rss or track=rss
-		case strings.Contains(k+strings.Join(v, ""), "rss"):
+		case filter(v, "rss"):
 			values.Del(k)
 		}
 	}
 	out.RawQuery = values.Encode()
 
+	return
+}
+
+func filter(haystack []string, needle string) (found bool) {
+	for _, v := range haystack {
+		found = found || v == needle
+	}
 	return
 }

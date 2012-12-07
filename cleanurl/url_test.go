@@ -40,6 +40,16 @@ func TestNum(t *testing.T) {
 	testURLs(t, urls)
 }
 
+func TestRSS(t *testing.T) {
+	urls := map[string]string{
+		"http://my.tld?rss=123":           "http://my.tld",
+		"http://my.tld?param=rss":         "http://my.tld",
+		"http://my.tld?param=1&param=2":   "http://my.tld?param=1&param=2",
+		"http://my.tld?param=rss&param=2": "http://my.tld",
+	}
+	testURLs(t, urls)
+}
+
 func TestUTM(t *testing.T) {
 	urls := map[string]string{
 		"http://technology.amis.nl/2012/08/08/quick-introduction-of-what-and-why-of-oracle-database-edition-based-redefinition/?utm_source=rss&utm_medium=rss&utm_campaign=quick-introduction-of-what-and-why-of-oracle-database-edition-based-redefinition": "http://technology.amis.nl/2012/08/08/quick-introduction-of-what-and-why-of-oracle-database-edition-based-redefinition/",
