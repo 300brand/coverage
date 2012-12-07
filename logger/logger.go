@@ -7,42 +7,34 @@ import (
 )
 
 const (
-	DEBUG = iota
-	WARN
-	FATAL
-	PANIC
+	_DEBUG = iota
+	_WARN
+	_FATAL
+	_PANIC
+	flags = log.LstdFlags | log.Lshortfile
 )
 
 var (
-	flags    = log.LstdFlags | log.Lshortfile
-	loggers  = make(map[int]*log.Logger, len(prefixes))
-	prefixes = map[int]string{
-		DEBUG: "DEBUG   ",
-		WARN:  "WARNING ",
-		FATAL: "FATAL   ",
-		PANIC: "PANIC   ",
+	loggers = [...]*log.Logger{
+		_DEBUG: log.New(os.Stderr, "DEBUG   ", flags),
+		_WARN:  log.New(os.Stderr, "WARNING ", flags),
+		_FATAL: log.New(os.Stderr, "FATAL   ", flags),
+		_PANIC: log.New(os.Stderr, "PANIC   ", flags),
 	}
 )
 
 func Debug(v ...interface{}) {
-	getLogger(DEBUG).Output(2, fmt.Sprintln(v...))
+	loggers[_DEBUG].Output(2, fmt.Sprintln(v...))
 }
 
 func Debugf(format string, v ...interface{}) {
-	getLogger(DEBUG).Output(2, fmt.Sprintf(format, v...))
+	loggers[_DEBUG].Output(2, fmt.Sprintf(format, v...))
 }
 
 func Warn(v ...interface{}) {
-	getLogger(WARN).Output(2, fmt.Sprintln(v...))
+	loggers[_WARN].Output(2, fmt.Sprintln(v...))
 }
 
 func Warnf(format string, v ...interface{}) {
-	getLogger(WARN).Output(2, fmt.Sprintf(format, v...))
-}
-
-func getLogger(level int) *log.Logger {
-	if _, ok := loggers[level]; !ok {
-		loggers[level] = log.New(os.Stderr, prefixes[level], flags)
-	}
-	return loggers[level]
+	loggers[_WARN].Output(2, fmt.Sprintf(format, v...))
 }
