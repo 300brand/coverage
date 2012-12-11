@@ -36,11 +36,7 @@ func TestFeedExtraction(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	feed, err := parser.Parse(resp.Body, req.Type)
-	if err != nil {
+	if _, err := parser.Parse(resp.Body); err != nil {
 		t.Error(err)
-	}
-	if len(feed.Articles) != 50 {
-		t.Errorf("Did not get expected Article count, %d", len(feed.Articles))
 	}
 }
