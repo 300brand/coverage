@@ -12,10 +12,10 @@ import (
 	"path"
 )
 
-var download bool
+var local bool
 
 func init() {
-	flag.BoolVar(&download, "url", false, "Argument is a URL, requiring download")
+	flag.BoolVar(&local, "local", false, "Argument is a local file")
 }
 
 func DownloadFeed(url string) (data []byte, err error) {
@@ -27,11 +27,11 @@ func DownloadFeed(url string) (data []byte, err error) {
 	return
 }
 
-func GetData(path string, download bool) (data []byte, err error) {
-	if download {
-		data, err = DownloadFeed(path)
-	} else {
+func GetData(path string, local bool) (data []byte, err error) {
+	if local {
 		data, err = ReadFeed(path)
+	} else {
+		data, err = DownloadFeed(path)
 	}
 	return
 }
@@ -50,7 +50,7 @@ func main() {
 	path := flag.Arg(0)
 
 	// Pull data from download or filesystem
-	data, err := GetData(path, download)
+	data, err := GetData(path, local)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(2)
