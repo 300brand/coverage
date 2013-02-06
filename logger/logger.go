@@ -6,8 +6,11 @@ import (
 	"os"
 )
 
+type Level int
+
 const (
-	_DEBUG = iota
+	_DEBUG Level = iota
+	_INFO
 	_WARN
 	_FATAL
 	_PANIC
@@ -16,9 +19,14 @@ const (
 
 var loggers = [...]*log.Logger{
 	_DEBUG: log.New(os.Stderr, "DEBUG   ", flags),
+	_INFO:  log.New(os.Stderr, "INFO    ", flags),
 	_WARN:  log.New(os.Stderr, "WARNING ", flags),
 	_FATAL: log.New(os.Stderr, "FATAL   ", flags),
 	_PANIC: log.New(os.Stderr, "PANIC   ", flags),
+}
+
+func Print(level int, v ...interface{}) {
+	loggers[level].Output(2, fmt.Sprintln(v...))
 }
 
 func Debug(v ...interface{}) {
