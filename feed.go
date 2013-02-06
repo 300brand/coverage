@@ -11,6 +11,6 @@ type Feed struct {
 	Title     string
 	URL       url.URL
 	LastCheck time.Time
-	Articles  []Article
+	Articles  []Article `bson:-`
 	Logs      LogEntries
 }
