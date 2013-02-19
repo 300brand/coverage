@@ -13,4 +13,9 @@ type Publication struct {
 	Feeds    []Feed
 	FeedIDs  []bson.ObjectId
 	Logs     LogEntries
+	Times    struct {
+		Added     time.Time
+		Updated   time.Time
+		LastCheck time.Time
+	}
 }

@@ -7,10 +7,14 @@ import (
 )
 
 type Feed struct {
-	ID        bson.ObjectId
-	Title     string
-	URL       url.URL
-	LastCheck time.Time
-	Articles  []Article `bson:-`
-	Logs      LogEntries
+	ID       bson.ObjectId
+	Title    string
+	URL      url.URL
+	Articles []Article `bson:-`
+	Logs     LogEntries
+	Times    struct {
+		Added     time.Time
+		Updated   time.Time
+		LastCheck time.Time
+	}
 }

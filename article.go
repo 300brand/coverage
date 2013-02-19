@@ -10,7 +10,12 @@ type Article struct {
 	ID          bson.ObjectId
 	Title       string
 	URL         url.URL
-	Published   time.Time
 	ProperNames ProperNames
 	Logs        LogEntries
+	Times       struct {
+		Added     time.Time
+		Updated   time.Time
+		LastCheck time.Time
+		Published time.Time
+	}
 }
