@@ -25,8 +25,8 @@ var loggers = [...]*log.Logger{
 	_PANIC: log.New(os.Stderr, "PANIC   ", flags),
 }
 
-func Print(level int, v ...interface{}) {
-	loggers[level].Output(2, fmt.Sprintln(v...))
+func Print(e Entry) {
+	loggers[e.Level].Output(2, fmt.Sprintf("[%s] %s", e.Time, e.Msg))
 }
 
 func Debug(v ...interface{}) {
