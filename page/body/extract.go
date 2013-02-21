@@ -8,7 +8,7 @@ import (
 	//"github.com/moovweb/gokogiri"
 )
 
-var cleanFilters = []filter.Filter{
+var cleanFilters = filter.Filters{
 	filter.Head,
 	filter.Style,
 	filter.Script,
@@ -19,7 +19,7 @@ var cleanFilters = []filter.Filter{
 func CleanDOM(n *html.Node) {
 	for c := n.FirstChild; c != nil; {
 		next := c.NextSibling
-		if filter.AnyValid(c, cleanFilters) {
+		if cleanFilters.Any(c) {
 			n.RemoveChild(c)
 		} else {
 			CleanDOM(c)

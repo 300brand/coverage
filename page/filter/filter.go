@@ -9,15 +9,6 @@ import (
 // condition.
 type Filter func(n *html.Node) bool
 
-func AnyValid(n *html.Node, filters []Filter) bool {
-	for _, f := range filters {
-		if f(n) {
-			return true
-		}
-	}
-	return false
-}
-
 func BlockElement(n *html.Node) bool {
 	if n.Type != html.ElementNode {
 		return false
