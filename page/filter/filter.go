@@ -52,7 +52,7 @@ func Head(n *html.Node) bool {
 // *html.Node to change the tag to a div for future processing.
 func NormalizeBlock(n *html.Node) bool {
 	if BlockElement(n) {
-		n.DataAtom = atom.Lookup([]byte("div"))
+		n.DataAtom = atom.Div
 		n.Data = "div"
 	}
 	return false
