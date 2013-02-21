@@ -1,15 +1,19 @@
 package body
 
 import (
+	"bytes"
 	"code.google.com/p/go.net/html"
 	"git.300brand.com/coverage/page/filter"
+	"os"
+	//"github.com/moovweb/gokogiri"
 )
 
 var cleanFilters = []filter.Filter{
 	filter.Head,
 	filter.Style,
-	filter.Scripts,
-	filter.Comments,
+	filter.Script,
+	filter.Comment,
+	filter.NormalizeBlock,
 }
 
 func CleanDOM(n *html.Node) {
@@ -22,4 +26,20 @@ func CleanDOM(n *html.Node) {
 		}
 		c = next
 	}
+}
+
+func GetBody(b []byte) (body string, err error) {
+	r := bytes.NewReader(b)
+	doc, err := html.Parse(r)
+	if err != nil {
+		return
+	}
+	CleanDOM(doc)
+	html.Render(os.Stdout, doc)
+	//
+	//, err := gokogiri.ParseHtml(b)
+	//if err != nil {
+	//	return
+	//}
+	return
 }
