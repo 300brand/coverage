@@ -1,7 +1,6 @@
 package main
 
 import (
-	//"code.google.com/p/go.net/html"
 	"flag"
 	"fmt"
 	"git.300brand.com/coverage/page/body"
@@ -28,10 +27,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	if cleanedOnly {
-		out, err = body.CleanHTML(in)
-	} else {
-		out, err = body.GetBody(in)
+	out, err = body.CleanHTML(in)
+	if !cleanedOnly {
+		out, err = body.GetBody(out)
 	}
 
 	if err != nil {
