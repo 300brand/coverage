@@ -6,31 +6,33 @@ import (
 	"github.com/moovweb/gokogiri/xml"
 )
 
-type Div string
-type Divs []Div
+type Block string
+type Blocks []Block
 
 func GetBody(b []byte) (body []byte, err error) {
 	doc, err := gokogiri.ParseHtml(b)
+	defer doc.Free()
 	if err != nil {
 		return
 	}
-	html := doc.Root().FirstChild()
-	divs, err := GetPDivs(html)
+	html := doc.Root()
+	fmt.Println(html.Name())
+	blocks, err := GetPBlocks(html)
 	if err != nil {
 		return
 	}
-	body = []byte(fmt.Sprintf("%d", len(divs)))
+	body = []byte(fmt.Sprintf("GetBody %q", blocks))
 	return
 }
 
-// $divs = $xpath->query('//div[p]');
-func GetPDivs(n xml.Node) (divs Divs, err error) {
+func GetPBlocks(n xml.Node) (b Blocks, err error) {
 	results, err := n.Search("//div[p]")
 	if err != nil {
 		return
 	}
-	fmt.Printf("%d\n", len(results))
-	divs = make(Divs, len(results))
+	for _, r := range results {
+		b = append(b, Block(r.Content()))
+	}
 	return
 }
 
