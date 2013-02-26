@@ -3,15 +3,12 @@ package filter
 import (
 	"code.google.com/p/go.net/html"
 	"code.google.com/p/go.net/html/atom"
-	"regexp"
 	"strings"
 )
 
 // Filter funcs return true when the *html.Node passed in matches some
 // condition.
 type Filter func(n *html.Node) bool
-
-var despaceRegex = regexp.MustCompile("(  +|[\t\r\n])+")
 
 func BlockElement(n *html.Node) bool {
 	if n.Type != html.ElementNode {

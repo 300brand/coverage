@@ -5,8 +5,11 @@ package filter
 import (
 	"code.google.com/p/go.net/html"
 	"code.google.com/p/go.net/html/atom"
+	"regexp"
 	"strings"
 )
+
+var despaceRegex = regexp.MustCompile("(  +|[\t\r\n])+")
 
 // Add newlines after block-level elements
 func AddBlockBreaks(n *html.Node) bool {
@@ -40,7 +43,7 @@ func Despace(n *html.Node) bool {
 	if n.Type != html.TextNode {
 		return false
 	}
-	n.Data = strings.Trim(n.Data, " \t\r\n")
+	n.Data = strings.Trim(n.Data, "\t\r\n")
 	n.Data = despaceRegex.ReplaceAllString(n.Data, " ")
 	return false
 }
