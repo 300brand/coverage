@@ -7,11 +7,14 @@ import (
 )
 
 var cleanFilters = filter.Filters{
+	filter.Spaces,
 	filter.Head,
 	filter.Style,
 	filter.Script,
 	filter.Comment,
 	filter.NormalizeBlock,
+	filter.Despace,
+	filter.Empty,
 }
 
 func CleanHTML(b []byte) (cleaned []byte, err error) {
