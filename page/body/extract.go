@@ -1,7 +1,6 @@
 package body
 
 import (
-	"fmt"
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xml"
 	"github.com/moovweb/gokogiri/xpath"
@@ -38,8 +37,12 @@ func GetBody(in []byte) (b Body, err error) {
 		}
 		blocks = append(blocks, nodes...)
 	}
-	for i, block := range blocks {
-		fmt.Printf("%d: %s\n\n", i, block)
+	for _, block := range blocks {
+		content := block.Content()
+		if len(content) > len(b.Text) {
+			b.HTML = block.InnerHtml()
+			b.Text = content
+		}
 	}
 	return
 }
