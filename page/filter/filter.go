@@ -35,15 +35,6 @@ func Comment(n *html.Node) bool {
 	return n.Type == html.CommentNode
 }
 
-func Despace(n *html.Node) bool {
-	if n.Type != html.TextNode {
-		return false
-	}
-	n.Data = strings.Trim(n.Data, " \t\r\n")
-	n.Data = despaceRegex.ReplaceAllString(n.Data, " ")
-	return false
-}
-
 func Empty(n *html.Node) bool {
 	if n.Type != html.ElementNode || n.FirstChild != nil {
 		return false
@@ -58,16 +49,6 @@ func Empty(n *html.Node) bool {
 
 func Head(n *html.Node) bool {
 	return n.Type == html.ElementNode && n.DataAtom == atom.Head
-}
-
-// Note this always returns false. This filter silently modifies the incoming
-// *html.Node to change the tag to a div for future processing.
-func NormalizeBlock(n *html.Node) bool {
-	if BlockElement(n) {
-		n.DataAtom = atom.Div
-		n.Data = "div"
-	}
-	return false
 }
 
 func Script(n *html.Node) bool {
