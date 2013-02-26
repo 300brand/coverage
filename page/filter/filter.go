@@ -11,6 +11,8 @@ import (
 // condition.
 type Filter func(n *html.Node) bool
 
+var despaceRegex = regexp.MustCompile("(  +|[\t\r\n])+")
+
 func BlockElement(n *html.Node) bool {
 	if n.Type != html.ElementNode {
 		return false
@@ -37,9 +39,8 @@ func Despace(n *html.Node) bool {
 	if n.Type != html.TextNode {
 		return false
 	}
-	re := regexp.MustCompile("(  +|[\t\r\n])+")
 	n.Data = strings.Trim(n.Data, " \t\r\n")
-	n.Data = re.ReplaceAllString(n.Data, " ")
+	n.Data = despaceRegex.ReplaceAllString(n.Data, " ")
 	return false
 }
 

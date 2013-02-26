@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xml"
+	"github.com/moovweb/gokogiri/xpath"
 )
 
 type Body struct {
@@ -13,10 +14,14 @@ type Body struct {
 
 type blockFunc func(xml.Node) ([]xml.Node, error)
 
-var blockFuncs = []blockFunc{
-	PBlocks,
-	//BrBrBlocks,
-}
+var (
+	blockFuncs = []blockFunc{
+		PBlocks,
+		BrBrBlocks,
+	}
+	xpathP    = xpath.Compile("//div[count(p) > 1]")
+	xpathBrBr = xpath.Compile("//div[br/following-sibling::*[1][self::br]]")
+)
 
 func GetBody(in []byte) (b Body, err error) {
 	doc, err := gokogiri.ParseHtml(in)
@@ -40,9 +45,9 @@ func GetBody(in []byte) (b Body, err error) {
 }
 
 func PBlocks(n xml.Node) ([]xml.Node, error) {
-	return n.Search("//div[p]")
+	return n.Search(xpathP)
 }
 
 func BrBrBlocks(n xml.Node) ([]xml.Node, error) {
-	return n.Search("//div[br/following-sibling::*[1][self::br]]")
+	return n.Search(xpathBrBr)
 }
