@@ -3,6 +3,8 @@ package filter
 import (
 	"code.google.com/p/go.net/html"
 	"code.google.com/p/go.net/html/atom"
+	"regexp"
+	"strings"
 )
 
 // Filter funcs return true when the *html.Node passed in matches some
@@ -31,8 +33,26 @@ func Comment(n *html.Node) bool {
 	return n.Type == html.CommentNode
 }
 
+func Despace(n *html.Node) bool {
+	if n.Type != html.TextNode {
+		return false
+	}
+	re := regexp.MustCompile("(  +|[\t\r\n])+")
+	n.Data = strings.Trim(n.Data, " \t\r\n")
+	n.Data = re.ReplaceAllString(n.Data, " ")
+	return false
+}
+
 func Empty(n *html.Node) bool {
-	return n.Type == html.ElementNode && n.FirstChild == nil
+	if n.Type != html.ElementNode || n.FirstChild != nil {
+		return false
+	}
+	switch n.DataAtom {
+	case atom.Br:
+	default:
+		return true
+	}
+	return false
 }
 
 func Head(n *html.Node) bool {
@@ -60,6 +80,10 @@ func Script(n *html.Node) bool {
 		return false
 	}
 	return true
+}
+
+func Spaces(n *html.Node) bool {
+	return n.Type == html.TextNode && strings.Trim(n.Data, " \t\r\n") == ""
 }
 
 func Style(n *html.Node) bool {
