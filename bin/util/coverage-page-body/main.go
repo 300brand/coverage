@@ -19,23 +19,26 @@ func init() {
 func main() {
 	flag.Parse()
 
-	var out []byte
-
 	in, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	out, err = body.CleanHTML(in)
-	if !cleanedOnly {
-		out, err = body.GetBody(out)
+	clean, err := body.CleanHTML(in)
+	if cleanedOnly {
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(2)
+		}
+		fmt.Printf("%s\n", clean)
+		return
 	}
 
+	b, err := body.GetBody(clean)
 	if err != nil {
 		fmt.Println(err)
-		os.Exit(2)
+		os.Exit(3)
 	}
-
-	fmt.Printf("%s\n", out)
+	fmt.Printf("Body: %v\n", b)
 }
