@@ -6,36 +6,43 @@ import (
 	"github.com/moovweb/gokogiri/xml"
 )
 
-type Block string
-type Blocks []Block
+type Body struct {
+	HTML string
+	Text string
+}
 
-func GetBody(b []byte) (body []byte, err error) {
-	doc, err := gokogiri.ParseHtml(b)
+type blockFunc func(xml.Node) ([]xml.Node, error)
+
+var blockFuncs = []blockFunc{
+	PBlocks,
+	//BrBrBlocks,
+}
+
+func GetBody(in []byte) (b Body, err error) {
+	doc, err := gokogiri.ParseHtml(in)
 	defer doc.Free()
 	if err != nil {
 		return
 	}
 	html := doc.Root()
-	fmt.Println(html.Name())
-	blocks, err := GetPBlocks(html)
-	if err != nil {
-		return
+	blocks := []xml.Node{}
+	for _, f := range blockFuncs {
+		nodes, err := f(html)
+		if err != nil {
+			return b, err
+		}
+		blocks = append(blocks, nodes...)
 	}
-	body = []byte(fmt.Sprintf("GetBody %q", blocks))
-	return
-}
-
-func GetPBlocks(n xml.Node) (b Blocks, err error) {
-	results, err := n.Search("//div[p]")
-	if err != nil {
-		return
-	}
-	for _, r := range results {
-		b = append(b, Block(r.Content()))
+	for i, block := range blocks {
+		fmt.Printf("%d: %s\n\n", i, block)
 	}
 	return
 }
 
-// $divs = $xpath->query('//div[br/following-sibling::*[1][self::br]]');
-//func GetBrBrDivs(doc *html.HtmlDocument) (divs Divs) {
-//}
+func PBlocks(n xml.Node) ([]xml.Node, error) {
+	return n.Search("//div[p]")
+}
+
+func BrBrBlocks(n xml.Node) ([]xml.Node, error) {
+	return n.Search("//div[br/following-sibling::*[1][self::br]]")
+}
