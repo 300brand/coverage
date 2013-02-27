@@ -6,14 +6,19 @@ import (
 	"git.300brand.com/coverage/page/body"
 	"io/ioutil"
 	"os"
+	"strings"
 )
 
 var (
 	cleanedOnly bool
+	noHTML      bool
+	noText      bool
 )
 
 func init() {
 	flag.BoolVar(&cleanedOnly, "clean", false, "Only show the cleaned HTML used before extracing body content")
+	flag.BoolVar(&noHTML, "nohtml", false, "Don't show body HTML")
+	flag.BoolVar(&noText, "notext", false, "Don't show body Text")
 }
 
 func main() {
@@ -40,5 +45,13 @@ func main() {
 		fmt.Println(err)
 		os.Exit(3)
 	}
-	fmt.Printf("Body: %v\n", b)
+	if !noHTML {
+		fmt.Println(b.HTML)
+	}
+	if !noHTML && !noText {
+		fmt.Println("\n========================================\n")
+	}
+	if !noText {
+		fmt.Println(strings.Replace(b.Text, "\n", "\n\n", -1))
+	}
 }
