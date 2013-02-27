@@ -39,16 +39,34 @@ func TestBlockElementType(t *testing.T) {
 		DataAtom: atom.Div,
 	}
 	types := map[html.NodeType]bool{
-		html.ErrorNode:    false,
-		html.TextNode:     false,
-		html.DocumentNode: false,
-		html.ElementNode:  true,
 		html.CommentNode:  false,
 		html.DoctypeNode:  false,
+		html.DocumentNode: false,
+		html.ElementNode:  true,
+		html.ErrorNode:    false,
+		html.TextNode:     false,
 	}
 	for i, isBlock := range types {
 		n.Type = i
 		if BlockElement(n) != isBlock {
+			t.Errorf("Expected %v for %d", !isBlock, i)
+		}
+	}
+}
+
+func TestCommentType(t *testing.T) {
+	n := &html.Node{}
+	types := map[html.NodeType]bool{
+		html.CommentNode:  true,
+		html.DoctypeNode:  false,
+		html.DocumentNode: false,
+		html.ElementNode:  false,
+		html.ErrorNode:    false,
+		html.TextNode:     false,
+	}
+	for i, isBlock := range types {
+		n.Type = i
+		if Comment(n) != isBlock {
 			t.Errorf("Expected %v for %d", !isBlock, i)
 		}
 	}
