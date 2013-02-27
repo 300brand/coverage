@@ -11,14 +11,12 @@ import (
 
 var (
 	cleanedOnly bool
-	noHTML      bool
-	noText      bool
+	showHTML    bool
 )
 
 func init() {
 	flag.BoolVar(&cleanedOnly, "clean", false, "Only show the cleaned HTML used before extracing body content")
-	flag.BoolVar(&noHTML, "nohtml", false, "Don't show body HTML")
-	flag.BoolVar(&noText, "notext", false, "Don't show body Text")
+	flag.BoolVar(&showHTML, "html", false, "Show HTML body instead of Text body")
 }
 
 func main() {
@@ -45,13 +43,9 @@ func main() {
 		fmt.Println(err)
 		os.Exit(3)
 	}
-	if !noHTML {
+	if showHTML {
 		fmt.Printf("%s\n", b.HTML)
-	}
-	if !noHTML && !noText {
-		fmt.Println("\n========================================\n")
-	}
-	if !noText {
+	} else {
 		fmt.Printf("%s\n", doubleSpace(b.Text))
 	}
 }
