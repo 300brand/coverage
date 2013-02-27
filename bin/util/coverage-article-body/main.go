@@ -1,12 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"git.300brand.com/coverage/article/body"
 	"io/ioutil"
 	"os"
-	"strings"
 )
 
 var (
@@ -46,12 +46,16 @@ func main() {
 		os.Exit(3)
 	}
 	if !noHTML {
-		fmt.Println(b.HTML)
+		fmt.Printf("%s\n", b.HTML)
 	}
 	if !noHTML && !noText {
 		fmt.Println("\n========================================\n")
 	}
 	if !noText {
-		fmt.Println(strings.Replace(b.Text, "\n", "\n\n", -1))
+		fmt.Printf("%s\n", doubleSpace(b.Text))
 	}
+}
+
+func doubleSpace(b []byte) []byte {
+	return bytes.Replace(b, []byte("\n"), []byte("\n\n"), -1)
 }

@@ -1,16 +1,16 @@
 package body
 
 import (
+	"bytes"
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xml"
 	"github.com/moovweb/gokogiri/xpath"
 	"regexp"
-	"strings"
 )
 
 type Body struct {
-	HTML string
-	Text string
+	HTML []byte
+	Text []byte
 }
 
 type blockFunc func(xml.Node) ([]xml.Node, error)
@@ -44,11 +44,11 @@ func GetBody(in []byte) (b Body, err error) {
 		content := block.Content()
 		// Keep blocks where the text is longest
 		if len(content) > len(b.Text) {
-			b.HTML = block.InnerHtml()
-			b.Text = content
+			b.HTML = []byte(block.InnerHtml())
+			b.Text = []byte(content)
 		}
 	}
-	b.Text = reSingleNL.ReplaceAllString(strings.Trim(b.Text, "\n"), "\n")
+	b.Text = reSingleNL.ReplaceAll(bytes.Trim(b.Text, "\n"), []byte("\n"))
 	return
 }
 
