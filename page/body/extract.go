@@ -4,6 +4,8 @@ import (
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xml"
 	"github.com/moovweb/gokogiri/xpath"
+	"regexp"
+	"strings"
 )
 
 type Body struct {
@@ -18,8 +20,9 @@ var (
 		PBlocks,
 		BrBrBlocks,
 	}
-	xpathP    = xpath.Compile("//div[count(p) > 1]")
-	xpathBrBr = xpath.Compile("//div[br/following-sibling::*[1][self::br]]")
+	xpathP     = xpath.Compile("//div[count(p) > 1]")
+	xpathBrBr  = xpath.Compile("//div[br/following-sibling::*[1][self::br]]")
+	reSingleNL = regexp.MustCompile("[\n]{2,}")
 )
 
 func GetBody(in []byte) (b Body, err error) {
@@ -39,11 +42,13 @@ func GetBody(in []byte) (b Body, err error) {
 	}
 	for _, block := range blocks {
 		content := block.Content()
+		// Keep blocks where the text is longest
 		if len(content) > len(b.Text) {
 			b.HTML = block.InnerHtml()
 			b.Text = content
 		}
 	}
+	b.Text = reSingleNL.ReplaceAllString(strings.Trim(b.Text, "\n"), "\n")
 	return
 }
 
