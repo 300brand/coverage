@@ -3,7 +3,7 @@ package body
 import (
 	"bytes"
 	"code.google.com/p/go.net/html"
-	"git.300brand.com/coverage/page/filter"
+	"git.300brand.com/coverage/article/filter"
 )
 
 var cleanFilters = filter.Filters{

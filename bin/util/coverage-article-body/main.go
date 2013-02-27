@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"git.300brand.com/coverage/page/body"
+	"git.300brand.com/coverage/article/body"
 	"io/ioutil"
 	"os"
 	"strings"
