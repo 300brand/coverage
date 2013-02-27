@@ -1,9 +1,9 @@
 package filter
 
 import (
-	"bytes"
 	"code.google.com/p/go.net/html"
 	"code.google.com/p/go.net/html/atom"
+	"strings"
 	"testing"
 )
 
@@ -75,15 +75,21 @@ func TestCommentType(t *testing.T) {
 
 func TestEmpty(t *testing.T) {
 	tests := map[string]bool{
-		"<br>": false,
+		"<br>":                   false,
+		"<div></div>":            true,
+		"<div><div></div></div>": false,
 	}
 	for test, empty := range tests {
-		r := bytes.NewReader([]byte(test))
+		r := strings.NewReader(test)
 		doc, err := html.Parse(r)
 		if err != nil {
 			t.Error(err)
 		}
-		if Empty(doc) != empty {
+		// Path makes up for the fact that html.Parse() establishes
+		// the entire HTML tree:
+		// <html><head></head><body>...</body></html>
+		node := doc.FirstChild.FirstChild.NextSibling.FirstChild
+		if Empty(node) != empty {
 			t.Errorf("Expected %v for `%s'", empty, test)
 		}
 	}
