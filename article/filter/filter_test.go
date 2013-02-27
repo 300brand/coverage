@@ -1,6 +1,7 @@
 package filter
 
 import (
+	"bytes"
 	"code.google.com/p/go.net/html"
 	"code.google.com/p/go.net/html/atom"
 	"testing"
@@ -49,7 +50,7 @@ func TestBlockElementType(t *testing.T) {
 	for i, isBlock := range types {
 		n.Type = i
 		if BlockElement(n) != isBlock {
-			t.Errorf("Expected %v for %d", !isBlock, i)
+			t.Errorf("Expected %v for %d", isBlock, i)
 		}
 	}
 }
@@ -67,7 +68,23 @@ func TestCommentType(t *testing.T) {
 	for i, isBlock := range types {
 		n.Type = i
 		if Comment(n) != isBlock {
-			t.Errorf("Expected %v for %d", !isBlock, i)
+			t.Errorf("Expected %v for %d", isBlock, i)
+		}
+	}
+}
+
+func TestEmpty(t *testing.T) {
+	tests := map[string]bool{
+		"<br>": false,
+	}
+	for test, empty := range tests {
+		r := bytes.NewReader([]byte(test))
+		doc, err := html.Parse(r)
+		if err != nil {
+			t.Error(err)
+		}
+		if Empty(doc) != empty {
+			t.Errorf("Expected %v for `%s'", empty, test)
 		}
 	}
 }
