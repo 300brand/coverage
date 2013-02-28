@@ -7,52 +7,30 @@ import (
 	"testing"
 )
 
-func TestBlockElementDataAtom(t *testing.T) {
-	n := &html.Node{
-		Type: html.ElementNode,
-	}
-	atoms := map[atom.Atom]bool{
-		atom.A:       false,
-		atom.Article: true,
-		atom.Body:    false,
-		atom.Div:     true,
-		atom.Footer:  true,
-		atom.Head:    false,
-		atom.Header:  true,
-		atom.Input:   false,
-		atom.Nav:     true,
-		atom.Section: true,
-		atom.Span:    false,
-		atom.Table:   false,
-		atom.Td:      true,
-		atom.Tr:      false,
-	}
-	for i, isBlock := range atoms {
-		n.DataAtom = i
-		if BlockElement(n) != isBlock {
-			t.Errorf("Expected %v for %s", isBlock, i.String())
-		}
-	}
-}
-
-func TestBlockElementType(t *testing.T) {
-	n := &html.Node{
-		DataAtom: atom.Div,
-	}
-	types := map[html.NodeType]bool{
-		html.CommentNode:  false,
-		html.DoctypeNode:  false,
-		html.DocumentNode: false,
-		html.ElementNode:  true,
-		html.ErrorNode:    false,
-		html.TextNode:     false,
-	}
-	for i, isType := range types {
-		n.Type = i
-		if BlockElement(n) != isType {
-			t.Errorf("Expected %v for %d", isType, i)
-		}
-	}
+func TestBlockElement(t *testing.T) {
+	test := `
+	<!DOCTYPE html>
+	<html data-valid="false">
+		<head data-valid="false"></head>
+		<body data-valid="false">
+			<a data-valid="false"></a>
+			<article data-valid="true"></article>
+			<div data-valid="true"></div>
+			<footer data-valid="true"></footer>
+			<header data-valid="true"></header>
+			<input data-valid="false">
+			<nav data-valid="true"></nav>
+			<section data-valid="true"></section>
+			<span data-valid="false"></span>
+			<table data-valid="false">
+				<tr data-valid="false">
+					<td data-valid="true"></td>
+				</tr>
+			</table>
+		</body>
+	</html>
+	`
+	testElements(t, test, BlockElement)
 }
 
 func TestCommentType(t *testing.T) {
@@ -170,6 +148,50 @@ func TestScriptType(t *testing.T) {
 		n.Type = i
 		if Script(n) != isType {
 			t.Errorf("Expected %v for %d", isType, i)
+		}
+	}
+}
+
+// Fetches all child nodes within a node, flattening them into a single array
+func getNodes(n *html.Node) (nodes []*html.Node) {
+	for c := n; c != nil; c = c.NextSibling {
+		nodes = append(nodes, c)
+		if c.FirstChild != nil {
+			nodes = append(nodes, getNodes(c.FirstChild)...)
+		}
+	}
+	return
+}
+
+// Gets the value for an attribute on an element
+func getAttribute(n *html.Node, q string) string {
+	for _, a := range n.Attr {
+		if a.Key == q {
+			return a.Val
+		}
+	}
+	return ""
+}
+
+// Takes a string of HTML where elements for testing have the attribute
+// data-valid. The value for data-valid should be either "true" or "false" to
+// match the outcome of the filter when applied to the tag.
+func testElements(t *testing.T, s string, f Filter) {
+	r := strings.NewReader(s)
+	doc, err := html.Parse(r)
+	if err != nil {
+		t.Error(err)
+	}
+	nodes := getNodes(doc)
+	for _, node := range nodes {
+		val := getAttribute(node, "data-valid")
+		// Only work on elements where the data-valid attribute exists
+		if val == "" {
+			continue
+		}
+		valid := val == "true"
+		if f(node) != valid {
+			t.Errorf("Expected %v for %s", valid, node.Data)
 		}
 	}
 }
