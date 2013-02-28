@@ -2,7 +2,6 @@ package filter
 
 import (
 	"code.google.com/p/go.net/html"
-	"code.google.com/p/go.net/html/atom"
 	"strings"
 	"testing"
 )
@@ -73,82 +72,81 @@ func TestEmpty(t *testing.T) {
 	testElements(t, test, Empty)
 }
 
-func TestHeadDataAtom(t *testing.T) {
-	n := &html.Node{
-		Type: html.ElementNode,
-	}
-	atoms := map[atom.Atom]bool{
-		atom.Body:  false,
-		atom.Div:   false,
-		atom.Head:  true,
-		atom.Html:  false,
-		atom.Style: false,
-	}
-	for i, isHead := range atoms {
-		n.DataAtom = i
-		if Head(n) != isHead {
-			t.Errorf("Expected %v for %s", isHead, i.String())
+func TestHead(t *testing.T) {
+	test := `<!DOCTYPE html><html><head></head><body></body></html>`
+	testElements(t, test, Head)
+}
+
+func TestScript(t *testing.T) {
+	test := `<!DOCTYPE html>
+	<html valid="false">
+		<head valid="false">
+			<script valid="true"></script>
+			<script valid="true">
+				document.write('mooo')
+			</script>
+		</head>
+		<body valid="false">
+			<script valid="true" src="./thing.js"></script>
+		</body>
+	</html>`
+	testElements(t, test, Script)
+}
+
+func TestSpaces(t *testing.T) {
+	expect := 7
+	test := `<!DOCTYPE html><html><head></head><body>
+		<div></div>
+		<div>
+			<h1>Test</h1>
+			<h2> </h2>
+		</div>
+	</body></html>`
+	for _, n := range getStringNodes(t, test) {
+		if Spaces(n) {
+			expect--
 		}
+	}
+	if expect > 0 {
+		t.Errorf("Couldn't find %d space node(s)", expect)
+	} else if expect < 0 {
+		t.Errorf("Found %d too many space nodes", expect*-1)
 	}
 }
 
-func TestHeadType(t *testing.T) {
-	n := &html.Node{
-		DataAtom: atom.Head,
-	}
-	types := map[html.NodeType]bool{
-		html.CommentNode:  false,
-		html.DoctypeNode:  false,
-		html.DocumentNode: false,
-		html.ElementNode:  true,
-		html.ErrorNode:    false,
-		html.TextNode:     false,
-	}
-	for i, isType := range types {
-		n.Type = i
-		if Head(n) != isType {
-			t.Errorf("Expected %v for %d", isType, i)
-		}
-	}
+func TestStyle(t *testing.T) {
+	test := `<!DOCTYPE html>
+	<html valid="false">
+		<head valid="false">
+			<style valid="true" type="text/css">
+				body { color:#F00; }
+			</style>
+		</head>
+		<body valid="false">
+			<style valid="true"></style>
+		</body>
+	</html>`
+	testElements(t, test, Style)
 }
 
-func TestScriptDataAtom(t *testing.T) {
-	n := &html.Node{
-		Type: html.ElementNode,
-	}
-	atoms := map[atom.Atom]bool{
-		atom.Body:     false,
-		atom.Div:      false,
-		atom.Html:     false,
-		atom.Noscript: true,
-		atom.Script:   true,
-		atom.Style:    false,
-	}
-	for i, isScript := range atoms {
-		n.DataAtom = i
-		if Script(n) != isScript {
-			t.Errorf("Expected %v for %s", isScript, i.String())
+func TestText(t *testing.T) {
+	expect := 8
+	test := `<!DOCTYPE html><html><head></head><body>
+		<div></div>
+		<div>
+			<h1>Test</h1>
+			<h2> </h2>
+		</div>
+	</body></html>`
+	for _, n := range getStringNodes(t, test) {
+		if Text(n) {
+			expect--
 		}
 	}
-}
-
-func TestScriptType(t *testing.T) {
-	n := &html.Node{
-		DataAtom: atom.Script,
-	}
-	types := map[html.NodeType]bool{
-		html.CommentNode:  false,
-		html.DoctypeNode:  false,
-		html.DocumentNode: false,
-		html.ElementNode:  true,
-		html.ErrorNode:    false,
-		html.TextNode:     false,
-	}
-	for i, isType := range types {
-		n.Type = i
-		if Script(n) != isType {
-			t.Errorf("Expected %v for %d", isType, i)
-		}
+	if expect > 0 {
+		t.Errorf("Couldn't find %d text node(s)", expect)
+	} else if expect < 0 {
+		t.Errorf("Found %d too many text nodes", expect*-1)
 	}
 }
 
