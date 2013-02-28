@@ -30,7 +30,7 @@ func TestBlockElementDataAtom(t *testing.T) {
 	for i, isBlock := range atoms {
 		n.DataAtom = i
 		if BlockElement(n) != isBlock {
-			t.Errorf("Expected %v for %s", !isBlock, i.String())
+			t.Errorf("Expected %v for %s", isBlock, i.String())
 		}
 	}
 }
@@ -47,10 +47,10 @@ func TestBlockElementType(t *testing.T) {
 		html.ErrorNode:    false,
 		html.TextNode:     false,
 	}
-	for i, isBlock := range types {
+	for i, isType := range types {
 		n.Type = i
-		if BlockElement(n) != isBlock {
-			t.Errorf("Expected %v for %d", isBlock, i)
+		if BlockElement(n) != isType {
+			t.Errorf("Expected %v for %d", isType, i)
 		}
 	}
 }
@@ -65,10 +65,10 @@ func TestCommentType(t *testing.T) {
 		html.ErrorNode:    false,
 		html.TextNode:     false,
 	}
-	for i, isBlock := range types {
+	for i, isType := range types {
 		n.Type = i
-		if Comment(n) != isBlock {
-			t.Errorf("Expected %v for %d", isBlock, i)
+		if Comment(n) != isType {
+			t.Errorf("Expected %v for %d", isType, i)
 		}
 	}
 }
@@ -93,4 +93,44 @@ func TestEmpty(t *testing.T) {
 			t.Errorf("Expected %v for `%s'", empty, test)
 		}
 	}
+}
+
+func TestHeadDataAtom(t *testing.T) {
+	n := &html.Node{
+		Type: html.ElementNode,
+	}
+	atoms := map[atom.Atom]bool{
+		atom.Body:  false,
+		atom.Div:   false,
+		atom.Head:  true,
+		atom.Html:  false,
+		atom.Style: false,
+	}
+	for i, isHead := range atoms {
+		n.DataAtom = i
+		if Head(n) != isHead {
+			t.Errorf("Expected %v for %s", isHead, i.String())
+		}
+	}
+}
+
+func TestHeadType(t *testing.T) {
+	n := &html.Node{
+		DataAtom: atom.Head,
+	}
+	types := map[html.NodeType]bool{
+		html.CommentNode:  false,
+		html.DoctypeNode:  false,
+		html.DocumentNode: false,
+		html.ElementNode:  true,
+		html.ErrorNode:    false,
+		html.TextNode:     false,
+	}
+	for i, isType := range types {
+		n.Type = i
+		if Head(n) != isType {
+			t.Errorf("Expected %v for %d", isType, i)
+		}
+	}
+
 }
