@@ -9,21 +9,21 @@ import (
 
 func TestBlockElement(t *testing.T) {
 	test := `<!DOCTYPE html>
-	<html data-valid="false">
-		<head data-valid="false"></head>
-		<body data-valid="false">
-			<a data-valid="false"></a>
-			<article data-valid="true"></article>
-			<div data-valid="true"></div>
-			<footer data-valid="true"></footer>
-			<header data-valid="true"></header>
-			<input data-valid="false">
-			<nav data-valid="true"></nav>
-			<section data-valid="true"></section>
-			<span data-valid="false"></span>
-			<table data-valid="false">
-				<tr data-valid="false">
-					<td data-valid="true"></td>
+	<html valid="false">
+		<head valid="false"></head>
+		<body valid="false">
+			<a valid="false"></a>
+			<article valid="true"></article>
+			<div valid="true"></div>
+			<footer valid="true"></footer>
+			<header valid="true"></header>
+			<input valid="false">
+			<nav valid="true"></nav>
+			<section valid="true"></section>
+			<span valid="false"></span>
+			<table valid="false">
+				<tr valid="false">
+					<td valid="true"></td>
 				</tr>
 			</table>
 		</body>
@@ -58,16 +58,16 @@ func TestEmpty(t *testing.T) {
 	<html>
 		<head></head>
 		<body>
-			<br id="1" data-valid="false">
-			<div id="2" data-valid="true"></div>
-			<div id="3" data-valid="false"><div id="4" data-valid="true"></div></div>
-			<div id="5" data-valid="true">    </div>
-			<div id="6" data-valid="true">
+			<br id="1" valid="false">
+			<div id="2" valid="true"></div>
+			<div id="3" valid="false"><div id="4" valid="true"></div></div>
+			<div id="5" valid="true">    </div>
+			<div id="6" valid="true">
 			</div>
-			<div id="7" data-valid="false">
-				<div id="8" data-valid="true"></div>
+			<div id="7" valid="false">
+				<div id="8" valid="true"></div>
 			</div>
-			<div id="9" data-valid="false">Text</div>
+			<div id="9" valid="false">Text</div>
 		</body>
 	</html>`
 	testElements(t, test, Empty)
@@ -183,13 +183,13 @@ func getStringNodes(t *testing.T, s string) []*html.Node {
 }
 
 // Takes a string of HTML where elements for testing have the attribute
-// data-valid. The value for data-valid should be either "true" or "false" to
+// valid. The value for valid should be either "true" or "false" to
 // match the outcome of the filter when applied to the tag.
 func testElements(t *testing.T, s string, f Filter) {
 	nodes := getStringNodes(t, s)
 	for _, node := range nodes {
-		val := getAttribute(node, "data-valid")
-		// Only work on elements where the data-valid attribute exists
+		val := getAttribute(node, "valid")
+		// Only work on elements where the valid attribute exists
 		if val == "" {
 			continue
 		}
