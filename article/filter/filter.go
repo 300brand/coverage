@@ -33,13 +33,19 @@ func Comment(n *html.Node) bool {
 }
 
 func Empty(n *html.Node) bool {
-	if n.Type != html.ElementNode || n.FirstChild != nil {
+	if n.Type != html.ElementNode {
 		return false
 	}
+	c := n.FirstChild
+	// Only child is a text node of spaces
+	if c != nil && c == n.LastChild && Spaces(c) {
+		return true
+	}
+	// Special-case inline tags
 	switch n.DataAtom {
 	case atom.Br:
 	default:
-		return true
+		return c == nil
 	}
 	return false
 }

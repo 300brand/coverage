@@ -54,25 +54,23 @@ func TestComment(t *testing.T) {
 }
 
 func TestEmpty(t *testing.T) {
-	tests := map[string]bool{
-		"<br>":                   false,
-		"<div></div>":            true,
-		"<div><div></div></div>": false,
-	}
-	for test, empty := range tests {
-		r := strings.NewReader(test)
-		doc, err := html.Parse(r)
-		if err != nil {
-			t.Error(err)
-		}
-		// Path makes up for the fact that html.Parse() establishes
-		// the entire HTML tree:
-		// <html><head></head><body>...</body></html>
-		node := doc.FirstChild.FirstChild.NextSibling.FirstChild
-		if Empty(node) != empty {
-			t.Errorf("Expected %v for `%s'", empty, test)
-		}
-	}
+	test := `<!DOCTYPE html>
+	<html>
+		<head></head>
+		<body>
+			<br id="1" data-valid="false">
+			<div id="2" data-valid="true"></div>
+			<div id="3" data-valid="false"><div id="4" data-valid="true"></div></div>
+			<div id="5" data-valid="true">    </div>
+			<div id="6" data-valid="true">
+			</div>
+			<div id="7" data-valid="false">
+				<div id="8" data-valid="true"></div>
+			</div>
+			<div id="9" data-valid="false">Text</div>
+		</body>
+	</html>`
+	testElements(t, test, Empty)
 }
 
 func TestHeadDataAtom(t *testing.T) {
@@ -197,7 +195,7 @@ func testElements(t *testing.T, s string, f Filter) {
 		}
 		valid := val == "true"
 		if f(node) != valid {
-			t.Errorf("Expected %v for %s", valid, node.Data)
+			t.Errorf("Expected %v for %s[%s]", valid, node.Data, getAttribute(node, "id"))
 		}
 	}
 }
