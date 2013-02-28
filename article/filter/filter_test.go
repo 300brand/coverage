@@ -8,8 +8,7 @@ import (
 )
 
 func TestBlockElement(t *testing.T) {
-	test := `
-	<!DOCTYPE html>
+	test := `<!DOCTYPE html>
 	<html data-valid="false">
 		<head data-valid="false"></head>
 		<body data-valid="false">
@@ -28,26 +27,29 @@ func TestBlockElement(t *testing.T) {
 				</tr>
 			</table>
 		</body>
-	</html>
-	`
+	</html>`
 	testElements(t, test, BlockElement)
 }
 
-func TestCommentType(t *testing.T) {
-	n := &html.Node{}
-	types := map[html.NodeType]bool{
-		html.CommentNode:  true,
-		html.DoctypeNode:  false,
-		html.DocumentNode: false,
-		html.ElementNode:  false,
-		html.ErrorNode:    false,
-		html.TextNode:     false,
-	}
-	for i, isType := range types {
-		n.Type = i
-		if Comment(n) != isType {
-			t.Errorf("Expected %v for %d", isType, i)
+func TestComment(t *testing.T) {
+	// How many comments are in the test code below:
+	expect := 1
+	test := `<!DOCTYPE html>
+	<html>
+		<head></head>
+		<body>
+			<!-- COMMENT -->
+		</body>
+	</html>`
+	for _, n := range getStringNodes(t, test) {
+		if Comment(n) {
+			expect--
 		}
+	}
+	if expect > 0 {
+		t.Errorf("Couldn't find %d comment(s)", expect)
+	} else if expect < 0 {
+		t.Errorf("Found %d too many comments", expect*-1)
 	}
 }
 
@@ -152,6 +154,16 @@ func TestScriptType(t *testing.T) {
 	}
 }
 
+// Gets the value for an attribute on an element
+func getAttribute(n *html.Node, q string) string {
+	for _, a := range n.Attr {
+		if a.Key == q {
+			return a.Val
+		}
+	}
+	return ""
+}
+
 // Fetches all child nodes within a node, flattening them into a single array
 func getNodes(n *html.Node) (nodes []*html.Node) {
 	for c := n; c != nil; c = c.NextSibling {
@@ -163,26 +175,20 @@ func getNodes(n *html.Node) (nodes []*html.Node) {
 	return
 }
 
-// Gets the value for an attribute on an element
-func getAttribute(n *html.Node, q string) string {
-	for _, a := range n.Attr {
-		if a.Key == q {
-			return a.Val
-		}
+func getStringNodes(t *testing.T, s string) []*html.Node {
+	r := strings.NewReader(s)
+	doc, err := html.Parse(r)
+	if err != nil {
+		t.Error(err)
 	}
-	return ""
+	return getNodes(doc)
 }
 
 // Takes a string of HTML where elements for testing have the attribute
 // data-valid. The value for data-valid should be either "true" or "false" to
 // match the outcome of the filter when applied to the tag.
 func testElements(t *testing.T, s string, f Filter) {
-	r := strings.NewReader(s)
-	doc, err := html.Parse(r)
-	if err != nil {
-		t.Error(err)
-	}
-	nodes := getNodes(doc)
+	nodes := getStringNodes(t, s)
 	for _, node := range nodes {
 		val := getAttribute(node, "data-valid")
 		// Only work on elements where the data-valid attribute exists
