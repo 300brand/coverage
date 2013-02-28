@@ -132,5 +132,44 @@ func TestHeadType(t *testing.T) {
 			t.Errorf("Expected %v for %d", isType, i)
 		}
 	}
+}
 
+func TestScriptDataAtom(t *testing.T) {
+	n := &html.Node{
+		Type: html.ElementNode,
+	}
+	atoms := map[atom.Atom]bool{
+		atom.Body:     false,
+		atom.Div:      false,
+		atom.Html:     false,
+		atom.Noscript: true,
+		atom.Script:   true,
+		atom.Style:    false,
+	}
+	for i, isScript := range atoms {
+		n.DataAtom = i
+		if Script(n) != isScript {
+			t.Errorf("Expected %v for %s", isScript, i.String())
+		}
+	}
+}
+
+func TestScriptType(t *testing.T) {
+	n := &html.Node{
+		DataAtom: atom.Script,
+	}
+	types := map[html.NodeType]bool{
+		html.CommentNode:  false,
+		html.DoctypeNode:  false,
+		html.DocumentNode: false,
+		html.ElementNode:  true,
+		html.ErrorNode:    false,
+		html.TextNode:     false,
+	}
+	for i, isType := range types {
+		n.Type = i
+		if Script(n) != isType {
+			t.Errorf("Expected %v for %d", isType, i)
+		}
+	}
 }
