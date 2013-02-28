@@ -68,7 +68,7 @@ func Script(n *html.Node) bool {
 }
 
 func Spaces(n *html.Node) bool {
-	return n.Type == html.TextNode && strings.Trim(n.Data, " \t\r\n") == ""
+	return Text(n) && strings.Trim(n.Data, " \t\r\n") == ""
 }
 
 func Style(n *html.Node) bool {
