@@ -17,7 +17,7 @@ func (fs Filters) Any(n *html.Node) bool {
 
 func (fs Filters) All(n *html.Node) bool {
 	for _, f := range fs {
-		if f(n) {
+		if !f(n) {
 			return false
 		}
 	}
