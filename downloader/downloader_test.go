@@ -7,28 +7,60 @@ import (
 	"testing"
 )
 
+const (
+	Success = "success"
+)
+
+type status int
+
+var codes = []int{
+	http.StatusOK,
+	http.StatusNotFound,
+	http.StatusInternalServerError,
+	http.StatusBadGateway,
+	http.StatusServiceUnavailable,
+}
+
+func (s status) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	w.WriteHeader(int(s))
+}
+
+func server() *httptest.Server {
+	mux := http.NewServeMux()
+	// Default response
+	mux.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(w, Success)
+	})
+	// Redirect
+	mux.HandleFunc("/redirect", func(w http.ResponseWriter, req *http.Request) {
+		http.Redirect(w, req, "/", http.StatusSeeOther)
+	})
+	// Codes
+	for _, code := range codes {
+		mux.Handle(fmt.Sprintf("/%d", code), status(code))
+	}
+	return httptest.NewServer(mux)
+}
+
 func TestDownload(t *testing.T) {
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "Response")
-	}))
-	defer server.Close()
-	expect := "Response"
-	r, err := Fetch(server.URL)
+	s := server()
+	defer s.Close()
+
+	r, err := Fetch(s.URL)
 	if err != nil {
 		t.Error(err)
 	}
-	if string(r.Body) != expect {
-		t.Errorf("Expect: %s", expect)
+	if string(r.Body) != Success {
+		t.Errorf("Expect: %s", Success)
 		t.Errorf("Got:    %s", r.Body)
 	}
 }
 
 func TestRealURL(t *testing.T) {
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "Response")
-	}))
-	defer server.Close()
-	r, err := Fetch(server.URL)
+	s := server()
+	defer s.Close()
+
+	r, err := Fetch(s.URL)
 	if err != nil {
 		t.Error(err)
 	}
@@ -38,14 +70,12 @@ func TestRealURL(t *testing.T) {
 }
 
 func TestRedirect(t *testing.T) {
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "Response")
-	}))
-	defer server.Close()
+	s := server()
+	defer s.Close()
 
-	url := "http://httpbin.org/redirect/3"
-	expect := "http://httpbin.org/get"
-	r, err := Fetch(server.URL)
+	url := s.URL + "/redirect"
+	expect := s.URL + "/"
+	r, err := Fetch(url)
 	if err != nil {
 		t.Error(err)
 	}
@@ -56,15 +86,11 @@ func TestRedirect(t *testing.T) {
 }
 
 func TestResponseCode(t *testing.T) {
-	codes := []int{
-		http.StatusOK,
-		http.StatusNotFound,
-		http.StatusInternalServerError,
-		http.StatusBadGateway,
-		http.StatusServiceUnavailable,
-	}
+	s := server()
+	defer s.Close()
+
 	for _, code := range codes {
-		r, err := Fetch(fmt.Sprintf("http://httpbin.org/status/%d", code))
+		r, err := Fetch(fmt.Sprintf("%s/%d", s.URL, code))
 		if err != nil {
 			t.Error(err)
 		}
