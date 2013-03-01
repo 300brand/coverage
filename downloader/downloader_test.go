@@ -3,35 +3,32 @@ package downloader
 import (
 	"fmt"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 )
 
 func TestDownload(t *testing.T) {
-	url := "http://httpbin.org/response-headers?Content-Type=text/plain"
-	expect := []byte(`{
-  "Content-Length": "60",
-  "Content-Type": "text/plain"
-}`)
-	r, err := Fetch(url)
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "Response")
+	}))
+	defer server.Close()
+	expect := "Response"
+	r, err := Fetch(server.URL)
 	if err != nil {
 		t.Error(err)
 	}
-	// Length check
-	if len(r.Body) != len(expect) {
+	if string(r.Body) != expect {
 		t.Errorf("Expect: %s", expect)
 		t.Errorf("Got:    %s", r.Body)
-		return
-	}
-	for i, b := range expect {
-		if r.Body[i] != b {
-			t.Errorf("Invalid char `%d', expected `%d'", r.Body[i], b)
-		}
 	}
 }
 
 func TestRealURL(t *testing.T) {
-	url := "http://httpbin.org/get"
-	r, err := Fetch(url)
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "Response")
+	}))
+	defer server.Close()
+	r, err := Fetch(server.URL)
 	if err != nil {
 		t.Error(err)
 	}
@@ -41,9 +38,14 @@ func TestRealURL(t *testing.T) {
 }
 
 func TestRedirect(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "Response")
+	}))
+	defer server.Close()
+
 	url := "http://httpbin.org/redirect/3"
 	expect := "http://httpbin.org/get"
-	r, err := Fetch(url)
+	r, err := Fetch(server.URL)
 	if err != nil {
 		t.Error(err)
 	}
