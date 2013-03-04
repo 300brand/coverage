@@ -8,7 +8,21 @@ func init() {
 	filterFuncs = []filterFunc{
 		space,
 		quote,
+		punctuation,
 	}
+}
+
+func punctuation(r rune) bool {
+	switch r {
+	case ',':
+	case '.':
+	case '!':
+	case '?':
+	case '&':
+	default:
+		return false
+	}
+	return true
 }
 
 func quote(r rune) bool {

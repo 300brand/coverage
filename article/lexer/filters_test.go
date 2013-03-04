@@ -25,6 +25,16 @@ func TestNewLines(t *testing.T) {
 	})
 }
 
+func TestPunctuation(t *testing.T) {
+	runTests(t, tests{
+		"test? test":  "testtest",
+		"test, test":  "testtest",
+		"test! test":  "testtest",
+		"test. test":  "testtest",
+		"test & test": "testtest",
+	})
+}
+
 func TestQuotes(t *testing.T) {
 	runTests(t, tests{
 		`"test`:       "test",
