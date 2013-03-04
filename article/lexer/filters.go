@@ -25,6 +25,7 @@ func space(r rune) bool {
 	case ' ':
 	case '\n':
 	case '\r':
+	case '\t':
 	default:
 		return false
 	}

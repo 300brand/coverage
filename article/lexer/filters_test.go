@@ -44,6 +44,15 @@ func TestSpaces(t *testing.T) {
 	})
 }
 
+func TestTabs(t *testing.T) {
+	runTests(t, tests{
+		"test":       "test",
+		"\ttest":     "test",
+		"test\t":     "test",
+		"test\ttest": "testtest",
+	})
+}
+
 func runTests(t *testing.T, ts tests) {
 	for s, cleaned := range ts {
 		w := GetWords([]byte(s))
