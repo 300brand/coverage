@@ -1,7 +1,6 @@
-package main
+package coverage
 
 import (
-	"fmt"
 	"sort"
 )
 
