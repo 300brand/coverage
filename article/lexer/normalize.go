@@ -2,7 +2,7 @@ package lexer
 
 // Pre-processes text to swap out certain characters for spaces or nothing
 func Normalize(in []byte) (out []byte) {
-	out = make([]byte, len(in))
+	out = make([]byte, 0, len(in))
 	for _, b := range in {
 		switch {
 		case punctuation(b) || quote(b):
