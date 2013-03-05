@@ -27,11 +27,7 @@ func hyphenation(r byte) bool {
 
 func punctuation(r byte) bool {
 	switch r {
-	case ',':
-	case '.':
-	case '!':
-	case '?':
-	case '&':
+	case ',', '.', '!', '?', '&':
 	default:
 		return false
 	}
@@ -49,10 +45,7 @@ func quote(r byte) bool {
 
 func space(r byte) bool {
 	switch r {
-	case ' ':
-	case '\n':
-	case '\r':
-	case '\t':
+	case ' ', '\n', '\r', '\t':
 	default:
 		return false
 	}
