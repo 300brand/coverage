@@ -5,15 +5,21 @@ import (
 	"github.com/rookii/paicehusk"
 )
 
-func GetWords(b []byte) (w Words) {
+var StemmingEnabled = false
+
+func GetWords(b []byte) (ws Words) {
 	n := Normalize(b)
 	for i, f := range bytes.Fields(n) {
 		s := string(f)
-		w.Add(Word{
+		w := Word{
 			Word:  s,
-			Stem:  paicehusk.DefaultRules.Stem(s),
 			Index: i,
-		})
+		}
+		// Stemming adds 10x the time to split words up
+		if StemmingEnabled {
+			w.Stem = paicehusk.DefaultRules.Stem(s)
+		}
+		ws.Add(w)
 	}
 	return
 }

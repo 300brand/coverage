@@ -4,6 +4,14 @@ import (
 	"testing"
 )
 
+// var benchmarkString comes from normalize_test.go
+
+func BenchmarkGetWords(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		GetWords(benchmarkString)
+	}
+}
+
 func TestWordStemIndex(t *testing.T) {
 	s := []byte(`
 		As open government gains favor and reaps benefits for the federal
