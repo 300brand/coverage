@@ -2,24 +2,18 @@ package lexer
 
 import (
 	"bytes"
+	"github.com/rookii/paicehusk"
 )
 
 func GetWords(b []byte) (w Words) {
-	fields := bytes.FieldsFunc(b, fieldFilter)
-	for i, f := range fields {
+	n := Normalize(b)
+	for i, f := range bytes.Fields(n) {
+		s := string(f)
 		w.Add(Word{
-			Word:  string(f),
+			Word:  s,
+			Stem:  paicehusk.DefaultRules.Stem(s),
 			Index: i,
 		})
 	}
 	return
-}
-
-func fieldFilter(r rune) bool {
-	for _, f := range filterFuncs {
-		if f(r) {
-			return true
-		}
-	}
-	return false
 }

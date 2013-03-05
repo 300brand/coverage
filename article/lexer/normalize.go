@@ -1,18 +1,31 @@
 package lexer
 
-type filterFunc func(rune) bool
-
-var filterFuncs []filterFunc
-
-func init() {
-	filterFuncs = []filterFunc{
-		space,
-		quote,
-		punctuation,
+// Pre-processes text to swap out certain characters for spaces or nothing
+func Normalize(in []byte) (out []byte) {
+	out = make([]byte, len(in))
+	for _, b := range in {
+		switch {
+		case punctuation(b) || quote(b):
+			// skip
+		case space(b) || hyphenation(b):
+			out = append(out, ' ')
+		default:
+			out = append(out, b)
+		}
 	}
+	return
 }
 
-func punctuation(r rune) bool {
+func hyphenation(r byte) bool {
+	switch r {
+	case '-':
+	default:
+		return false
+	}
+	return true
+}
+
+func punctuation(r byte) bool {
 	switch r {
 	case ',':
 	case '.':
@@ -25,7 +38,7 @@ func punctuation(r rune) bool {
 	return true
 }
 
-func quote(r rune) bool {
+func quote(r byte) bool {
 	switch r {
 	case '"':
 	default:
@@ -34,7 +47,7 @@ func quote(r rune) bool {
 	return true
 }
 
-func space(r rune) bool {
+func space(r byte) bool {
 	switch r {
 	case ' ':
 	case '\n':
