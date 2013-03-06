@@ -7,6 +7,8 @@ import (
 )
 
 var cleanFilters = filter.Filters{
+	filter.Aside,
+	filter.Form,
 	filter.Spaces,
 	filter.Head,
 	filter.Style,
