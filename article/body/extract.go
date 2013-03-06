@@ -20,8 +20,8 @@ var (
 		PBlocks,
 		BrBrBlocks,
 	}
-	xpathP     = xpath.Compile("//div[count(p) > 1]")
-	xpathBrBr  = xpath.Compile("//div[br/following-sibling::*[1][self::br]]")
+	xpathP     = xpath.Compile("//*[count(p) > 1]")
+	xpathBrBr  = xpath.Compile("//*[br/following-sibling::*[1][self::br]]")
 	reSingleNL = regexp.MustCompile("[\n]{2,}")
 )
 
@@ -48,7 +48,7 @@ func GetBody(in []byte) (b Body, err error) {
 			b.Text = []byte(content)
 		}
 	}
-	b.Text = reSingleNL.ReplaceAll(bytes.Trim(b.Text, "\n"), []byte("\n"))
+	b.Text = reSingleNL.ReplaceAll(bytes.Trim(b.Text, "\n"), []byte{'\n'})
 	return
 }
 
@@ -56,6 +56,24 @@ func PBlocks(n xml.Node) ([]xml.Node, error) {
 	return n.Search(xpathP)
 }
 
-func BrBrBlocks(n xml.Node) ([]xml.Node, error) {
-	return n.Search(xpathBrBr)
+func BrBrBlocks(n xml.Node) (nodeset []xml.Node, err error) {
+	nodeset, err = n.Search(xpathBrBr)
+	if err != nil {
+		return
+	}
+	// Sub-divs tend to be advertisements or links to other articles
+	for _, node := range nodeset {
+		removeSubDivs(node)
+	}
+	return
+}
+
+func removeSubDivs(n xml.Node) {
+	for c := n.FirstChild(); c != nil; {
+		next := c.NextSibling()
+		if c.Name() == "div" {
+			c.Remove()
+		}
+		c = next
+	}
 }
