@@ -6,6 +6,24 @@ import (
 	"testing"
 )
 
+func TestAside(t *testing.T) {
+	test := `<!DOCTYPE html>
+	<html>
+		<head></head>
+		<body>
+			<div class="aside" valid="false"></div>
+			<div valid="false">Text</div>
+			<aside valid="true">
+				<div valid="false"></div>
+			</aside>
+			<div valid="false">
+				<aside valid="true"></aside>
+			</div>
+		</body>
+	</html>`
+	testElements(t, test, Aside)
+}
+
 func TestBlockElement(t *testing.T) {
 	test := `<!DOCTYPE html>
 	<html valid="false">
@@ -70,6 +88,20 @@ func TestEmpty(t *testing.T) {
 		</body>
 	</html>`
 	testElements(t, test, Empty)
+}
+
+func TestForm(t *testing.T) {
+	test := `<!DOCTYPE html>
+	<html>
+		<head></head>
+		<body>
+			<form valid="true" action="login" method="post">
+				<input type="text">
+				<input type="password">
+			</form>
+		</body>
+	</html>`
+	testElements(t, test, Form)
 }
 
 func TestHead(t *testing.T) {

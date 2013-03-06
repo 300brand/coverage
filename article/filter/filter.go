@@ -10,6 +10,10 @@ import (
 // condition.
 type Filter func(n *html.Node) bool
 
+func Aside(n *html.Node) bool {
+	return n.Type == html.ElementNode && n.DataAtom == atom.Aside
+}
+
 func BlockElement(n *html.Node) bool {
 	if n.Type != html.ElementNode {
 		return false
@@ -48,6 +52,10 @@ func Empty(n *html.Node) bool {
 		return c == nil
 	}
 	return false
+}
+
+func Form(n *html.Node) bool {
+	return n.Type == html.ElementNode && n.DataAtom == atom.Form
 }
 
 func Head(n *html.Node) bool {
