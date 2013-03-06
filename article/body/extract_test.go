@@ -33,8 +33,9 @@ func TestAOLGov(t *testing.T) {
 
 // 340032 - Big Mac returns to SoCal as Dodgers hitting coach
 // http://www.usatoday.com/story/sports/mlb/dodgers/2012/11/07/mark-mcgwire-hired-as-dodgers-hitting-coach/1690053/
+// Updated to: http://www.usatoday.com/story/sports/mlb/dodgers/2012/11/07/mark-mcgwire-hired-as-dodgers-hitting-coach/1690053/?ajax=true
 func TestUSAToday(t *testing.T) {
-	//compareBodies(t, "USAToday")
+	compareBodies(t, "USAToday")
 }
 
 // 340038 - Greek Lawmakers Pass Austerity Deal
@@ -68,34 +69,47 @@ func TestAOLGovSurveyResults(t *testing.T) {
 }
 
 func compareBodies(t *testing.T, basename string) {
+	// Open ze file!
 	htmlIn, err := os.Open("../samples/" + basename + ".html")
 	if err != nil {
 		t.Error(err)
 		return
 	}
 	defer htmlIn.Close()
+	// Pull in ze data!
 	html, err := ioutil.ReadAll(htmlIn)
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	b, err := GetBody(html)
+	// Clean ze HTMLz!
+	clean, err := CleanHTML(html)
 	if err != nil {
 		t.Error(err)
 		return
 	}
+	// Extract ze body!
+	b, err := GetBody(clean)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	// Open ze other file! The anticpiation, it grows!
 	bodyIn, err := os.Open("../samples/" + basename + ".body")
 	if err != nil {
 		t.Error(err)
 		return
 	}
 	defer bodyIn.Close()
+	// Pull in ze other data!
 	expect, err := ioutil.ReadAll(bodyIn)
 	if err != nil {
 		t.Error(err)
 		return
 	}
+	// Trim to look pretty!
 	expect = bytes.TrimSpace(expect)
+	// Compare ze datas!
 	if string(b.Text) != string(expect) {
 		t.Error("Bodies do not match")
 		t.Logf("Expect:\n%s", expect)
