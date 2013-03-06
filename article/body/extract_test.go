@@ -25,6 +25,19 @@ func TestCPPIOnline(t *testing.T) {
 	//compareBodies(t, "CPPIOnline")
 }
 
+// http://www.medicalnewstoday.com/articles/257245.php
+// Remove <select> tags
+func TestMedicalNewsToday(t *testing.T) {
+	//compareBodies(t, "MedicalNewsToday")
+}
+
+// http://www.nytimes.com/2013/03/07/world/americas/after-chavezs-death-questions-about-future-abound-in-venezuela.html
+// http://blog.scottlowe.org/2013/03/05/technology-short-take-30/
+// http://mobileenterprise.edgl.com/how-to/The-Matrix-of-Mobile-Testing85037?rssid=Article85037
+// http://www.tmcnet.com/viewette.aspx?u=http%3a%2f%2fwww.tmcnet.com%2fusubmit%2f2013%2f03%2f06%2f6971719.htm&kw=3
+// http://www.pcmag.com/article2/0,2817,2416247,00.asp?kc=PCRSS03079TX1K0000585
+// http://www.itbusiness.ca/it/client/en/Home/buildRss.asp?cid=67
+
 // 221797 - Data.gov Expands Federal Communities, Global Impact
 // http://gov.aol.com/2012/09/26/data-gov-expands-federal-communities-global-impact/
 func TestAOLGov(t *testing.T) {
@@ -41,13 +54,13 @@ func TestUSAToday(t *testing.T) {
 // 340038 - Greek Lawmakers Pass Austerity Deal
 // http://online.wsj.com/article/SB10001424127887323894704578104832247833100.html
 func TestWallStreetJournal(t *testing.T) {
-	//compareBodies(t, "WallStreetJournal")
+	compareBodies(t, "WallStreetJournal")
 }
 
 // 340046 - Concur FY Q4 Revs Light; Profits Beat; Shrs Edge Higher
 // http://www.forbes.com/sites/ericsavitz/2012/11/07/concur-fy-q4-revs-light-profits-beat-shrs-edge-higher/
 func TestForbes(t *testing.T) {
-	//compareBodies(t, "Forbes")
+	compareBodies(t, "Forbes")
 }
 
 // 340066 - Echo360 buys LectureTools in first acquisition since funding
