@@ -18,6 +18,7 @@ var cleanFilters = filter.Filters{
 	filter.Despace,
 	filter.Empty,
 	filter.AddBlockBreaks,
+	filter.TranslateUnicode,
 }
 
 func CleanHTML(b []byte) (cleaned []byte, err error) {
