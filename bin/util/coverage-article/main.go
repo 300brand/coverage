@@ -5,7 +5,9 @@ import (
 	"flag"
 	"fmt"
 	"git.300brand.com/coverage"
+	"git.300brand.com/coverage/article/body"
 	"git.300brand.com/coverage/downloader"
+	"git.300brand.com/coverage/service"
 	"os"
 )
 
@@ -20,10 +22,16 @@ func main() {
 
 	a := coverage.NewArticle()
 	url := fixURL(flag.Arg(0))
+	services := []service.Service{
+		downloader.NewService(url),
+		body.NewService(),
+	}
 
-	if err := downloader.NewService(url).Update(a); err != nil {
-		fmt.Println(err)
-		os.Exit(2)
+	for i, s := range services {
+		if err := s.Update(a); err != nil {
+			fmt.Printf("[%d] service error: %s\n", i, err)
+			os.Exit(2)
+		}
 	}
 
 	out, err := json.MarshalIndent(a, "", "\t")
