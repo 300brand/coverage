@@ -26,8 +26,10 @@ func (a *Article) Modified() {
 	a.Times.Updated = time.Now()
 }
 
-func NewArticle() (a Article) {
-	a.ID = bson.NewObjectId()
+func NewArticle() (a *Article) {
+	a = &Article{
+		ID: bson.NewObjectId(),
+	}
 	a.Times.Added = time.Now()
 	return
 }
