@@ -11,13 +11,13 @@ type Service struct {
 	URL string
 }
 
-var _ service.Service = &Service{}
+var _ service.Service = Service{}
 
-func NewService(url string) *Service {
-	return &Service{URL: url}
+func NewService(url string) Service {
+	return Service{URL: url}
 }
 
-func (s *Service) Update(a *coverage.Article) error {
+func (s Service) Update(a *coverage.Article) error {
 	r, err := Fetch(s.URL)
 	if err != nil {
 		return err
