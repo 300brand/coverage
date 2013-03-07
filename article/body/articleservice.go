@@ -6,15 +6,15 @@ import (
 	"git.300brand.com/coverage/service"
 )
 
-type Service struct{}
+type ArticleService struct{}
 
-var _ service.Service = Service{}
+var _ service.ArticleService = ArticleService{}
 
-func NewService() Service {
-	return Service{}
+func NewArticleService() ArticleService {
+	return ArticleService{}
 }
 
-func (s Service) Update(a *coverage.Article) (err error) {
+func (s ArticleService) Update(a *coverage.Article) (err error) {
 	if a.HTML == nil {
 		return errors.New("HTML not set, did you run the downloader service?")
 	}

@@ -22,9 +22,9 @@ func main() {
 
 	a := coverage.NewArticle()
 	url := fixURL(flag.Arg(0))
-	services := []service.Service{
-		downloader.NewService(url),
-		body.NewService(),
+	services := []service.ArticleService{
+		downloader.NewArticleService(url),
+		body.NewArticleService(),
 	}
 
 	for i, s := range services {

@@ -7,17 +7,17 @@ import (
 	"time"
 )
 
-type Service struct {
+type ArticleService struct {
 	URL string
 }
 
-var _ service.Service = Service{}
+var _ service.ArticleService = ArticleService{}
 
-func NewService(url string) Service {
-	return Service{URL: url}
+func NewArticleService(url string) ArticleService {
+	return ArticleService{URL: url}
 }
 
-func (s Service) Update(a *coverage.Article) error {
+func (s ArticleService) Update(a *coverage.Article) error {
 	r, err := Fetch(s.URL)
 	if err != nil {
 		return err

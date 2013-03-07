@@ -4,6 +4,6 @@ import (
 	"git.300brand.com/coverage"
 )
 
-type Service interface {
+type ArticleService interface {
 	Update(*coverage.Article) error
 }
