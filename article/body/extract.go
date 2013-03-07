@@ -2,16 +2,12 @@ package body
 
 import (
 	"bytes"
+	"git.300brand.com/coverage"
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xml"
 	"github.com/moovweb/gokogiri/xpath"
 	"regexp"
 )
-
-type Body struct {
-	HTML []byte
-	Text []byte
-}
 
 type blockFunc func(xml.Node) ([]xml.Node, error)
 
@@ -25,7 +21,7 @@ var (
 	reSingleNL = regexp.MustCompile("[\n]{2,}")
 )
 
-func GetBody(in []byte) (b Body, err error) {
+func GetBody(in []byte) (b coverage.Body, err error) {
 	doc, err := gokogiri.ParseHtml(in)
 	defer doc.Free()
 	if err != nil {

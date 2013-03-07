@@ -1,8 +1,6 @@
 package coverage
 
 import (
-	"git.300brand.com/coverage/article/body"
-	"git.300brand.com/coverage/downloader"
 	"git.300brand.com/coverage/logger"
 	"labix.org/v2/mgo/bson"
 	"net/url"
@@ -10,11 +8,11 @@ import (
 )
 
 type Article struct {
-	ID    bson.ObjectId
+	ID    bson.ObjectId `bson:"_id"`
 	Title string
 	URL   *url.URL
 	HTML  []byte
-	Body  body.Body
+	Body  Body
 	Logs  logger.Entries
 	Times struct {
 		Added     time.Time
@@ -24,23 +22,12 @@ type Article struct {
 	}
 }
 
-func NewArticle(r *downloader.Response) (a *Article, err error) {
-	a = &Article{
-		ID: bson.NewObjectId(),
-	}
-	a.Times.Added = time.Now()
-	// Temporarily commented out - friggin huge
-	// a.HTML = r.Body
-
-	if a.URL, err = url.Parse(r.RealURL); err != nil {
-		return
-	}
-
-	if a.Body, err = body.GetBody(r.Body); err != nil {
-		return
-	}
-
+func (a *Article) Modified() {
 	a.Times.Updated = time.Now()
-	a.Times.LastCheck = time.Now()
+}
+
+func NewArticle() (a Article) {
+	a.ID = bson.NewObjectId()
+	a.Times.Added = time.Now()
 	return
 }
