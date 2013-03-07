@@ -16,7 +16,12 @@ func Fetch(url string) (r Response, err error) {
 	r.OriginalURL = url
 	r.RealURL = url
 
-	client := http.Client{
+	// Add support for the file protocol
+	transport := &http.Transport{}
+	transport.RegisterProtocol("file", http.NewFileTransport(http.Dir("/")))
+
+	client := &http.Client{
+		Transport: transport,
 		CheckRedirect: func(req *http.Request, via []*http.Request) (err error) {
 			// Add checks to remove ?rss and other params
 			r.RealURL = req.URL.String()

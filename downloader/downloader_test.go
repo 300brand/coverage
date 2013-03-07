@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 )
 
@@ -50,6 +51,30 @@ func TestDownload(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+	if string(r.Body) != Success {
+		t.Errorf("Expect: %s", Success)
+		t.Errorf("Got:    %s", r.Body)
+	}
+}
+
+func TestFileDownload(t *testing.T) {
+	path := fmt.Sprintf("%s%s%s", os.TempDir(), string(os.PathSeparator), "TestFileDownload")
+	f, err := os.Create(path)
+	if err != nil {
+		t.Error(err)
+	}
+	defer f.Close()
+	defer os.Remove(path)
+
+	f.WriteString(Success)
+	f.Close()
+
+	pathURL := "file://" + path
+	r, err := Fetch(pathURL)
+	if err != nil {
+		t.Error(err)
+	}
+
 	if string(r.Body) != Success {
 		t.Errorf("Expect: %s", Success)
 		t.Errorf("Got:    %s", r.Body)
