@@ -19,19 +19,7 @@ func main() {
 	flag.Parse()
 
 	a := coverage.NewArticle()
-
-	url := flag.Arg(0)
-	if isFile {
-		if url[0] != '/' {
-			wd, err := os.Getwd()
-			if err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-			url = fmt.Sprintf("%s%s%s", wd, string(os.PathSeparator), url)
-		}
-		url = "file://" + url
-	}
+	url := fixURL(flag.Arg(0))
 
 	if err := downloader.NewService(url).Update(a); err != nil {
 		fmt.Println(err)
@@ -44,4 +32,19 @@ func main() {
 		os.Exit(3)
 	}
 	fmt.Printf("%s\n", out)
+}
+
+func fixURL(url string) string {
+	if isFile {
+		if url[0] != '/' {
+			wd, err := os.Getwd()
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+			url = fmt.Sprintf("%s%s%s", wd, string(os.PathSeparator), url)
+		}
+		url = "file://" + url
+	}
+	return url
 }
