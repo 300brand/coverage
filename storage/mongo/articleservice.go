@@ -5,15 +5,16 @@ import (
 	"git.300brand.com/coverage/service"
 )
 
-type ArticleService struct{}
+type ArticleService struct {
+	m *Mongo
+}
 
 var _ service.ArticleService = &ArticleService{}
 
-func NewArticleService() *ArticleService {
-	return &ArticleService{}
+func NewArticleService(m *Mongo) *ArticleService {
+	return &ArticleService{m: m}
 }
 
 func (s *ArticleService) Update(a *coverage.Article) error {
-
-	return nil
+	return s.m.UpdateArticle(a)
 }
