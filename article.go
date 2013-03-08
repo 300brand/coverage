@@ -22,11 +22,6 @@ type Article struct {
 	}
 }
 
-type ArticleFile struct {
-	Name string
-	Data []byte
-}
-
 func NewArticle() (a *Article) {
 	a = &Article{
 		ID: bson.NewObjectId(),
@@ -35,19 +30,22 @@ func NewArticle() (a *Article) {
 	return
 }
 
-func (a *Article) Files() []ArticleFile {
-	return []ArticleFile{
+func (a *Article) Files() []File {
+	return []File{
 		{
-			Name: a.ID.Hex() + ".html",
-			Data: a.HTML,
+			Name:        a.ID.Hex() + ".html",
+			ContentType: "text/html",
+			Data:        a.HTML,
 		},
 		{
-			Name: a.ID.Hex() + ".body.html",
-			Data: a.Body.HTML,
+			Name:        a.ID.Hex() + ".body.html",
+			ContentType: "text/html",
+			Data:        a.Body.HTML,
 		},
 		{
-			Name: a.ID.Hex() + ".body.text",
-			Data: a.Body.Text,
+			Name:        a.ID.Hex() + ".body.text",
+			ContentType: "text/plain",
+			Data:        a.Body.Text,
 		},
 	}
 }
