@@ -36,6 +36,12 @@ func (m *Mongo) Connect() (err error) {
 	return
 }
 
+func (m *Mongo) GetArticle(query interface{}) (a *coverage.Article, err error) {
+	a = &coverage.Article{}
+	err = m.db.C(ArticleCollection).Find(query).One(a)
+	return
+}
+
 func (m *Mongo) UpdateArticle(a *coverage.Article) (err error) {
 	c := m.db.C(ArticleCollection)
 	if _, err = c.UpsertId(a.ID, a); err != nil {
