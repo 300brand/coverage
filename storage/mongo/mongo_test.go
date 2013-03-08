@@ -97,6 +97,7 @@ func TestNoDupes(t *testing.T) {
 }
 
 func cleanup(m *Mongo) {
+	m.db.DropDatabase()
 	m.Close()
 }
 
@@ -106,6 +107,5 @@ func connect(t *testing.T) (m *Mongo) {
 		t.Error(err)
 		return
 	}
-	m.db.DropDatabase()
 	return
 }
