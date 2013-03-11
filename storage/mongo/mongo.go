@@ -13,17 +13,7 @@ type Mongo struct {
 	s      *mgo.Session
 }
 
-var indexes = map[string][]mgo.Index{
-	ArticleCollection: {
-		mgo.Index{
-			Key:        []string{"url"},
-			Background: true,
-			DropDups:   true,
-			Sparse:     false,
-			Unique:     true,
-		},
-	},
-}
+var indexes = map[string][]mgo.Index{}
 
 func New(url, dbName string) *Mongo {
 	return &Mongo{

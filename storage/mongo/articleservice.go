@@ -3,6 +3,7 @@ package mongo
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
+	"labix.org/v2/mgo"
 )
 
 type ArticleService struct {
@@ -12,6 +13,18 @@ type ArticleService struct {
 const ArticleCollection = "Articles"
 
 var _ service.ArticleService = &ArticleService{}
+
+func init() {
+	indexes[ArticleCollection] = []mgo.Index{
+		mgo.Index{
+			Key:        []string{"url"},
+			Background: true,
+			DropDups:   true,
+			Sparse:     false,
+			Unique:     true,
+		},
+	}
+}
 
 func NewArticleService(m *Mongo) *ArticleService {
 	return &ArticleService{m: m}
