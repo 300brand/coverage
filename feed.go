@@ -8,14 +8,12 @@ import (
 )
 
 type Feed struct {
-	ID       bson.ObjectId
-	Title    string
-	URL      url.URL
-	Articles []Article `bson:-`
-	Logs     logger.Entries
-	Times    struct {
-		Added     time.Time
-		Updated   time.Time
-		LastCheck time.Time
-	}
+	ID        bson.ObjectId
+	Title     string
+	URL       url.URL
+	Articles  []Article `bson:-`
+	Logs      logger.Entries
+	Added     time.Time
+	Updated   time.Time
+	LastCheck time.Time
 }

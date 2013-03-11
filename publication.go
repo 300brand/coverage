@@ -8,16 +8,14 @@ import (
 )
 
 type Publication struct {
-	ID       bson.ObjectId
-	Title    string
-	Homepage url.URL
-	TLD      string
-	Feeds    []Feed
-	FeedIDs  []bson.ObjectId
-	Logs     logger.Entries
-	Times    struct {
-		Added     time.Time
-		Updated   time.Time
-		LastCheck time.Time
-	}
+	ID        bson.ObjectId
+	Title     string
+	Homepage  url.URL
+	TLD       string
+	Feeds     []Feed
+	FeedIDs   []bson.ObjectId
+	Logs      logger.Entries
+	Added     time.Time
+	Updated   time.Time
+	LastCheck time.Time
 }

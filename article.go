@@ -8,25 +8,23 @@ import (
 )
 
 type Article struct {
-	ID    bson.ObjectId `bson:"_id"`
-	Title string
-	URL   *url.URL
-	HTML  []byte `bson:"-"`
-	Body  Body   `bson:"-"`
-	Logs  logger.Entries
-	Times struct {
-		Added     time.Time
-		Updated   time.Time
-		LastCheck time.Time
-		Published time.Time
-	}
+	ID        bson.ObjectId `bson:"_id"`
+	Title     string
+	URL       *url.URL
+	HTML      []byte `bson:"-"`
+	Body      Body   `bson:"-"`
+	Logs      logger.Entries
+	Added     time.Time
+	Updated   time.Time
+	LastCheck time.Time
+	Published time.Time
 }
 
 func NewArticle() (a *Article) {
 	a = &Article{
 		ID: bson.NewObjectId(),
 	}
-	a.Times.Added = time.Now()
+	a.Added = time.Now()
 	return
 }
 
@@ -51,5 +49,5 @@ func (a *Article) Files() []File {
 }
 
 func (a *Article) Modified() {
-	a.Times.Updated = time.Now()
+	a.Updated = time.Now()
 }
