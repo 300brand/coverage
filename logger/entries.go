@@ -1,11 +1,43 @@
 package logger
 
 import (
-	"code.google.com/p/log4go"
+	"fmt"
+	"time"
 )
 
-type LogEntries []log4go.LogRecord
+type Entries []Entry
 
-func (es *LogEntries) Add(r log4go.LogRecord) {
-	*es = append(*es, r)
+type Entry struct {
+	Time    time.Time
+	Level   Level
+	Message string
+}
+
+func (es *Entries) Add(e *Entry) {
+	*es = append(*es, *e)
+}
+
+func (es *Entries) Debug(v ...interface{}) {
+	es.WriteEntry(&Entry{
+		Time:  time.Now(),
+		Level: Ldebug,
+	}, v...)
+}
+
+func (es *Entries) Error(err error) error {
+	es.WriteEntry(&Entry{
+		Time:  time.Now(),
+		Level: Lerror,
+	}, err)
+	return err
+}
+
+func (es *Entries) WriteEntry(e *Entry, v ...interface{}) {
+	switch val := v[0].(type) {
+	case string:
+		e.Message = fmt.Sprintf(val, v[1:]...)
+	default:
+		e.Message = fmt.Sprintf("%+v", v)
+	}
+	es.Add(e)
 }
