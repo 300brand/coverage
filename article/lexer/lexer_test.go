@@ -21,4 +21,5 @@ func TestWordStemIndex(t *testing.T) {
 	for _, w := range GetWords(s) {
 		t.Logf("%2d %-14s %s", w.Index, w.Word, w.Stem)
 	}
+	t.Error("TODO")
 }
