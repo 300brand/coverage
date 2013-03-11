@@ -5,7 +5,6 @@ import (
 	"labix.org/v2/mgo/bson"
 	"net/url"
 	"testing"
-	"time"
 )
 
 var (
@@ -26,7 +25,7 @@ func TestArticleSave(t *testing.T) {
 	in := coverage.NewArticle()
 	in.Title = "Test Title"
 	in.URL, _ = url.Parse("http://www.google.com/search?q=search")
-	in.Times.Updated = time.Now()
+	in.Modified()
 	m.UpdateArticle(in)
 
 	out, err := m.GetArticle(bson.M{"_id": in.ID})

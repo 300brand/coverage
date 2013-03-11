@@ -22,7 +22,7 @@ func (s ArticleService) Update(a *coverage.Article) error {
 	if err != nil {
 		return err
 	}
-	a.Times.LastCheck = time.Now()
+	a.LastCheck = time.Now()
 	a.HTML = r.Body
 	if a.URL, err = url.Parse(r.RealURL); err != nil {
 		return err
