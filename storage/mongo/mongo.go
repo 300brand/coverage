@@ -6,16 +6,11 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-const (
-	ArticleCollection = "Articles"
-)
-
 type Mongo struct {
-	DBName    string
-	URL       string
-	db        *mgo.Database
-	s         *mgo.Session
-	cArticles *mgo.Collection
+	DBName string
+	URL    string
+	db     *mgo.Database
+	s      *mgo.Session
 }
 
 var indexes = map[string][]mgo.Index{
@@ -47,7 +42,6 @@ func (m *Mongo) Connect() (err error) {
 		return
 	}
 	m.db = m.s.DB(m.DBName)
-	m.cArticles = m.db.C(ArticleCollection)
 	err = m.EnsureIndexes()
 	return
 }
@@ -58,25 +52,6 @@ func (m *Mongo) EnsureIndexes() (err error) {
 			if err = m.db.C(name).EnsureIndex(index); err != nil {
 				return
 			}
-		}
-	}
-	return
-}
-
-func (m *Mongo) GetArticle(query interface{}) (a *coverage.Article, err error) {
-	a = &coverage.Article{}
-	err = m.cArticles.Find(query).One(a)
-	return
-}
-
-func (m *Mongo) UpdateArticle(a *coverage.Article) (err error) {
-	_, err = m.cArticles.UpsertId(a.ID, a)
-	if err != nil {
-		return
-	}
-	for _, f := range a.Files() {
-		if err = m.storeFile(ArticleCollection, &f); err != nil {
-			return
 		}
 	}
 	return
