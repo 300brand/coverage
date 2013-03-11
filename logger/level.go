@@ -3,7 +3,7 @@ package logger
 type Level int
 
 const (
-	Ldebug Level = iota << 1
+	Ldebug Level = 1 << iota
 	Lerror
 )
 
