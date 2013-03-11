@@ -27,6 +27,13 @@ func (es *Entries) Error(err error) error {
 	return err
 }
 
+func (es *Entries) Service(v ...interface{}) {
+	es.WriteEntry(&Entry{
+		Time:  time.Now(),
+		Level: Lservice,
+	}, v...)
+}
+
 func (es *Entries) WriteEntry(e *Entry, v ...interface{}) {
 	switch val := v[0].(type) {
 	case string:

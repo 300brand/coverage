@@ -15,11 +15,12 @@ func NewArticleService() ArticleService {
 }
 
 func (s ArticleService) Update(a *coverage.Article) (err error) {
+	a.Log.Service("body.ArticleService")
 	if a.HTML == nil {
-		return errors.New("HTML not set, did you run the downloader service?")
+		return a.Log.Error(errors.New("HTML not set, did you run the downloader service?"))
 	}
 	if a.Body, err = GetBody(a.HTML); err != nil {
-		return
+		return a.Log.Error(err)
 	}
 	a.Modified()
 	return

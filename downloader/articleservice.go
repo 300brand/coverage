@@ -18,14 +18,15 @@ func NewArticleService(url string) ArticleService {
 }
 
 func (s ArticleService) Update(a *coverage.Article) error {
+	a.Log.Service("downloader.ArticleService")
 	r, err := Fetch(s.URL)
 	if err != nil {
-		return err
+		return a.Log.Error(err)
 	}
 	a.LastCheck = time.Now()
 	a.HTML = r.Body
 	if a.URL, err = url.Parse(r.RealURL); err != nil {
-		return err
+		return a.Log.Error(err)
 	}
 	a.Modified()
 	return nil

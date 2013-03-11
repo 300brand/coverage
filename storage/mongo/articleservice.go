@@ -16,5 +16,6 @@ func NewArticleService(m *Mongo) *ArticleService {
 }
 
 func (s *ArticleService) Update(a *coverage.Article) error {
+	a.Log.Service("mongo.ArticleService")
 	return s.m.UpdateArticle(a)
 }
