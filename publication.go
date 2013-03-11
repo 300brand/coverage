@@ -8,14 +8,26 @@ import (
 )
 
 type Publication struct {
-	ID        bson.ObjectId
+	ID        bson.ObjectId `bson:"_id"`
 	Title     string
-	Homepage  url.URL
-	TLD       string
+	URL       *url.URL
 	Feeds     []Feed
-	FeedIDs   []bson.ObjectId
 	Log       logger.Entries
 	Added     time.Time
 	Updated   time.Time
 	LastCheck time.Time
+}
+
+func NewPublication() (p *Publication) {
+	p = &Publication{
+		ID:    bson.NewObjectId(),
+		Added: time.Now(),
+	}
+	p.Log.Debug("Created: %s", p.ID.Hex())
+	return
+}
+
+func (p *Publication) AddFeed(f *Feed) {
+	p.Feeds = append(p.Feeds, *f)
+	p.Log.Debug("Added Feed: %s", f.ID.Hex())
 }
