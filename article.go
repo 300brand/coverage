@@ -23,9 +23,9 @@ type Article struct {
 
 func NewArticle() (a *Article) {
 	a = &Article{
-		ID: bson.NewObjectId(),
+		ID:    bson.NewObjectId(),
+		Added: time.Now(),
 	}
-	a.Added = time.Now()
 	a.Log.Debug("Created: %s", a.ID.Hex())
 	return
 }
