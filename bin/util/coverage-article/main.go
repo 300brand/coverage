@@ -8,13 +8,19 @@ import (
 	"git.300brand.com/coverage/article/body"
 	"git.300brand.com/coverage/downloader"
 	"git.300brand.com/coverage/service"
+	"git.300brand.com/coverage/storage/mongo"
+	"labix.org/v2/mgo/bson"
 	"os"
 )
 
-var isFile bool
+var (
+	isFile bool
+	feedId string
+)
 
 func init() {
 	flag.BoolVar(&isFile, "f", false, "Argument is a file instead of URL")
+	flag.StringVar(&feedId, "feedId", "", "If supplied, saves article to the database under the supplied Feed ID")
 }
 
 func main() {
@@ -25,6 +31,14 @@ func main() {
 	services := []service.ArticleService{
 		downloader.NewArticleService(url),
 		body.NewArticleService(),
+	}
+
+	if feedId != "" {
+		m := mongo.New("localhost", "Coverage")
+		m.Connect()
+		defer m.Close()
+		services = append(services, mongo.NewArticleService(m))
+		a.FeedId = bson.ObjectIdHex(feedId)
 	}
 
 	for i, s := range services {
