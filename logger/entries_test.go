@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"bytes"
 	"errors"
 	"testing"
 )
@@ -8,7 +9,7 @@ import (
 func TestError(t *testing.T) {
 	e := Entries{}
 	e.Debug(errors.New("Test Error"))
-	if msg := e[0].Message; msg != "[Test Error]" {
+	if msg := e[0].Message; msg != "Test Error" {
 		t.Error("Invalid message:", msg)
 	}
 }
@@ -24,6 +25,18 @@ func TestErrorPassthru(t *testing.T) {
 		t.Error("Invalid error returned")
 	}
 
+}
+
+func TestIOLogging(t *testing.T) {
+	w := &bytes.Buffer{}
+	EnableLogging(w)
+	e := Entries{}
+	e.Debug("Test")
+	e.Error(errors.New("Test Error"))
+	if w.String() == "" {
+		t.Error("Empty buffer returned")
+	}
+	DisableLogging()
 }
 
 func TestLength1(t *testing.T) {
