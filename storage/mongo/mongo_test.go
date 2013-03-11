@@ -101,6 +101,9 @@ func cleanup(m *Mongo) {
 }
 
 func connect(t *testing.T) (m *Mongo) {
+	if testing.Short() {
+		t.Skip("Short tests running")
+	}
 	m = New(dbURL, dbName)
 	if err := m.Connect(); err != nil {
 		t.Error(err)
