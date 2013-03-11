@@ -1,7 +1,7 @@
 package coverage
 
 import (
-	"git.300brand.com/coverage/logger"
+	. "git.300brand.com/coverage/logger"
 	"labix.org/v2/mgo/bson"
 	"net/url"
 	"time"
@@ -13,7 +13,7 @@ type Article struct {
 	URL       *url.URL
 	HTML      []byte `bson:"-"`
 	Body      Body   `bson:"-"`
-	Logs      logger.Entries
+	Logs      LogEntries
 	Added     time.Time
 	Updated   time.Time
 	LastCheck time.Time

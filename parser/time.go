@@ -2,7 +2,6 @@ package parser
 
 import (
 	"errors"
-	"git.300brand.com/coverage/logger"
 	"time"
 )
 
@@ -49,7 +48,7 @@ func (t Time) String() string {
 func (t Time) Time() (ts time.Time) {
 	ts, err := t.Parse()
 	if err != nil {
-		logger.Warn(err)
+		//logger.Warn(err)
 	}
 	return
 }

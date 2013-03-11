@@ -2,7 +2,7 @@ package download
 
 import (
 	"git.300brand.com/coverage/downloader"
-	"git.300brand.com/coverage/logger"
+	//"git.300brand.com/coverage/logger"
 	//"github.com/bketelsen/skynet"
 	"errors"
 	"time"
@@ -32,7 +32,7 @@ func downloadFeed(req *FeedRequest) (downloader.Response, error) {
 	}()
 	select {
 	case <-time.After(req.Timeout):
-		logger.Warn("DownloadService.DownloadFeed: Timeout reached when downloading ", req.URL)
+		//logger.Warn("DownloadService.DownloadFeed: Timeout reached when downloading ", req.URL)
 		return downloader.Response{}, errors.New("Timeout reached")
 	case p := <-ch:
 		return p.Response, p.error

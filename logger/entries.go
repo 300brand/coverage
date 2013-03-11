@@ -4,8 +4,8 @@ import (
 	"code.google.com/p/log4go"
 )
 
-type Entries []log4go.LogRecord
+type LogEntries []log4go.LogRecord
 
-func (es *Entries) Add(r log4go.LogRecord) {
+func (es *LogEntries) Add(r log4go.LogRecord) {
 	*es = append(*es, r)
 }
