@@ -15,15 +15,7 @@ const PublicationCollection = "Publications"
 var _ service.PublicationService = &PublicationService{}
 
 func init() {
-	indexes[PublicationCollection] = []mgo.Index{
-		mgo.Index{
-			Key:        []string{"url"},
-			Background: true,
-			DropDups:   true,
-			Sparse:     false,
-			Unique:     true,
-		},
-	}
+	indexes[PublicationCollection] = []mgo.Index{}
 }
 
 func NewPublicationService(m *Mongo) *PublicationService {
