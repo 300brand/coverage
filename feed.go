@@ -26,6 +26,16 @@ func NewFeed() (f *Feed) {
 	return
 }
 
+func (f *Feed) Files() []File {
+	return []File{
+		{
+			Name:        f.ID.Hex() + ".xml",
+			ContentType: "text/xml",
+			Data:        f.Content,
+		},
+	}
+}
+
 func (f *Feed) Downloaded() {
 	f.LastDownload = time.Now()
 }
