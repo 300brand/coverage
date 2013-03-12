@@ -69,12 +69,15 @@ func main() {
 		p.Title = pub.Title
 		if p.URL, err = url.Parse(pub.URL); err != nil {
 			log.Println(err)
+			continue
 		}
 		for _, feedURL := range pub.Feeds {
 			f := coverage.NewFeed()
 			if f.URL, err = url.Parse(feedURL); err != nil {
-				p.AddFeed(f)
+				log.Println(err)
+				continue
 			}
+			p.AddFeed(f)
 			if err = feedService.Update(f); err != nil {
 				log.Println(err)
 			}
