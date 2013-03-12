@@ -19,14 +19,11 @@ type Pub struct {
 	Feeds []string
 }
 
-var (
-	dbHost = "localhost"
-	dbName = "Coverage"
-)
+var dbHost, dbName string
 
 func init() {
-	flag.StringVar(&dbHost, "dbHost", dbHost, "Override MongoDB host")
-	flag.StringVar(&dbName, "dbName", dbName, "Override MongoDB database")
+	flag.StringVar(&dbHost, "dbHost", "localhost", "Override MongoDB host")
+	flag.StringVar(&dbName, "dbName", "Coverage", "Override MongoDB database")
 }
 
 func main() {
