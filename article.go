@@ -9,7 +9,7 @@ import (
 
 type Article struct {
 	ID        bson.ObjectId `bson:"_id"`
-	FeedId    bson.ObjectId
+	FeedId    bson.ObjectId `bson:",omitempty"`
 	Title     string
 	URL       *url.URL
 	HTML      []byte `bson:"-"`
