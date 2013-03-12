@@ -8,13 +8,13 @@ import (
 )
 
 type Feed struct {
-	ID        bson.ObjectId `bson:"_id"`
-	URL       *url.URL
-	Content   []byte `bson:"-"`
-	Log       logger.Entries
-	Added     time.Time
-	Updated   time.Time
-	LastCheck time.Time
+	ID           bson.ObjectId `bson:"_id"`
+	URL          *url.URL
+	Content      []byte `bson:"-"`
+	Log          logger.Entries
+	Added        time.Time
+	Updated      time.Time
+	LastDownload time.Time
 }
 
 func NewFeed() (f *Feed) {
@@ -24,4 +24,8 @@ func NewFeed() (f *Feed) {
 	}
 	f.Log.Debug("Created: %s", f.ID.Hex())
 	return
+}
+
+func (f *Feed) Downloaded() {
+	f.LastDownload = time.Now()
 }

@@ -3,8 +3,6 @@ package downloader
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
-	"net/url"
-	"time"
 )
 
 type FeedService struct {
@@ -22,6 +20,7 @@ func (s FeedService) Update(f *coverage.Feed) error {
 	if err != nil {
 		return f.Log.Error(err)
 	}
+	f.Content = r.Body
 	f.Downloaded()
 	return nil
 }
