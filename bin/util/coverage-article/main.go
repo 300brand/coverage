@@ -10,6 +10,7 @@ import (
 	"git.300brand.com/coverage/service"
 	"git.300brand.com/coverage/storage/mongo"
 	"labix.org/v2/mgo/bson"
+	"net/url"
 	"os"
 )
 
@@ -27,9 +28,10 @@ func main() {
 	flag.Parse()
 
 	a := coverage.NewArticle()
-	url := fixURL(flag.Arg(0))
+	a.URL = fixURL(flag.Arg(0))
+
 	services := []service.ArticleService{
-		downloader.NewArticleService(url),
+		downloader.NewArticleService(),
 		body.NewArticleService(),
 	}
 
@@ -56,17 +58,22 @@ func main() {
 	fmt.Printf("%s\n", out)
 }
 
-func fixURL(url string) string {
+func fixURL(s string) *url.URL {
 	if isFile {
-		if url[0] != '/' {
+		if s[0] != '/' {
 			wd, err := os.Getwd()
 			if err != nil {
 				fmt.Println(err)
 				os.Exit(1)
 			}
-			url = fmt.Sprintf("%s%s%s", wd, string(os.PathSeparator), url)
+			s = fmt.Sprintf("%s%s%s", wd, string(os.PathSeparator), s)
 		}
-		url = "file://" + url
+		s = "file://" + s
 	}
-	return url
+	u, err := url.Parse(s)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(2)
+	}
+	return u
 }

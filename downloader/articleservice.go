@@ -8,25 +8,27 @@ import (
 )
 
 type ArticleService struct {
-	URL string
 }
 
 var _ service.ArticleService = ArticleService{}
 
-func NewArticleService(url string) ArticleService {
-	return ArticleService{URL: url}
+func NewArticleService() ArticleService {
+	return ArticleService{}
 }
 
 func (s ArticleService) Update(a *coverage.Article) error {
 	a.Log.Service("downloader.ArticleService")
-	r, err := Fetch(s.URL)
+	r, err := Fetch(a.URL.String())
 	if err != nil {
 		return a.Log.Error(err)
 	}
 	a.LastCheck = time.Now()
 	a.HTML = r.Body
-	if a.URL, err = url.Parse(r.RealURL); err != nil {
-		return a.Log.Error(err)
+	if a.URL.String() != r.RealURL {
+		a.Log.Debug("Updating URL from [%s] to [%s]", a.URL.String(), r.RealURL)
+		if a.URL, err = url.Parse(r.RealURL); err != nil {
+			return a.Log.Error(err)
+		}
 	}
 	a.Modified()
 	return nil
