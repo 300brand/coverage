@@ -11,9 +11,9 @@ func TestArticleService(t *testing.T) {
 	s := NewArticleService()
 	a := coverage.NewArticle()
 	cwd, _ := os.Getwd()
-	a.URL, _ = url.Parse("file://" + cwd + "/../article/samples/AOLGov.html")
+	a.URL, _ = url.Parse("file://" + cwd + "/sample-download.txt")
 	s.Update(a)
-	if len(a.HTML) != 60539 {
-		t.Error("URL not downloaded properly")
+	if len(a.HTML) != 447 {
+		t.Errorf("URL not downloaded properly - %d bytes", len(a.HTML))
 	}
 }

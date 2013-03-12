@@ -5,8 +5,7 @@ import (
 	"git.300brand.com/coverage/service"
 )
 
-type FeedService struct {
-}
+type FeedService struct{}
 
 var _ service.FeedService = FeedService{}
 
