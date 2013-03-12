@@ -1,6 +1,7 @@
 package coverage
 
 import (
+	"fmt"
 	"git.300brand.com/coverage/logger"
 	"labix.org/v2/mgo/bson"
 	"net/url"
@@ -27,7 +28,15 @@ func NewPublication() (p *Publication) {
 	return
 }
 
-func (p *Publication) AddFeed(f *Feed) {
+func (p *Publication) AddFeed(f *Feed) error {
+	url := f.URL.String()
+	idHex := f.ID.Hex()
+	for _, feed := range p.Feeds {
+		if idHex == feed.ID.Hex() || url == feed.URL.String() {
+			return p.Log.Error(fmt.Errorf("Duplicate feed: %s [%s]", idHex, url))
+		}
+	}
 	p.Feeds = append(p.Feeds, *f)
-	p.Log.Debug("Added Feed: %s", f.ID.Hex())
+	p.Log.Debug("Added Feed: %s [%s]", idHex, url)
+	return nil
 }
