@@ -47,7 +47,6 @@ func (m *Mongo) GetFeed(query interface{}) (f *coverage.Feed, err error) {
 }
 
 func (m *Mongo) UpdateFeed(f *coverage.Feed) (err error) {
-	f.Log.Debug("mongo.UpdateFeed")
 	_, err = m.db.C(FeedCollection).UpsertId(f.ID, f)
 	if err != nil {
 		return

@@ -34,7 +34,6 @@ func (m *Mongo) GetPublication(query interface{}) (p *coverage.Publication, err 
 }
 
 func (m *Mongo) UpdatePublication(p *coverage.Publication) (err error) {
-	p.Log.Debug("mongo.UpdatePublication")
 	_, err = m.db.C(PublicationCollection).UpsertId(p.ID, p)
 	return
 }

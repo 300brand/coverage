@@ -49,7 +49,6 @@ func (m *Mongo) GetArticle(query interface{}) (a *coverage.Article, err error) {
 }
 
 func (m *Mongo) UpdateArticle(a *coverage.Article) (err error) {
-	a.Log.Debug("mongo.UpdateArticle")
 	_, err = m.db.C(ArticleCollection).UpsertId(a.ID, a)
 	if err != nil {
 		return
