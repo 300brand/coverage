@@ -54,8 +54,18 @@ func Empty(n *html.Node) bool {
 	return false
 }
 
-func Form(n *html.Node) bool {
-	return n.Type == html.ElementNode && n.DataAtom == atom.Form
+func Input(n *html.Node) bool {
+	if n.Type != html.ElementNode {
+		return false
+	}
+	switch n.DataAtom {
+	case atom.Input:
+	case atom.Select:
+	case atom.Textarea:
+	default:
+		return false
+	}
+	return true
 }
 
 func Head(n *html.Node) bool {

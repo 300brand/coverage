@@ -90,23 +90,28 @@ func TestEmpty(t *testing.T) {
 	testElements(t, test, Empty)
 }
 
-func TestForm(t *testing.T) {
+func TestHead(t *testing.T) {
+	test := `<!DOCTYPE html><html><head></head><body></body></html>`
+	testElements(t, test, Head)
+}
+
+func TestInput(t *testing.T) {
 	test := `<!DOCTYPE html>
 	<html>
 		<head></head>
 		<body>
-			<form valid="true" action="login" method="post">
-				<input type="text">
-				<input type="password">
+			<form valid="false" action="login" method="post">
+				<input type="text" valid="true">
+				<input type="password" valid="true">
+				<select valid="true">
+					<option>A</option>
+					<option>B</option>
+				</select>
+				<textarea valid="true"></textarea>
 			</form>
 		</body>
 	</html>`
-	testElements(t, test, Form)
-}
-
-func TestHead(t *testing.T) {
-	test := `<!DOCTYPE html><html><head></head><body></body></html>`
-	testElements(t, test, Head)
+	testElements(t, test, Input)
 }
 
 func TestScript(t *testing.T) {
