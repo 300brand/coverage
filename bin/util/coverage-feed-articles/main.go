@@ -3,9 +3,11 @@ package main
 import (
 	"flag"
 	"git.300brand.com/coverage/article/body"
+	"git.300brand.com/coverage/article/lexer"
 	"git.300brand.com/coverage/downloader"
 	"git.300brand.com/coverage/logger"
 	"git.300brand.com/coverage/parser"
+	"git.300brand.com/coverage/service"
 	"git.300brand.com/coverage/storage/mongo"
 	"labix.org/v2/mgo/bson"
 	"log"
@@ -60,15 +62,18 @@ func main() {
 	log.Println("Building article list")
 	parser.NewFeedService().Update(feed)
 
-	das := downloader.NewArticleService()
-	bas := body.NewArticleService()
-	mas := mongo.NewArticleService(m)
+	services := []service.ArticleService{
+		downloader.NewArticleService(),
+		body.NewArticleService(),
+		lexer.NewArticleService(),
+		mongo.NewArticleService(m),
+	}
 	for _, a := range feed.Articles {
 		log.Printf("Processing %s", a.URL)
-		das.Update(a)
-		bas.Update(a)
-		if err := mas.Update(a); err != nil {
-			log.Fatal(err)
+		for _, s := range services {
+			if err := s.Update(a); err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 
