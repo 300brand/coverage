@@ -29,13 +29,15 @@ func NewFeed() (f *Feed) {
 }
 
 func (f *Feed) AddURL(u *url.URL) bool {
-	s := u.String()
+	urlCopy := *u
+
+	s := urlCopy.String()
 	for _, v := range f.URLs {
 		if v.String() == s {
 			return false
 		}
 	}
-	f.URLs = append(f.URLs, u)
+	f.URLs = append(f.URLs, &urlCopy)
 	return true
 }
 
