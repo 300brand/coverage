@@ -125,3 +125,19 @@ func TestResponseCode(t *testing.T) {
 		}
 	}
 }
+
+func TestCleanURL(t *testing.T) {
+	s := server()
+	defer s.Close()
+
+	u := fmt.Sprintf("%s/page?wprss=rss_opinions", s.URL)
+	r, err := Fetch(u)
+	if err != nil {
+		t.Error(err)
+	}
+	expect := fmt.Sprintf("%s/page", s.URL)
+	if r.RealURL != expect {
+		t.Errorf("Expect: %s", expect)
+		t.Errorf("Got:    %s", r.RealURL)
+	}
+}
