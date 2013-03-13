@@ -23,6 +23,13 @@ func init() {
 			Sparse:     false,
 			Unique:     true,
 		},
+		mgo.Index{
+			Key:        []string{"words.word"},
+			Background: true,
+			DropDups:   false,
+			Sparse:     false,
+			Unique:     false,
+		},
 	}
 }
 
