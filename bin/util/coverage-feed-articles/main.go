@@ -52,7 +52,7 @@ func main() {
 		log.Fatalf("Could not find feed with ID: %s", config.ID.Hex())
 	}
 
-	log.Println("Downloading new feed")
+	log.Printf("Downloading feed %s\n", feed.ID.Hex())
 	downloader.NewFeedService().Update(feed)
 
 	log.Println("Saving data")
@@ -72,7 +72,8 @@ func main() {
 		log.Printf("Processing %s", a.URL)
 		for _, s := range services {
 			if err := s.Update(a); err != nil {
-				log.Fatal(err)
+				log.Printf("ERROR [%s] %s\n", a.ID.Hex(), err)
+				break
 			}
 		}
 	}
