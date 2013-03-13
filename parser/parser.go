@@ -2,6 +2,7 @@ package parser
 
 import (
 	"errors"
+	"git.300brand.com/coverage/parser/decoder"
 )
 
 func Normalize(data []byte, n Normalizer) (err error) {
@@ -12,7 +13,7 @@ func Normalize(data []byte, n Normalizer) (err error) {
 	return n.Normalize(d)
 }
 
-func Parse(data []byte) (d Decoder, err error) {
+func Parse(data []byte) (d decoder.Decoder, err error) {
 	t, err := Type(data)
 	if err != nil {
 		return
@@ -20,12 +21,12 @@ func Parse(data []byte) (d Decoder, err error) {
 	return ParseType(data, t)
 }
 
-func ParseType(data []byte, t string) (d Decoder, err error) {
-	if _, ok := decoders[t]; !ok {
+func ParseType(data []byte, t string) (d decoder.Decoder, err error) {
+	if _, ok := decoder.Decoders[t]; !ok {
 		errors.New("Unknown decoder type: " + t)
 		return
 	}
-	d = decoders[t].New()
+	d = decoder.Decoders[t].New()
 	err = d.Decode(data)
 	return
 }
@@ -33,7 +34,7 @@ func ParseType(data []byte, t string) (d Decoder, err error) {
 // Tests the feed against all registered decoders to determine the appropriate
 // decoder to use.
 func Type(data []byte) (t string, err error) {
-	for t, d := range decoders {
+	for t, d := range decoder.Decoders {
 		if err = d.Decode(data); err == nil {
 			return t, nil
 		}

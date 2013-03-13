@@ -3,8 +3,8 @@ package normalizer
 import (
 	"errors"
 	"fmt"
-	"git.300brand.com/coverage/parser"
 	"git.300brand.com/coverage/parser/atom"
+	"git.300brand.com/coverage/parser/decoder"
 	"git.300brand.com/coverage/parser/rdf"
 	"git.300brand.com/coverage/parser/rss"
 	"net/url"
@@ -22,7 +22,7 @@ type Article struct {
 	URL       url.URL
 }
 
-func (d *Default) Normalize(doc parser.Decoder) (err error) {
+func (d *Default) Normalize(doc decoder.Decoder) (err error) {
 	switch v := doc.(type) {
 	case *atom.Doc:
 		err = d.normalizeAtom(v)

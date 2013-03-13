@@ -2,7 +2,7 @@ package atom
 
 import (
 	"encoding/xml"
-	"git.300brand.com/coverage/parser"
+	"git.300brand.com/coverage/parser/decoder"
 	"time"
 )
 
@@ -44,10 +44,10 @@ type Text struct {
 }
 
 func init() {
-	parser.RegisterDecoder("atom", &Doc{})
+	decoder.RegisterDecoder("atom", &Doc{})
 }
 
-func (doc Doc) New() parser.Decoder {
+func (doc Doc) New() decoder.Decoder {
 	return &Doc{}
 }
 
