@@ -2,16 +2,17 @@ package lexer
 
 import (
 	"bytes"
+	"git.300brand.com/coverage"
 	"github.com/rookii/paicehusk"
 )
 
 var StemmingEnabled = false
 
-func GetWords(b []byte) (ws Words) {
+func GetWords(b []byte) (ws coverage.Words) {
 	n := Normalize(b)
 	for i, f := range bytes.Fields(n) {
 		s := string(f)
-		w := Word{
+		w := coverage.Word{
 			Word:  s,
 			Index: i,
 		}

@@ -16,7 +16,7 @@ func BenchmarkNormalize(b *testing.B) {
 
 func TestApostrophes(t *testing.T) {
 	runTests(t, tests{
-		"test's": "test's",
+		"test's": "tests",
 	})
 }
 

@@ -1,4 +1,4 @@
-package lexer
+package coverage
 
 type Words []Word
 
