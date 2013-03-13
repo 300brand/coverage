@@ -19,7 +19,7 @@ type Default struct {
 type Article struct {
 	Published time.Time
 	Title     string
-	URL       url.URL
+	URL       *url.URL
 }
 
 func (d *Default) Normalize(doc decoder.Decoder) (err error) {
@@ -44,16 +44,16 @@ func (d *Default) normalizeAtom(doc *atom.Doc) (err error) {
 			continue
 		}
 
-		url, err := url.Parse(e.Link[0].Href)
+		u, err := url.Parse(e.Link[0].Href)
 		if err != nil {
-			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", url, err))
+			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", u, err))
 			continue
 		}
 
 		d.Articles = append(d.Articles, Article{
 			Published: e.Updated,
 			Title:     e.Title,
-			URL:       *url,
+			URL:       u,
 		})
 	}
 	return
@@ -67,16 +67,16 @@ func (d *Default) normalizeRDF(doc *rdf.Doc) (err error) {
 			continue
 		}
 
-		url, err := url.Parse(item.Link)
+		u, err := url.Parse(item.Link)
 		if err != nil {
-			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", url, err))
+			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", u, err))
 			continue
 		}
 
 		d.Articles = append(d.Articles, Article{
 			Published: item.Date.Time(),
 			Title:     item.Title,
-			URL:       *url,
+			URL:       u,
 		})
 	}
 	return
@@ -90,16 +90,16 @@ func (d *Default) normalizeRSS(doc *rss.Doc) (err error) {
 			continue
 		}
 
-		url, err := url.Parse(item.Link)
+		u, err := url.Parse(item.Link)
 		if err != nil {
-			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", url, err))
+			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", u, err))
 			continue
 		}
 
 		d.Articles = append(d.Articles, Article{
 			Published: item.PubDate.Time(),
 			Title:     item.Title,
-			URL:       *url,
+			URL:       u,
 		})
 	}
 	return
