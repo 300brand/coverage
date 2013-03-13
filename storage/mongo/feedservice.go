@@ -4,6 +4,7 @@ import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
 	"labix.org/v2/mgo"
+	"labix.org/v2/mgo/bson"
 )
 
 type FeedService struct {
@@ -36,6 +37,10 @@ func (s *FeedService) Update(f *coverage.Feed) error {
 }
 
 func (m *Mongo) GetFeed(query interface{}) (f *coverage.Feed, err error) {
+	switch v := query.(type) {
+	case bson.ObjectId:
+		query = bson.M{"_id": v}
+	}
 	f = &coverage.Feed{}
 	err = m.db.C(FeedCollection).Find(query).One(f)
 	return
