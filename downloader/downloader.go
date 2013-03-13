@@ -1,8 +1,10 @@
 package downloader
 
 import (
+	"git.300brand.com/coverage/cleanurl"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 )
 
 type Response struct {
@@ -12,24 +14,23 @@ type Response struct {
 	RealURL     string
 }
 
-func Fetch(url string) (r Response, err error) {
-	r.OriginalURL = url
-	r.RealURL = url
+func Fetch(URL string) (r Response, err error) {
+	r.OriginalURL = URL
 
 	// Add support for the file protocol
-	transport := &http.Transport{}
+	transport := &http.Transport{
+		Proxy: func(req *http.Request) (*url.URL, error) {
+			r.RealURL = cleanurl.Clean(req.URL).String()
+			return nil, nil
+		},
+	}
 	transport.RegisterProtocol("file", http.NewFileTransport(http.Dir("/")))
 
 	client := &http.Client{
 		Transport: transport,
-		CheckRedirect: func(req *http.Request, via []*http.Request) (err error) {
-			// Add checks to remove ?rss and other params
-			r.RealURL = req.URL.String()
-			return
-		},
 	}
 
-	resp, err := client.Get(url)
+	resp, err := client.Get(URL)
 	if err != nil {
 		return
 	}
