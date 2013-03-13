@@ -6,6 +6,7 @@ import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/storage/mongo"
 	"io"
+	"labix.org/v2/mgo/bson"
 	"log"
 	"net/url"
 	"os"
@@ -16,10 +17,24 @@ type Pubs []Pub
 type Pub struct {
 	Title string
 	URL   string
-	Feeds []string
+	Feeds []Feed
 }
 
-var dbHost, dbName string
+type Feed struct {
+	ID  int
+	URL string
+}
+
+type FeedID struct {
+	MysqlID int
+	MongoID bson.ObjectId
+}
+
+var (
+	dbHost  string
+	dbName  string
+	feedIDs = []FeedID{}
+)
 
 func init() {
 	flag.StringVar(&dbHost, "dbHost", "localhost", "Override MongoDB host")
@@ -68,9 +83,9 @@ func main() {
 			log.Println(err)
 			continue
 		}
-		for _, feedURL := range pub.Feeds {
+		for _, feed := range pub.Feeds {
 			f := coverage.NewFeed()
-			if f.URL, err = url.Parse(feedURL); err != nil {
+			if f.URL, err = url.Parse(feed.URL); err != nil {
 				log.Println(err)
 				continue
 			}
@@ -78,9 +93,19 @@ func main() {
 			if err = feedService.Update(f); err != nil {
 				log.Println(err)
 			}
+			feedIDs = append(feedIDs, FeedID{
+				MysqlID: feed.ID,
+				MongoID: f.ID,
+			})
 		}
 		if err = pubService.Update(p); err != nil {
 			log.Println(err)
 		}
 	}
+
+	b, err := json.MarshalIndent(&feedIDs, "", "\t")
+	if err != nil {
+		log.Println(err)
+	}
+	os.Stdout.Write(b)
 }
