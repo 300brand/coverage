@@ -36,7 +36,7 @@ func punctuation(r byte) bool {
 
 func quote(r byte) bool {
 	switch r {
-	case '"':
+	case '"', '\'':
 	default:
 		return false
 	}
