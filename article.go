@@ -12,6 +12,7 @@ type Article struct {
 	FeedId    bson.ObjectId `bson:",omitempty"`
 	Title     string
 	URL       *url.URL
+	Words     []Word
 	HTML      []byte `bson:"-"`
 	Body      Body   `bson:"-"`
 	Log       logger.Entries

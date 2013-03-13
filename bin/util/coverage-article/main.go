@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/article/body"
+	"git.300brand.com/coverage/article/lexer"
 	"git.300brand.com/coverage/downloader"
 	"git.300brand.com/coverage/service"
 	"git.300brand.com/coverage/storage/mongo"
@@ -33,6 +34,7 @@ func main() {
 	services := []service.ArticleService{
 		downloader.NewArticleService(),
 		body.NewArticleService(),
+		lexer.NewArticleService(),
 	}
 
 	if feedId != "" {
