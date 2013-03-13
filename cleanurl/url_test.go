@@ -61,6 +61,13 @@ func TestUTM(t *testing.T) {
 	testURLs(t, urls)
 }
 
+func TestWashingtonPost(t *testing.T) {
+	urls := map[string]string{
+		"http://www.washingtonpost.com/blogs/plum-line/post/budget-war-showcases-sharp-contrast-in-values-and-priorities/2013/03/12/03c9de08-8b3c-11e2-9b1a-deb258a24f2d_blog.html?wprss=rss_opinions": "http://www.washingtonpost.com/blogs/plum-line/post/budget-war-showcases-sharp-contrast-in-values-and-priorities/2013/03/12/03c9de08-8b3c-11e2-9b1a-deb258a24f2d_blog.html",
+	}
+	testURLs(t, urls)
+}
+
 func testURLs(t *testing.T, urls map[string]string) {
 	for u, exp := range urls {
 		test, err := url.Parse(u)
