@@ -19,7 +19,11 @@ func (s ArticleService) Update(a *coverage.Article) (err error) {
 	if a.HTML == nil {
 		return a.Log.Error(errors.New("HTML not set, did you run the downloader service?"))
 	}
-	if a.Body, err = GetBody(a.HTML); err != nil {
+	cleaned, err := CleanHTML(a.HTML)
+	if err != nil {
+		return a.Log.Error(err)
+	}
+	if a.Body, err = GetBody(cleaned); err != nil {
 		return a.Log.Error(err)
 	}
 	a.Modified()
