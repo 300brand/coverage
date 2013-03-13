@@ -10,7 +10,8 @@ import (
 type Feed struct {
 	ID           bson.ObjectId `bson:"_id"`
 	URL          *url.URL
-	Content      []byte `bson:"-"`
+	Content      []byte     `bson:"-"`
+	Articles     []*Article `bson:"-"`
 	Log          logger.Entries
 	Added        time.Time
 	Updated      time.Time
