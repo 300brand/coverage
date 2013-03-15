@@ -18,7 +18,7 @@ func (c *Changelog) Add(field string, when time.Time) {
 	}
 }
 
-func (c Changelog) Changed(fields ...string) {
+func (c *Changelog) Changed(fields ...string) {
 	now := time.Now()
 	for _, field := range fields {
 		c.Add(field, now)
