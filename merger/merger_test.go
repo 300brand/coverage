@@ -14,12 +14,16 @@ type T struct {
 
 func TestHasChangelog(t *testing.T) {
 	a := struct{ A int }{}
-	b := T{}
 	if _, err := getChangelog(a.A); err == nil {
 		t.Error("a-type does not have Changelog")
 	}
+	b := T{}
 	if _, err := getChangelog(b); err != nil {
 		t.Error("T has Changelog")
+	}
+	c := struct{ Changelog }{}
+	if _, err := getChangelog(c); err != nil {
+		t.Error("c-type has embedded Changelog")
 	}
 }
 
