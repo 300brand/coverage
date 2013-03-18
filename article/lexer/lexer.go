@@ -10,7 +10,9 @@ var StemmingEnabled = false
 
 func GetWords(b []byte) (ws coverage.Words) {
 	n := Normalize(b)
-	for i, f := range bytes.Fields(n) {
+	fields := bytes.Fields(n)
+	ws = make(coverage.Words, 0, len(fields))
+	for i, f := range fields {
 		s := string(f)
 		w := coverage.Word{
 			Word:  s,
