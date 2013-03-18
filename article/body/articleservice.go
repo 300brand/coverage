@@ -26,6 +26,6 @@ func (s ArticleService) Update(a *coverage.Article) (err error) {
 	if a.Body, err = GetBody(cleaned); err != nil {
 		return a.Log.Error(err)
 	}
-	a.Modified()
+	a.Modified("Body")
 	return
 }

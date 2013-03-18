@@ -30,6 +30,6 @@ func (s ArticleService) Update(a *coverage.Article) error {
 			return a.Log.Error(err)
 		}
 	}
-	a.Modified()
+	a.Modified("HTML")
 	return nil
 }
