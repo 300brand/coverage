@@ -24,7 +24,7 @@ func (s *FeedService) Update(f *coverage.Feed) error {
 	f.Log.Service("feed.FeedService")
 
 	// Parse
-	d, err := parser.Parse(data)
+	d, err := parser.Parse(f.Content)
 	if err != nil {
 		return f.Log.Error(fmt.Errorf("Decoder error: %s", err))
 	}
