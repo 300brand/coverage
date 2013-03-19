@@ -2,6 +2,7 @@ package time
 
 import (
 	"errors"
+	"strings"
 	"time"
 )
 
@@ -28,14 +29,15 @@ var formats = []string{
 // Parses the incoming argument into a time.Time value. Valid formats include
 // those found in the time package.
 func (t Time) Parse() (ts time.Time, err error) {
+	s := strings.TrimSpace(string(t))
 	for _, layout := range formats {
-		if ts, err = time.Parse(layout, string(t)); err == nil {
+		if ts, err = time.Parse(layout, s); err == nil {
 			return
 		}
 	}
 	// As in time.Parse(), return UTC for the first arg, which will come out
 	// of the previous calls to time.Parse()
-	return ts, errors.New("Could not parse " + string(t))
+	return ts, errors.New("Could not parse " + s)
 }
 
 func (t Time) String() string {
