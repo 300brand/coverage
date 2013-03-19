@@ -19,7 +19,8 @@ type test struct {
 	Type  string
 	Feed  *coverage.Feed
 	Files struct {
-		URLs string
+		Times string
+		URLs  string
 	}
 }
 
@@ -37,6 +38,7 @@ func init() {
 		for _, filename := range list {
 			t := test{}
 			t.Files.URLs = strings.Replace(filename, "."+ext, ".urls", 1)
+			t.Files.Times = strings.Replace(filename, "."+ext, ".times", 1)
 			t.Type = ext
 
 			t.Feed = coverage.NewFeed()
@@ -62,17 +64,42 @@ func TestURLs(t *testing.T) {
 
 		b, err := ioutil.ReadFile(test.Files.URLs)
 		if err != nil {
-			t.Errorf("Read error: %s", err)
+			t.Fatalf("Read error: %s", err)
 		}
 
 		urls := strings.Fields(string(b))
 		if l := len(test.Feed.Articles); l != len(urls) {
-			t.Errorf("Invalid URL count\nExpect: %d\nGot: %d", len(urls), l)
+			t.Fatalf("Invalid URL count\nExpect: %d\nGot: %d", len(urls), l)
 		}
 
 		for i, u := range urls {
 			if aURL := test.Feed.Articles[i].URL; u != aURL.String() {
 				t.Errorf("URL Mismatch\nExpect: %s\nGot: %s", u, aURL)
+			}
+		}
+	}
+}
+
+func TestTimes(t *testing.T) {
+	for _, test := range tests {
+		if _, err := os.Stat(test.Files.Times); err != nil {
+			t.Logf("Skipping; no %s file found", test.Files.Times)
+			continue
+		}
+
+		b, err := ioutil.ReadFile(test.Files.Times)
+		if err != nil {
+			t.Fatalf("Read error: %s", err)
+		}
+
+		times := strings.FieldsFunc(string(b), func(r rune) bool { return r == '\n' })
+		if l := len(test.Feed.Articles); l != len(times) {
+			t.Fatalf("Invalid time count\nExpect: %d\nGot: %d", len(times), l)
+		}
+
+		for i, exp := range times {
+			if aTime := test.Feed.Articles[i].Published; exp != aTime.String() {
+				t.Logf("%s", aTime)
 			}
 		}
 	}
