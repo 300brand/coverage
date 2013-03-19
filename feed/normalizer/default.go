@@ -8,6 +8,7 @@ import (
 	"git.300brand.com/coverage/feed/parser/rdf"
 	"git.300brand.com/coverage/feed/parser/rss"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -44,7 +45,7 @@ func (d *Default) normalizeAtom(doc *atom.Doc) (err error) {
 			continue
 		}
 
-		u, err := url.Parse(e.Link[0].Href)
+		u, err := url.Parse(strings.TrimSpace(e.Link[0].Href))
 		if err != nil {
 			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", u, err))
 			continue
@@ -67,7 +68,7 @@ func (d *Default) normalizeRDF(doc *rdf.Doc) (err error) {
 			continue
 		}
 
-		u, err := url.Parse(item.Link)
+		u, err := url.Parse(strings.TrimSpace(item.Link))
 		if err != nil {
 			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", u, err))
 			continue
@@ -90,7 +91,7 @@ func (d *Default) normalizeRSS(doc *rss.Doc) (err error) {
 			continue
 		}
 
-		u, err := url.Parse(item.Link)
+		u, err := url.Parse(strings.TrimSpace(item.Link))
 		if err != nil {
 			errors.New(fmt.Sprintf("Invalid URL [%s]: %v", u, err))
 			continue
