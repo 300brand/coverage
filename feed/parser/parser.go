@@ -2,17 +2,8 @@ package parser
 
 import (
 	"errors"
-	"git.300brand.com/coverage/feed"
 	"git.300brand.com/coverage/feed/parser/decoder"
 )
-
-func Normalize(data []byte, n feed.Normalizer) (err error) {
-	d, err := Parse(data)
-	if err != nil {
-		return
-	}
-	return n.Normalize(d)
-}
 
 func Parse(data []byte) (d decoder.Decoder, err error) {
 	t, err := Type(data)

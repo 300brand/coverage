@@ -1,4 +1,4 @@
-package feed
+package normalizer
 
 import (
 	"git.300brand.com/coverage/feed/parser/decoder"

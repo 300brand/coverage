@@ -1,10 +1,12 @@
-package parser
+package feed
 
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/feed/normalizer"
+	"git.300brand.com/coverage/feed/parser"
 	"git.300brand.com/coverage/service"
 
+	"fmt"
 	_ "git.300brand.com/coverage/feed/parser/atom"
 	_ "git.300brand.com/coverage/feed/parser/rdf"
 	_ "git.300brand.com/coverage/feed/parser/rss"
@@ -19,12 +21,21 @@ func NewFeedService() *FeedService {
 }
 
 func (s *FeedService) Update(f *coverage.Feed) error {
-	f.Log.Service("parser.FeedService")
+	f.Log.Service("feed.FeedService")
 
-	n := &normalizer.Default{}
-	if err := Normalize(f.Content, n); err != nil {
-		return f.Log.Error(err)
+	// Parse
+	d, err := parser.Parse(data)
+	if err != nil {
+		return f.Log.Error(fmt.Errorf("Decoder error: %s", err))
 	}
+
+	// Normalize
+	n := &normalizer.Default{}
+	if err := n.Normalize(d); err != nil {
+		return f.Log.Error(fmt.Errorf("Normalizer error: %s", err))
+	}
+
+	// Apply and let dry
 	for _, article := range n.Articles {
 		if !f.AddURL(article.URL) {
 			continue
