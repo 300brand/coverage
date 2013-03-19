@@ -5,8 +5,8 @@ import (
 	"git.300brand.com/coverage/article/body"
 	"git.300brand.com/coverage/article/lexer"
 	"git.300brand.com/coverage/downloader"
+	"git.300brand.com/coverage/feed"
 	"git.300brand.com/coverage/logger"
-	"git.300brand.com/coverage/parser"
 	"git.300brand.com/coverage/service"
 	"git.300brand.com/coverage/storage/mongo"
 	"labix.org/v2/mgo/bson"
@@ -47,20 +47,20 @@ func main() {
 	}
 	defer m.Close()
 
-	feed, err := m.GetFeed(config.ID)
+	f, err := m.GetFeed(config.ID)
 	if err != nil {
 		log.Fatalf("Could not find feed with ID: %s", config.ID.Hex())
 	}
 
-	log.Printf("Downloading feed %s\n", feed.ID.Hex())
-	downloader.NewFeedService().Update(feed)
+	log.Printf("Downloading feed %s\n", f.ID.Hex())
+	downloader.NewFeedService().Update(f)
 
 	log.Println("Saving data")
 	mfs := mongo.NewFeedService(m)
-	mfs.Update(feed)
+	mfs.Update(f)
 
 	log.Println("Building article list")
-	parser.NewFeedService().Update(feed)
+	feed.NewFeedService().Update(f)
 
 	services := []service.ArticleService{
 		downloader.NewArticleService(),
@@ -68,7 +68,7 @@ func main() {
 		lexer.NewArticleService(),
 		mongo.NewArticleService(m),
 	}
-	for _, a := range feed.Articles {
+	for _, a := range f.Articles {
 		log.Printf("Processing %s", a.URL)
 		for _, s := range services {
 			if err := s.Update(a); err != nil {
@@ -79,5 +79,5 @@ func main() {
 	}
 
 	log.Println("Updating feed")
-	mfs.Update(feed)
+	mfs.Update(f)
 }
