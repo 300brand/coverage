@@ -8,22 +8,23 @@ import (
 
 type Time string
 
+// time.Kitchen not used.
 var formats = []string{
-	time.ANSIC,
-	time.UnixDate,
-	time.RubyDate,
-	time.RFC822Z,
-	time.RFC822,
-	time.RFC850,
-	time.RFC1123Z,
-	time.RFC1123,
-	time.RFC3339Nano,
-	time.RFC3339,
-	// time.Kitchen,
-	time.StampNano,
-	time.StampMicro,
-	time.StampMilli,
-	time.Stamp,
+	time.ANSIC,                  // "Mon Jan _2 15:04:05 2006"
+	time.UnixDate,               // "Mon Jan _2 15:04:05 MST 2006"
+	time.RubyDate,               // "Mon Jan 02 15:04:05 -0700 2006"
+	time.RFC822,                 // "02 Jan 06 15:04 MST"
+	time.RFC822Z,                // "02 Jan 06 15:04 -0700" // RFC822 with numeric zone
+	time.RFC850,                 // "Monday, 02-Jan-06 15:04:05 MST"
+	time.RFC1123,                // "Mon, 02 Jan 2006 15:04:05 MST"
+	time.RFC1123Z,               // "Mon, 02 Jan 2006 15:04:05 -0700" // RFC1123 with numeric zone
+	time.RFC3339,                // "2006-01-02T15:04:05Z07:00"
+	time.RFC3339Nano,            // "2006-01-02T15:04:05.999999999Z07:00"
+	time.Stamp,                  // "Jan _2 15:04:05"
+	time.StampMilli,             // "Jan _2 15:04:05.000"
+	time.StampMicro,             // "Jan _2 15:04:05.000000"
+	time.StampNano,              // "Jan _2 15:04:05.000000000"
+	"Mon, 2 Jan 2006  15:04:05", // A.M. Best Company
 }
 
 // Parses the incoming argument into a time.Time value. Valid formats include
