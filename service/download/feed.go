@@ -1,4 +1,5 @@
 package download
+/*
 
 import (
 	"git.300brand.com/coverage/downloader"
@@ -14,11 +15,9 @@ type FeedRequest struct {
 	URL     string
 }
 
-/*
 func (s *DownloadService) Feed(ri *skynet.RequestInfo, req *FeedRequest, resp *parser.Feed) error {
 	logger.Debug("DownloadService.Feed: ", req.URL)
 }
-*/
 
 func downloadFeed(req *FeedRequest) (downloader.Response, error) {
 	type pair struct {
@@ -39,3 +38,4 @@ func downloadFeed(req *FeedRequest) (downloader.Response, error) {
 	}
 	panic("unreachable")
 }
+*/
