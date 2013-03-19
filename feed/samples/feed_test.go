@@ -1,11 +1,11 @@
 package testfeed
 
 import (
-	"git.300brand.com/coverage/parser"
-	_ "git.300brand.com/coverage/parser/atom"
-	"git.300brand.com/coverage/parser/normalizer"
-	_ "git.300brand.com/coverage/parser/rdf"
-	_ "git.300brand.com/coverage/parser/rss"
+	"git.300brand.com/coverage/feed/normalizer"
+	"git.300brand.com/coverage/feed/parser"
+	_ "git.300brand.com/coverage/feed/parser/atom"
+	_ "git.300brand.com/coverage/feed/parser/rdf"
+	_ "git.300brand.com/coverage/feed/parser/rss"
 	"testing"
 )
 

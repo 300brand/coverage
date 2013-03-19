@@ -2,8 +2,8 @@ package rdf
 
 import (
 	"encoding/xml"
-	"git.300brand.com/coverage/parser/decoder"
-	"git.300brand.com/coverage/parser/time"
+	"git.300brand.com/coverage/feed/parser/decoder"
+	"git.300brand.com/coverage/feed/parser/time"
 )
 
 type Doc struct {

@@ -2,7 +2,7 @@ package atom
 
 import (
 	"encoding/xml"
-	"git.300brand.com/coverage/parser/decoder"
+	"git.300brand.com/coverage/feed/parser/decoder"
 	"time"
 )
 

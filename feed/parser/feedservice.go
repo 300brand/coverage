@@ -2,12 +2,12 @@ package parser
 
 import (
 	"git.300brand.com/coverage"
-	"git.300brand.com/coverage/parser/normalizer"
+	"git.300brand.com/coverage/feed/normalizer"
 	"git.300brand.com/coverage/service"
 
-	_ "git.300brand.com/coverage/parser/atom"
-	_ "git.300brand.com/coverage/parser/rdf"
-	_ "git.300brand.com/coverage/parser/rss"
+	_ "git.300brand.com/coverage/feed/parser/atom"
+	_ "git.300brand.com/coverage/feed/parser/rdf"
+	_ "git.300brand.com/coverage/feed/parser/rss"
 )
 
 type FeedService struct{}

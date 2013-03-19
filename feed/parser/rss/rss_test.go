@@ -1,7 +1,7 @@
 package rss
 
 import (
-	"git.300brand.com/coverage/parser/testfeed"
+	"git.300brand.com/coverage/feed/parser/testfeed"
 	"testing"
 	"time"
 )

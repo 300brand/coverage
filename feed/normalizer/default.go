@@ -3,10 +3,10 @@ package normalizer
 import (
 	"errors"
 	"fmt"
-	"git.300brand.com/coverage/parser/atom"
-	"git.300brand.com/coverage/parser/decoder"
-	"git.300brand.com/coverage/parser/rdf"
-	"git.300brand.com/coverage/parser/rss"
+	"git.300brand.com/coverage/feed/parser/atom"
+	"git.300brand.com/coverage/feed/parser/decoder"
+	"git.300brand.com/coverage/feed/parser/rdf"
+	"git.300brand.com/coverage/feed/parser/rss"
 	"net/url"
 	"time"
 )
