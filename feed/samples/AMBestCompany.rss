@@ -1,0 +1,943 @@
+
+    <rss version="2.0">
+      <channel>
+        <title>A.M. Best Company BestWire Feed</title>
+        <ttl>20</ttl>
+        <link>http://www.ambest.com/newsroom</link>
+        <description>
+          This is the syndication BestWire Feed ambest.com.
+        </description>
+      <skipHours>
+         <hour>1</hour>
+         <hour>2</hour>
+         <hour>3</hour>
+         <hour>4</hour>
+         <hour>5</hour>
+         <hour>6</hour>         
+         <hour>18</hour>
+         <hour>19</hour>
+         <hour>20</hour>
+         <hour>21</hour>
+         <hour>22</hour>
+         <hour>23</hour>
+         <hour>24</hour>              
+      </skipHours>        
+         <skipDays>
+         <day>Saturday</day>
+         <day>Sunday</day>
+      </skipDays>
+
+        <item>
+          <title>New York Life Co. Names New CFO</title>
+            
+          <description>
+             New York Life Insurance Co. has tapped John Fleurant to serve as executive vice president and chief financial officer, starting July 1. Fleurant will succeed Michael Sproule, 65, who will retire as ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163958
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>1</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  16:37:23
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Oklahoma Senate Sends House Legislation to Privatize CompSource</title>
+            
+          <description>
+             The Oklahoma Senate joined its House counterparts in passing legislation to privatize CompSource Oklahoma, which currently holds nearly one-third of the state’s workers’ compensation insurance market ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163957
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>2</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  15:45:52
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Guy Carpenter Pacific CEO: Reinsurers Respond to Changing Australia Market, New Pacific Island Cat Program</title>
+            
+          <description>
+             The reinsurance industry is responding to new Australian regulations and a new program to provide catastrophe coverage to five Pacific island nations, said Guy Carpenter &amp; Co.&apos;s new head of the ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163956
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>3</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  15:03:05
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Video: For NJ Shore Agency, Disaster Prep Helped Ease Sandy Pain</title>
+            
+          <description>
+             The McMahon Agency of Ocean City, N.J. made catastrophe preparations long before October 2012, when Hurricane Sandy hit. Mitigation efforts, such as an inland office, helped to service their ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163955
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>4</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  14:21:14
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Multi-Industry Group Opposes National Catastrophe Fund Bill</title>
+            
+          <description>
+             A bill introduced in the U.S. House of Representatives that would create a national catastrophe fund is facing opposition from a coalition of insurance, environmental and taxpayer ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163954
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>5</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  14:17:52
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Despite Near-Record Cats, USAA Net Income Up 33%</title>
+            
+          <description>
+             USAA Group in 2012 was slammed by $1.1 billion in catastrophe losses from 196,000 claims, leaving the company with a loss tab second only to 2011, but a net income that was 33% higher than in 2011, ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163953
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>6</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  14:01:38
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Insurers, Agents Battle Over NC Auto Insurance Reform Bill</title>
+            
+          <description>
+             North Carolina insurance industry groups are divided over a state Senate bill that would allow automobile insurers to set their own rate increases or decreases of up to 12%, greatly reforming the ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163952
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>7</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  12:50:18
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Video: BestWeek Live: NFIP &apos;Tension&apos;; Breakup of UK&apos;s FSA</title>
+            
+          <description>
+             In this episode of BestWeek Live: Washington Bureau Manager Jeff Jeffrey discusses differing opinions in industry and legislative circles on taking the National Flood Insurance Program private; ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163950
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>8</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  12:43:34
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Diverse Business Cultures Impede Nonlife M&amp;A Activity in Thailand: BestWeek Asia-Pacific, March 19, 2013</title>
+            
+          <description>
+             Despite an intensely competitive environment, family-owned nonlife insurance mergers in Thailand face hurdles due differing business cultures, according to a story in the latest BestWeek ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163949
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>9</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  12:40:26
+           </pubDate>
+        </item>
+
+        <item>
+          <title>A.M. Best Assigns Ratings to National Takaful Company (Watania) PJSC</title>
+            
+          <description>
+             A.M. Best Europe – Rating Services Limited has assigned a financial strength rating of B+ (Good) and an issuer credit rating of “bbb-” to National Takaful Company (Watania) PJSC (Watania) (United ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163948
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>10</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  12:15:25
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Revenue Up, Underwriting Profit Down in 2012 for Hong Kong Insurers</title>
+            
+          <description>
+             Hong Kong&apos;s insurance industry tallied aggregate gross premiums of HK$255.2 billion (US$32.9 billion) in 2012, up 13% from the previous year. At the same time, overall underwriting profit fell 27% to ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163946
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>11</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  11:03:48
+           </pubDate>
+        </item>
+
+        <item>
+          <title>BestDay Audio for Monday, March 18: Clyde &amp; Co. Partner: ASEAN Growth Beckons Insurers</title>
+            
+          <description>
+             BestDay Audio Podcast for Monday, March 18: According to Ian Stewart, a partner with legal firm Clyde &amp; Co., rising investment inflows, particularly for infrastructure, energy and manufacturing, are ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163945
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>12</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  09:20:36
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Investors Heritage Capital Co. Leads Friday&apos;s AMBG as Global Insurance Index Declines 0.04%</title>
+            
+          <description>
+             The AMBG closed Friday, March 15, at 1050.34 (-0.04%). Of the 15 A.M. Best stock indexes, seven rose and eight declined. Leading A.M. Best&apos;s Global Insurance Composite Index (AMBG) were Investors ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163944
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>13</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Mon, 18 Mar 2013  09:17:34
+           </pubDate>
+        </item>
+
+        <item>
+          <title>RAA: US Reinsurers NPW Rose 11.7% in 2012</title>
+            
+          <description>
+             A group of 19 U.S. property/casualty reinsurers posted a 11.7% increase in net premiums written in 2012, according to a survey of the reinsurers’ statutory underwriting results by the Reinsurance ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163943
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>14</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Fri, 15 Mar 2013  19:01:52
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Delaware Court Places Ullico Casualty in Rehab</title>
+            
+          <description>
+             The Chancery Court of Delaware placed Ullico Casualty Co. into rehabilitation and named Insurance Commissioner Karen Weldin Stewart receiver on March 11, according to court papers posted on the ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163942
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>15</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Fri, 15 Mar 2013  18:59:14
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Fla. Court Rules Insurer Cannot Limit Sinkhole Coverage</title>
+            
+          <description>
+             A Florida court will not allow two insurance companies to limit sinkhole loss coverage to a fraction of the overall coverage amount, finding the practice would make &quot;the optional coverage valueless,&quot; ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163941
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>16</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Fri, 15 Mar 2013  18:52:58
+           </pubDate>
+        </item>
+
+        <item>
+          <title>US House Lawmakers Take Aim at FSOC&apos;s Closed-Door Meetings</title>
+            
+          <description>
+             Federal lawmakers are pressing the Financial Stability Oversight Council to provide more information about meetings held out of view of the public, saying the lack of transparency conceals steps ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163940
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>17</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Fri, 15 Mar 2013  18:40:21
+           </pubDate>
+        </item>
+
+        <item>
+          <title>UnitedHealth Facing Proposed Class-Action Over Alleged Denial of Coverage for Mental Health Claims</title>
+            
+          <description>
+             UnitedHealth Group Inc., its behavioral health unit and various subsidiaries are facing a proposed class-action lawsuit brought by three members who allege they have been wrongly denied coverage for ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163939
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>18</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Fri, 15 Mar 2013  18:36:58
+           </pubDate>
+        </item>
+
+        <item>
+          <title>BestWeek: Contentious Questions Over Rates Emerge From Potential NFIP Privatization</title>
+            
+          <description>
+             As calls grow for the privatization of the National Flood Insurance Program, industry watchers are asking for details such as how it would set rates, according to the latest issue of BestWeek ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163938
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>19</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Fri, 15 Mar 2013  15:22:26
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Louisiana Citizens CEO Resigns With Plans to Head to Michigan</title>
+            
+          <description>
+             The chief executive officer of Louisiana Citizens Property Insurance Corp. will step down from his post June 1 after spending nearly three years heading up the state&apos;s insurer of last ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163937
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>20</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Fri, 15 Mar 2013  12:01:37
+           </pubDate>
+        </item>
+
+        <item>
+          <title>West Virginia Insurers Fighting Legislation to Prohibit Property Nonrenewals</title>
+            
+          <description>
+             Insurers are coming out against a bill in the West Virginia state Senate that would deprive insurers of a long-standing option to not renew at least some property insurance policies in instances ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163936
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>21</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Fri, 15 Mar 2013  11:56:29
+           </pubDate>
+        </item>
+
+        <item>
+          <title>For China&apos;s Ping An, Weak Life Results Dampen 2012 Profit Growth</title>
+            
+          <description>
+             Weak life insurance business performance dampened the performance Ping An Insurance Group, which posted a 3% rise in 2012 net profit to 20 billion yuan (US$3.2 billion).
+
+China&apos;s ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163935
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>22</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Fri, 15 Mar 2013  10:08:25
+           </pubDate>
+        </item>
+
+        <item>
+          <title>BestDay Audio for Friday, March 15: PCI on Global Regulation: Don&apos;t &apos;Erect Barriers&apos;</title>
+            
+          <description>
+             BestDay Audio Podcast for Friday, March 15: Dave Snyder, who leads the Property Casualty Insurers Association of America&apos;s international policy work, says dialogue on international regulations could ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163934
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>23</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Fri, 15 Mar 2013  10:04:03
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Assicurazioni Generali S.p.A. Leads Thursday&apos;s AMBG as Global Insurance Index Rises 0.95%</title>
+            
+          <description>
+             The AMBG closed Thursday, March 14, at 1050.79 (+0.95%). Of the 15 A.M. Best stock indexes, 14 rose and one declined. Leading A.M. Best&apos;s Global Insurance Composite Index (AMBG) were Assicurazioni ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163933
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>24</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Fri, 15 Mar 2013  09:56:09
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Update: Allied Lines Losses Spike in NJ, NY in 2012</title>
+            
+          <description>
+             (Corrects New York data throughout the story). Most of the largest allied lines writers in New York and New Jersey saw their adjusted loss ratios spike dramatically in 2012, according to insurance ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163932
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>25</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  16:17:29
+           </pubDate>
+        </item>
+
+        <item>
+          <title>AIG Shareholders Double Claim to $55.5 Billion in Bailout Suit Against Government</title>
+            
+          <description>
+             Starr International Co. Chairman Maurice &quot;Hank&quot; Greenberg and a class of American International Group Inc. shareholders have more than doubled the alleged damages in a class-action lawsuit against ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163931
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>26</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  16:13:57
+           </pubDate>
+        </item>
+
+        <item>
+          <title>A.M. Best Revises Outlook to Stable for Springfield Insurance Company</title>
+            
+          <description>
+             A.M. Best Co. has revised the outlook to stable from positive and affirmed the financial strength of B+ (Good) and issuer credit rating of “bbb-“ of  Springfield Insurance Company (Springfield) ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163930
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>27</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  16:12:52
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Insurers Struggle With Strategy Under Solvency II Uncertainty</title>
+            
+          <description>
+             Serial delays in the European Union&apos;s effort to implement the Solvency II capital adequacy directive are generating more vocal concern from the industry about cost and strategic ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163928
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>28</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  15:43:15
+           </pubDate>
+        </item>
+
+        <item>
+          <title>NY Private Equity Firm Closes Acquisition of Dallas National</title>
+            
+          <description>
+             New York-based private equity firm Southport Lane has closed its acquisition of Dallas National Insurance Co., a Texas-based property/casualty insurer that specializes in general liability and ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163927
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>29</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  15:31:27
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Insurance Groups Still Back NFIP Reforms in Wake of Bill to Change Rate Hikes</title>
+            
+          <description>
+             Insurance industry groups are reiterating their support for reforms made last year to fully fund the National Flood Insurance Program as Congress received legislation that would extend rate hikes on ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163926
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>30</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  15:28:36
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Update: AM Best 2012 Data Show Private Passenger Auto Physical Damage Loss Ratios Climb in NY, NJ</title>
+            
+          <description>
+             (Adds comments in third and fourth paragraphs.) Adjusted loss ratios last year in New York and New Jersey for the physical damage portion of private passenger automobile insurance are currently ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163924
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>31</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  15:06:50
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Losses Spike for Allied Lines in NJ, NY in 2012</title>
+            
+          <description>
+             Most of the largest allied lines writers in New York and New Jersey saw their adjusted loss ratios spike dramatically in 2012, according to insurance company annual data available in BestLink. ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163923
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>32</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  13:58:19
+           </pubDate>
+        </item>
+
+        <item>
+          <title>American Safety Reviewing Strategic Alternatives, Including Potential Sale of Company</title>
+            
+          <description>
+             Bermuda-based American Safety Insurance Holdings Ltd.&apos;s board of directors is undertaking &quot;a review of strategic alternatives, including a potential sale&quot; of the company.
+
+In the statement, ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163922
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>33</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  11:50:01
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Marsh: Asia&apos;s Transactional Risk Protection Market Up 50% in 2012</title>
+            
+          <description>
+             Rising demand for transactional risk mitigation for merger and acquisition activities led to 50% growth for the regional warranty and indemnity insurance market in 2012, according to insurance broker ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163921
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>34</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  11:37:16
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Impairment Costs Weigh on Profit for Reorganizing Generali</title>
+            
+          <description>
+             Impairment costs amid a realignment of businesses and investments led to a sharp fall in 2012 profit for Italy&apos;s Assicurazioni Generali SpA, even as the group reported operating income gains in all ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163920
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>35</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  11:19:56
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Singapore Seeks to Exploit Its Status as Pan-Asian Financial Center</title>
+            
+          <description>
+             With a strong regulatory system and a lead role as a pan-Asian insurance center, Singapore is looking to develop itself as a global financial hub, said Ravi Menon, managing director of the Monetary ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163919
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>36</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  10:55:37
+           </pubDate>
+        </item>
+
+        <item>
+          <title>A.M. Best Affirms Ratings of Guild Insurance Limited</title>
+            
+          <description>
+             A.M. Best Asia-Pacific Limited has affirmed the financial strength rating of A- (Excellent) and issuer credit rating of “a-” of Guild Insurance Limited (GIL) (Australia). The outlook for both ratings ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163918
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>37</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Thu, 14 Mar 2013  10:42:32
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Florida Senate Panel Approves Bill to Slow Growth of Citizens</title>
+            
+          <description>
+             The Florida Senate Banking and Insurance Committee passed property insurance reform legislation designed partly to reduce the market share of the state-backed Citizens Property Insurance Corp. by a ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163916
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>38</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  16:48:08
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Aon and Berkshire Hathaway Launch Insurance Sidecar</title>
+            
+          <description>
+             Broker Aon plc has teamed up with Berkshire Hathaway to launch a new sidecar.
+
+ Aon Risk Solutions, the global risk management business of Aon plc, said it signed a unique co-insurance ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163915
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>39</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  16:45:06
+           </pubDate>
+        </item>
+
+        <item>
+          <title>PCI Critical of TWIA Assigned Risk Bill</title>
+            
+          <description>
+             The Property Casualty Insurers Association of America strongly opposes a Texas Senate bill to create an assigned-risk plan designed to depopulate the Texas Windstorm Insurance Association, as one of ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163914
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>40</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  16:41:39
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Top NY Commercial Auto Writer Posts Near-Record Low Loss Ratio in 2012</title>
+            
+          <description>
+             New York&apos;s largest writer of commercial automobile insurance posted in 2012 one of its best adjusted loss ratios in the past decade, even as the state&apos;s market is trending toward a record high, ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163913
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>41</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  16:18:56
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Washington to Hold Hearing on Central United Life&apos;s Proposed Acquisition of Western United Life</title>
+            
+          <description>
+             Washington&apos;s insurance commissioner has scheduled a hearing on Central United Life Insurance Co.&apos;s proposed acquisition of Washington-based Western United Life Assurance Co.
+
+Central United ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163912
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>42</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  16:14:37
+           </pubDate>
+        </item>
+
+        <item>
+          <title>AIG Formalizes Promise to Pay Large Property Claims in Seven Days</title>
+            
+          <description>
+             American International Group is formalizing a promise to begin paying major commercial property claims within seven days.
+
+After a large loss, when the coverage is clear and there is an ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163911
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>43</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  16:10:14
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Sweeping Fires, Battering Hail Contribute to Elevated Loss Ratios in Colorado Homeowners</title>
+            
+          <description>
+             Battered by hailstorms and sweeping wildfires, homeowners insurers in Colorado are on track to report the second-highest average adjusted loss ratio in the past decade, according to annual statement ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163910
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>44</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  16:06:05
+           </pubDate>
+        </item>
+
+        <item>
+          <title>Chairman Sees Lloyd&apos;s Future in Developing Economies</title>
+            
+          <description>
+             If Lloyd&apos;s is to prosper in the coming decades, it will have to do more of its business in the world&apos;s emerging markets, according to Chairman John Nelson.
+
+In 2012, the Lloyd&apos;s premium split ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163909
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>45</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  16:00:26
+           </pubDate>
+        </item>
+
+        <item>
+          <title>McRaith: FIO Hopes to Release Reports by July</title>
+            
+          <description>
+             The Federal Insurance Office is set to release long-awaited reports on the U.S. insurance and reinsurance by early summer, said FIO Director Michael McRaith, during a March 13 meeting of the Federal ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163908
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>46</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  15:46:00
+           </pubDate>
+        </item>
+
+        <item>
+          <title>PCI&apos;s Snyder: Caution Needed in US-EU Regulatory Dialogues</title>
+            
+          <description>
+             International regulators should show there is a &quot;demonstrated need&quot; for new regulations before working them into place. Otherwise, the highly successful global insurance market could face serious ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163905
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>47</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  14:23:50
+           </pubDate>
+        </item>
+
+        <item>
+          <title>ING Revamps European Management Structure Ahead of Spinoff</title>
+            
+          <description>
+             ING Group NV announced changes in the governance of its European insurance and investment management operations ahead of a planned move to split those operations off as a ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163904
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>48</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  14:09:02
+           </pubDate>
+        </item>
+
+        <item>
+          <title>UK&apos;s Prudential Cites &apos;Sweet-Spot&apos; Asian Markets in 2012 Profit Surge</title>
+            
+          <description>
+             Prudential plc said its 2012 results showed continued robust growth in Asia, particularly in what the group&apos;s chief executive describes as the &quot;sweet-spot&quot; markets of Indonesia, Singapore, Malaysia, ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163903
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>49</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  12:22:55
+           </pubDate>
+        </item>
+
+        <item>
+          <title>New Zealand Insurers Navigate Complex Quake Aftermath as Claims Paid Hits US$5.5 Billion</title>
+            
+          <description>
+             Insurers in New Zealand are accelerating their recovery from the Canterbury earthquakes as they clear a complex set of obstacles created by the unique nature of the series of disasters. Total ...
+          </description>
+          
+          <link>
+             http://www3.ambest.com/Frames/FrameServer.asp?AltSrc=23&amp;Tab=1&amp;Site=news&amp;refnum=163898
+          </link>
+          <author>A.M. Best Company</author>
+          <Order>50</Order>                    
+          <source>BestWire</source>
+          <pubDate>
+             Wed, 13 Mar 2013  09:53:20
+           </pubDate>
+        </item>
+
+      </channel>
+    </rss>
