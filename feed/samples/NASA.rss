@@ -1,9 +1,7 @@
-package testfeed
-
-// ORIGIN: http://www.nasa.gov/rss/breaking_news.rss
-var RSS = []byte(`<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/externalflash/NASA_Detail/NASA_Detail.xsl" type="text/xsl"?>
 <rss version="2.0">
+	<!-- ORIGIN: http://www.nasa.gov/rss/breaking_news.rss -->
 	<channel>
 		<title>NASA Breaking News</title>
 		<link>http://www.nasa.gov/audience/formedia/features/index.html</link>
@@ -83,4 +81,4 @@ var RSS = []byte(`<?xml version="1.0" encoding="UTF-8"?>
 			<pubDate>Wed, 31 Oct 2012 00:00:00 EDT</pubDate>
 		</item>
 	</channel>
-</rss>`)
+</rss>

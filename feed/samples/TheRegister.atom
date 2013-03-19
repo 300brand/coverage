@@ -1,8 +1,6 @@
-package testfeed
-
-// ORIGIN: http://www.theregister.co.uk/bootnotes/headlines.atom
-var Atom = []byte(`<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<!-- ORIGIN: http://www.theregister.co.uk/bootnotes/headlines.atom -->
 	<id>tag:theregister.co.uk,2005:feed/theregister.co.uk/bootnotes/</id>
 	<title>The Register - Bootnotes</title>
 	<link rel="self" type="application/atom+xml" href="http://www.theregister.co.uk/bootnotes/headlines.atom"/>
@@ -567,4 +565,4 @@ var Atom = []byte(`<?xml version="1.0" encoding="UTF-8"?>
 		<title type="html">Steve Jobs is STILL DEAD</title>
 		<summary type="html" xml:base="http://www.theregister.co.uk/">&lt;h4&gt;'I am Ahead of the &lt;i&gt;Puck&lt;/i&gt;', insists deceased biz titan&lt;/h4&gt; &lt;p&gt;Visitors to Apple's online shop were today reminded that Steve Jobs remains dead.…&lt;/p&gt;</summary>
 	</entry>
-</feed>`)
+</feed>
