@@ -1,14 +1,27 @@
 package rdf
 
 import (
-	"git.300brand.com/coverage/feed/parser/testfeed"
+	"io/ioutil"
+	"log"
 	"testing"
 	"time"
 )
 
+var bRDF, bAtom []byte
+
+func init() {
+	var err error
+	if bRDF, err = ioutil.ReadFile("../../samples/NetworkWorld.rdf"); err != nil {
+		log.Fatal(err)
+	}
+	if bAtom, err = ioutil.ReadFile("../../samples/TheRegister.atom"); err != nil {
+		log.Fatal(err)
+	}
+}
+
 func TestEntryLen(t *testing.T) {
 	doc := Doc{}
-	if err := doc.Decode(testfeed.RDF); err != nil {
+	if err := doc.Decode(bRDF); err != nil {
 		t.Error(err)
 	}
 	entries := doc.Item
@@ -22,14 +35,14 @@ func TestEntryLen(t *testing.T) {
 
 func TestParseFail(t *testing.T) {
 	doc := Doc{}
-	if err := doc.Decode(testfeed.Atom); err == nil {
+	if err := doc.Decode(bAtom); err == nil {
 		t.Error("Expected error when parsing Atom feed")
 	}
 }
 
 func TestTitle(t *testing.T) {
 	doc := Doc{}
-	if err := doc.Decode(testfeed.RDF); err != nil {
+	if err := doc.Decode(bRDF); err != nil {
 		t.Error(err)
 	}
 	if doc.Channel.Title == "" {
@@ -132,7 +145,7 @@ func TestURLs(t *testing.T) {
 		"http://www.networkworld.com/news/2012/110712-cloud-security-lawyers-264055.html?source=nww_rss",
 	}
 	doc := Doc{}
-	if err := doc.Decode(testfeed.RDF); err != nil {
+	if err := doc.Decode(bRDF); err != nil {
 		t.Error(err)
 	}
 	entries := doc.Item
@@ -246,7 +259,7 @@ func TestTimestamps(t *testing.T) {
 		time.Date(2012, time.November, 7, 1, 49, 37, 0, loc),
 	}
 	doc := Doc{}
-	if err := doc.Decode(testfeed.RDF); err != nil {
+	if err := doc.Decode(bRDF); err != nil {
 		t.Error(err)
 	}
 	entries := doc.Item

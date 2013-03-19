@@ -1,13 +1,26 @@
 package atom
 
 import (
-	"git.300brand.com/coverage/feed/parser/testfeed"
+	"io/ioutil"
+	"log"
 	"testing"
 )
 
+var bAtom, bRSS []byte
+
+func init() {
+	var err error
+	if bAtom, err = ioutil.ReadFile("../../samples/TheRegister.atom"); err != nil {
+		log.Fatal(err)
+	}
+	if bRSS, err = ioutil.ReadFile("../../samples/NASA.rss"); err != nil {
+		log.Fatal(err)
+	}
+}
+
 func TestEntryLen(t *testing.T) {
 	doc := Doc{}
-	if err := doc.Decode(testfeed.Atom); err != nil {
+	if err := doc.Decode(bAtom); err != nil {
 		t.Error(err)
 	}
 	if len(doc.Entry) != 50 {
@@ -17,14 +30,14 @@ func TestEntryLen(t *testing.T) {
 
 func TestParserFail(t *testing.T) {
 	doc := Doc{}
-	if err := doc.Decode(testfeed.RSS); err == nil {
+	if err := doc.Decode(bRSS); err == nil {
 		t.Error("Expected error when parsing RSS feed")
 	}
 }
 
 func TestTitle(t *testing.T) {
 	doc := Doc{}
-	doc.Decode(testfeed.Atom)
+	doc.Decode(bAtom)
 	if doc.Title == "" {
 		t.Error("Blank title")
 	}
@@ -85,7 +98,7 @@ func TestURLs(t *testing.T) {
 		"http://go.theregister.com/feed/www.theregister.co.uk/2012/10/05/steve_jobs_is_still_dead/",
 	}
 	doc := Doc{}
-	doc.Decode(testfeed.Atom)
+	doc.Decode(bAtom)
 	if len(doc.Entry) == 0 {
 		t.Error("No entries found")
 	}
