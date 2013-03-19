@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/downloader"
-	"git.300brand.com/coverage/parser"
-	"git.300brand.com/coverage/parser/normalizer"
-	"io/ioutil"
+	"git.300brand.com/coverage/feed"
+	"log"
+	"net/url"
 	"os"
-	"path"
 )
 
 var local bool
@@ -18,56 +18,46 @@ func init() {
 	flag.BoolVar(&local, "local", false, "Argument is a local file")
 }
 
-func DownloadFeed(url string) (data []byte, err error) {
-	resp, err := downloader.Fetch(url)
-	if err != nil {
-		return
-	}
-	data = resp.Body
-	return
-}
-
-func GetData(path string, local bool) (data []byte, err error) {
-	if local {
-		data, err = ReadFeed(path)
-	} else {
-		data, err = DownloadFeed(path)
-	}
-	return
-}
-
-func ReadFeed(path string) (data []byte, err error) {
-	return ioutil.ReadFile(path)
-}
-
 func main() {
 	flag.Parse()
 	if len(flag.Args()) != 1 {
-		fmt.Printf("Usage: %s [-url] FEED\n", path.Base(os.Args[0]))
+		flag.PrintDefaults()
 		os.Exit(1)
 	}
 
 	path := flag.Arg(0)
 
-	// Pull data from download or filesystem
-	data, err := GetData(path, local)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(2)
+	if local {
+		cwd, _ := os.Getwd()
+		path = fmt.Sprintf("file://%s/%s", cwd, path)
 	}
 
-	// Normalize Feed
-	n := &normalizer.Default{}
-	if err := parser.Normalize(data, n); err != nil {
-		fmt.Println(err)
-		os.Exit(3)
+	log.Printf("Downloading %s", path)
+
+	u, err := url.Parse(path)
+	if err != nil {
+		log.Fatalf("url.Parse: %s", err)
+	}
+
+	f := coverage.NewFeed()
+	f.URL = u
+
+	if err := downloader.NewFeedService().Update(f); err != nil {
+		log.Fatalf("downloader: %s", err)
+	}
+
+	if err := feed.NewFeedService().Update(f); err != nil {
+		log.Fatalf("feed: %s", err)
 	}
 
 	// Output as JSON
-	enc, err := json.MarshalIndent(n, "", "\t")
+	enc, err := json.MarshalIndent(f, "", "\t")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(4)
 	}
 	os.Stdout.Write(enc)
+	os.Stdout.Write([]byte{'\n'})
+
+	log.Print("Done")
 }
