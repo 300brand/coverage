@@ -2,10 +2,10 @@ package coverage
 
 type Word struct {
 	Word  string
+	Lower string
 	Stem  string
-	Index int
 }
 
 func (w Word) String() string {
-	return w.Word
+	return string(w.Word)
 }

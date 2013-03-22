@@ -1,14 +1,15 @@
 package coverage
 
-type Words []Word
+type Words struct {
+	All   []string
+	Lower []string
+	Stems []string
+}
 
 func (ws *Words) Add(w Word) {
-	*ws = append(*ws, w)
+	ws.All = append(ws.All, w.Word)
 }
 
 func (ws *Words) Strings() (s []string) {
-	for _, w := range *ws {
-		s = append(s, w.Word)
-	}
-	return
+	return ws.All
 }

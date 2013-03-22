@@ -13,7 +13,7 @@ type Article struct {
 	FeedId    bson.ObjectId `bson:",omitempty"`
 	Title     string
 	URL       *url.URL
-	Words     []Word
+	Words     Words
 	HTML      []byte `bson:"-"`
 	Body      Body   `bson:"-"`
 	Added     time.Time

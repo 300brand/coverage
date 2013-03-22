@@ -27,7 +27,7 @@ func TestWordsLen(t *testing.T) {
 		universe based on the concept and expand its mission globally.
 	`)
 	words := GetWords(s)
-	if l := len(words); l != 31 {
+	if l := len(words.All); l != 31 {
 		t.Errorf("Got %d words", l)
 	}
 }
