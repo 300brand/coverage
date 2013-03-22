@@ -13,8 +13,7 @@ func GetWords(b []byte) (ws coverage.Words) {
 	fields := bytes.Fields(n)
 	for _, f := range fields {
 		w := coverage.Word{
-			Word:  string(f),
-			Lower: string(bytes.ToLower(f)),
+			Word: string(f),
 		}
 		// Stemming adds 10x the time to split words up
 		if StemmingEnabled {
