@@ -100,13 +100,42 @@ func TestAccommodate(t *testing.T) {
 
 func TestDump(t *testing.T) {
 	tr := New()
+	tr.Add("teased")
+	tr.Add("test")
+	tr.Add("testing")
+	t.Logf("\n%s", tr.Dump())
+}
+
+func TestHasEmpty(t *testing.T) {
+	tr := New()
+	if tr.Has("test") {
+		t.Error("Expected no test")
+	}
+}
+func TestHasOne(t *testing.T) {
+	tr := New()
+	tr.Add("test")
+	if !tr.Has("test") {
+		t.Error("Expected test")
+	}
+}
+func TestHasMany(t *testing.T) {
+	tr := New()
 	tr.Add("tease")
 	tr.Add("teases")
 	tr.Add("teased")
 	tr.Add("teaser")
 	tr.Add("tests")
-	tr.Add("tested")
 	tr.Add("test")
+	tr.Add("tested")
 	tr.Add("testing")
-	t.Logf("\n%s", tr.Dump())
+	if tr.Has("te") {
+		t.Error("Expected no te")
+	}
+	if !tr.Has("tease") {
+		t.Error("Expected tease")
+	}
+	if !tr.Has("testing") {
+		t.Error("Expected testing")
+	}
 }

@@ -6,10 +6,6 @@
 // Rewritten to make a little more idiomatic and easier to understand
 package trie
 
-import (
-	"fmt"
-)
-
 const (
 	CharLow  = 'a'
 	CharHigh = 'z'
@@ -17,7 +13,6 @@ const (
 )
 
 type Trie struct {
-	Len   int
 	Trunk *Branch
 }
 
@@ -28,24 +23,39 @@ func New() *Trie {
 }
 
 func (t *Trie) Add(entry string) {
-	t.Len++
 	t.Trunk.Add([]rune(entry))
 }
 
 func (t *Trie) Dump() (out string) {
-	out = fmt.Sprintf("Words: %d\n", t.Len)
-	out += t.Trunk.Dump(0)
-	return
+	return t.Trunk.Dump(0)
 }
 
 func (t *Trie) Has(entry string) (found bool) {
-	/*
-		b := t.Trunk
+	b := t.Trunk
+	runes := []rune(entry)
 
-		// it's <= here to ensure we get to the cheat comparison nil on a valid path
-		for i := 0; i <= len(entry); i++ {
-			// Match Leaf, if it exists
+	// it's <= here to ensure we get to the cheat comparison nil on a valid path
+	for i := 0; i <= len(runes); i++ {
+		// Match Leaf, if it exists
+		for j := 0; j < len(b.Leaf); j++ {
+			if i >= len(runes) {
+				return false
+			}
+			if b.Leaf[j] != runes[i] {
+				return false
+			}
+			i++
 		}
-	*/
-	return
+		// We have reassembled the word, completely
+		if i == len(runes) {
+			return b.End
+		}
+		idx := b.Index(runes[i])
+		// No branch
+		if len(b.Branches) < idx || b.Branches[idx] == nil {
+			return false
+		}
+		b = b.Branches[idx]
+	}
+	return true
 }
