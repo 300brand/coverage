@@ -57,6 +57,7 @@ func (b *Branch) Add(entry []rune) {
 		// Memory already allocated, just swap
 		branch.Branches, b.Branches = b.Branches, branch.Branches
 		branch.End, b.End = b.End, branch.End
+		branch.Runes = b.Runes
 		// Push new branch in
 		b.Accommodate(idx)
 		b.Branches[idx] = branch
@@ -78,14 +79,14 @@ func (b *Branch) Add(entry []rune) {
 func (b *Branch) Dump(depth int) (out string) {
 	leafLen := len(b.Leaf)
 	if leafLen > 0 {
-		out += fmt.Sprintf("%s%s\n", strings.Repeat(dumpPad, depth), string(b.Leaf))
+		out += fmt.Sprintf("%s L:%s\n", strings.Repeat(dumpPad, depth), string(b.Leaf))
 	}
 	if b.End {
-		out += fmt.Sprintf("%s$\n", strings.Repeat(dumpPad, depth+leafLen))
+		out += fmt.Sprintf("%s $\n", strings.Repeat(dumpPad, depth+leafLen))
 	}
 	for r, br := range b.Branches {
 		if br != nil {
-			out += fmt.Sprintf("%s%s\n", strings.Repeat(dumpPad, depth+leafLen), string([]rune{rune(r) + 'a'}))
+			out += fmt.Sprintf("%s I:%s\n", strings.Repeat(dumpPad, depth+leafLen), string([]rune{rune(r) + 'a'}))
 			out += br.Dump(depth + leafLen + 1)
 		}
 	}
