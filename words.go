@@ -6,14 +6,14 @@ import (
 )
 
 type Words struct {
-	All    []string
-	Unique []string
-	Stems  []string
+	All      []string
+	Keywords []string
+	Stems    []string
 }
 
 func (ws *Words) Add(w Word) {
 	ws.All = append(ws.All, w.Word)
-	ws.Unique = uAppend(ws.Unique, strings.ToLower(w.Word))
+	ws.Keywords = uAppend(ws.Keywords, strings.ToLower(w.Word))
 	if w.Stem != "" {
 		ws.Stems = uAppend(ws.Stems, w.Stem)
 	}
