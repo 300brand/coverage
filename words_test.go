@@ -22,8 +22,8 @@ func TestWordsUnique(t *testing.T) {
 	for _, s := range a {
 		words.Add(Word{Word: s})
 	}
-	if u := strings.Join(words.Unique, " "); u != "four one three two" {
-		t.Error("Unique did not match")
+	if u := strings.Join(words.Keywords, " "); u != "four one three two" {
+		t.Error("Keywords did not match")
 		t.Errorf("Got: %s", u)
 	}
 }
