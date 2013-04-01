@@ -1,5 +1,5 @@
 package lexer
 
-func GetKeywords(b []byte) []string {
+func Keywords(b []byte) []string {
 	return []string{}
 }

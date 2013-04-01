@@ -19,7 +19,7 @@ func (s *ArticleService) Update(a *coverage.Article) error {
 	if len(a.Body.Text) == 0 {
 		return a.Log.Error(errors.New("Article body is empty, did you run body.ArticleService?"))
 	}
-	a.Words = GetWords(a.Body.Text)
+	a.Words.All = Words(a.Body.Text)
 	a.Modified("Words")
 	return nil
 }

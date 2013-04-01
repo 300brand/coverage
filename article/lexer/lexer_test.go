@@ -6,16 +6,16 @@ import (
 
 // var benchmarkString comes from normalize_test.go
 
-func BenchmarkGetWords(b *testing.B) {
+func BenchmarkWords(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		GetWords(benchmarkString)
+		Words(benchmarkString)
 	}
 }
 
 func BenchmarkStemming(b *testing.B) {
 	StemmingEnabled = true
 	for i := 0; i < b.N; i++ {
-		GetWords(benchmarkString)
+		Words(benchmarkString)
 	}
 	StemmingEnabled = false
 }
@@ -26,8 +26,8 @@ func TestWordsLen(t *testing.T) {
 		workforce and citizens, Data.gov continues to build a Google-style
 		universe based on the concept and expand its mission globally.
 	`)
-	words := GetWords(s)
-	if l := len(words.All); l != 31 {
+	words := Words(s)
+	if l := len(words); l != 31 {
 		t.Errorf("Got %d words", l)
 	}
 }
