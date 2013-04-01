@@ -1,4 +1,4 @@
-// +build -goci
+// +build !goci
 
 package mongo
 
