@@ -52,7 +52,7 @@ func (t *Trie) Has(entry string) (found bool) {
 		}
 		idx := b.Index(runes[i])
 		// No branch
-		if len(b.Branches) <= idx || b.Branches[idx] == nil {
+		if idx == -1 || len(b.Branches) <= idx || b.Branches[idx] == nil {
 			return false
 		}
 		b = b.Branches[idx]
