@@ -7,13 +7,22 @@ func Normalize(in []byte) (out []byte) {
 		switch {
 		case punctuation(b) || quote(b):
 			// skip
-		case space(b) || hyphenation(b):
+		case space(b) || hyphenation(b) || bracketing(b) || slash(b):
 			out = append(out, ' ')
 		default:
 			out = append(out, b)
 		}
 	}
 	return
+}
+
+func bracketing(r byte) bool {
+	switch r {
+	case '(', ')', '[', ']', '{', '}':
+	default:
+		return false
+	}
+	return true
 }
 
 func hyphenation(r byte) bool {
@@ -41,6 +50,10 @@ func quote(r byte) bool {
 		return false
 	}
 	return true
+}
+
+func slash(r byte) bool {
+	return r == '/'
 }
 
 func space(r byte) bool {
