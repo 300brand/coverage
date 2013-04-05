@@ -24,7 +24,7 @@ func init() {
 			Unique:     true,
 		},
 		mgo.Index{
-			Key:        []string{"words.word"},
+			Key:        []string{"words.keywords"},
 			Background: true,
 			DropDups:   false,
 			Sparse:     false,
