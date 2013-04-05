@@ -1,5 +1,5 @@
 package config
 
 var (
-	RPCEndpoint = "sable.haha.com/jsonrpc"
+	RPC = struct{ Address string }{"http://sable.haha.com/jsonrpc"}
 )
