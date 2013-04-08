@@ -121,3 +121,14 @@ func TestQueue(t *testing.T) {
 	}
 	t.Logf("items: %+v", items)
 }
+
+func TestQueueId(t *testing.T) {
+	config.RPC.Address = s.URL + "/queue"
+	items, err := GetQueue(2750, 10)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if id := items.LastId; id != 2760 {
+		t.Errorf("Invalid ID: %d", id)
+	}
+}
