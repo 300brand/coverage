@@ -18,7 +18,7 @@ func testGet(t *testing.T) {
 }
 
 func TestQueue(t *testing.T) {
-	items, err := Queue()
+	items, err := GetQueue(2750, 10)
 	if err != nil {
 		t.Fatal(err)
 	}
