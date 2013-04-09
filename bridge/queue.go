@@ -8,11 +8,13 @@ import (
 )
 
 type Feed struct {
-	Id  uint64
-	Url string
+	QueueId uint64
+	Id      uint64
+	Url     string
 }
 
 type Report struct {
+	QueueId    uint64
 	Id         uint64
 	DateBounds struct{ Start, End string }
 	Phrases    struct{ Include, Exclude []string }
@@ -57,13 +59,13 @@ func GetQueue(LastId, Limit uint64) (q Queue, err error) {
 			}
 			q.Reports = append(q.Reports, convertReport(v))
 		case "CoverageFeed":
-			v := Feed{Id: r.ObjectId}
+			v := Feed{QueueId: r.QueueId, Id: r.ObjectId}
 			if err = json.Unmarshal(*r.Data, &v.Url); err != nil {
 				return
 			}
 			q.NewFeeds = append(q.NewFeeds, v)
 		case "RemoveFeed":
-			v := Feed{Id: r.ObjectId}
+			v := Feed{QueueId: r.QueueId, Id: r.ObjectId}
 			if err = json.Unmarshal(*r.Data, &v.Url); err != nil {
 				return
 			}
@@ -75,6 +77,8 @@ func GetQueue(LastId, Limit uint64) (q Queue, err error) {
 }
 
 func convertReport(in Report) (out coverage.Report) {
+	out = *coverage.NewReport()
+
 	out.ObjectId = in.Id
 	tz := time.Now().Format("MST")
 	out.DateBounds.Start, _ = time.Parse(MySQLTime, in.DateBounds.Start+tz)
