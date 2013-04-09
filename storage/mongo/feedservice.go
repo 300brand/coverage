@@ -46,6 +46,18 @@ func (m *Mongo) GetFeed(query interface{}) (f *coverage.Feed, err error) {
 	return
 }
 
+func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId) (f *coverage.Feed, err error) {
+	f = &coverage.Feed{}
+	err = m.db.C(FeedCollection).Find(bson.M{
+		"_id": bson.M{
+			"$not": bson.M{
+				"$in": ignore,
+			},
+		},
+	}).Sort("lastdownload").Limit(1).One(f)
+	return
+}
+
 func (m *Mongo) UpdateFeed(f *coverage.Feed) (err error) {
 	_, err = m.db.C(FeedCollection).UpsertId(f.ID, f)
 	if err != nil {
