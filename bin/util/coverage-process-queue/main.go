@@ -1,12 +1,21 @@
 package main
 
 import (
+	"flag"
 	"git.300brand.com/coverage/bridge"
 	"git.300brand.com/coverage/storage/mongo"
 	"log"
 )
 
+var limit uint64
+
+func init() {
+	flag.Uint64Var(&limit, "n", 10, "Chunk size for pulling items from frontend queue")
+}
+
 func main() {
+	flag.Parse()
+
 	q := mongo.New("localhost", "CoverageQueue")
 	if err := q.Connect(); err != nil {
 		log.Fatalf("q.Connect: %s", err)
@@ -24,16 +33,24 @@ func main() {
 		log.Fatalf("q.QueueLastId: %s", err)
 	}
 
-	queue, err := bridge.GetQueue(lastId, 1)
+	queue, err := bridge.GetQueue(lastId, limit)
 	if err != nil {
 		log.Fatalf("bridge.GetQueue: %s", err)
+	}
+
+	fs := mongo.NewFeedService(m)
+	for _, f := range queue.NewFeeds {
+		log.Printf("Adding Feed: %s %s", f.ID.Hex(), f.URL)
+		if err := fs.Update(&f); err != nil {
+			log.Printf("fs.Update: %s", err)
+		}
 	}
 
 	rs := mongo.NewReportService(m)
 	for _, r := range queue.Reports {
 		log.Printf("Adding Report: %s", r.ID.Hex())
 		if err := rs.Update(&r); err != nil {
-			log.Fatalf("rs.Update: %s", err)
+			log.Printf("rs.Update: %s", err)
 		}
 	}
 
