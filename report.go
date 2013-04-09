@@ -30,6 +30,7 @@ type Report struct {
 
 func NewReport() (r *Report) {
 	return &Report{
-		ID: bson.NewObjectId(),
+		ID:    bson.NewObjectId(),
+		Added: time.Now(),
 	}
 }

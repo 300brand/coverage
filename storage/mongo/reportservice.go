@@ -4,7 +4,6 @@ import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
 	"labix.org/v2/mgo"
-	"time"
 )
 
 type ReportService struct {
@@ -31,10 +30,6 @@ func (s *ReportService) Update(r *coverage.Report) error {
 func (m *Mongo) UpdateReport(r *coverage.Report) (err error) {
 	if err = m.EnsureIndexSet(ReportCollection, indexes[ReportCollection]); err != nil {
 		return
-	}
-
-	if r.Added.Equal(time.Time{}) {
-		r.Added = time.Now()
 	}
 
 	if len(r.Feeds) > 0 {
