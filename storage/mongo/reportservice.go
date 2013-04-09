@@ -25,7 +25,7 @@ func NewReportService(m *Mongo) *ReportService {
 
 func (s *ReportService) Update(r *coverage.Report) error {
 	r.Log.Service("mongo.ReportService")
-	s.m.UpdateReport(r)
+	return s.m.UpdateReport(r)
 }
 
 func (m *Mongo) UpdateReport(r *coverage.Report) (err error) {
@@ -33,13 +33,10 @@ func (m *Mongo) UpdateReport(r *coverage.Report) (err error) {
 		return
 	}
 
-	zero := time.Time{}
-	if r.Added.Equal(zero) {
+	if r.Added.Equal(time.Time{}) {
 		r.Added = time.Now()
 	}
 
 	_, err = m.db.C(ReportCollection).UpsertId(r.ID, r)
-	if err != nil {
-		return
-	}
+	return
 }
