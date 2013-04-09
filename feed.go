@@ -9,7 +9,10 @@ import (
 
 type Feed struct {
 	ID           bson.ObjectId `bson:"_id"`
+	ObjectId     uint64        // Comes from the bridge package when inserting from the frontend
+	QueueId      uint64        // Comes from the bridge package when inserting from the frontend
 	URL          *url.URL
+	Disabled     bool
 	Content      []byte     `bson:"-"`
 	Articles     []*Article `bson:"-"` // Temporary Article storage
 	URLs         []*url.URL
@@ -24,7 +27,6 @@ func NewFeed() (f *Feed) {
 		ID:    bson.NewObjectId(),
 		Added: time.Now(),
 	}
-	f.Log.Debug("Created: %s", f.ID.Hex())
 	return
 }
 

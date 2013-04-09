@@ -26,7 +26,7 @@ type Report struct {
 
 type Queue struct {
 	LastId      uint64
-	NewFeeds    []Feed
+	NewFeeds    []coverage.Feed
 	RemoveFeeds []Feed
 	Reports     []coverage.Report
 }
@@ -43,6 +43,8 @@ const MySQLTime = "2006-01-02 15:04:05MST"
 func GetQueue(LastId, Limit uint64) (q Queue, err error) {
 	b := New()
 	defer b.Close()
+
+	q.LastId = LastId
 
 	resp := make([]queueResponse, 0, Limit)
 	err = b.Call("queue", []uint64{LastId, Limit}, &resp)
@@ -63,7 +65,7 @@ func GetQueue(LastId, Limit uint64) (q Queue, err error) {
 			if err = json.Unmarshal(*r.Data, &v.Url); err != nil {
 				return
 			}
-			q.NewFeeds = append(q.NewFeeds, v)
+			q.NewFeeds = append(q.NewFeeds, convertFeed(v))
 		case "RemoveFeed":
 			v := Feed{QueueId: r.QueueId, Id: r.ObjectId}
 			if err = json.Unmarshal(*r.Data, &v.Url); err != nil {
@@ -74,6 +76,15 @@ func GetQueue(LastId, Limit uint64) (q Queue, err error) {
 		q.LastId = r.QueueId
 	}
 	return
+}
+
+func convertFeed(in Feed) (out coverage.Feed) {
+	out = *coverage.NewFeed()
+	out.ObjectId = in.Id
+	out.QueueId = in.QueueId
+	out.URL, _ = url.Parse(in.Url)
+	return
+
 }
 
 func convertReport(in Report) (out coverage.Report) {
