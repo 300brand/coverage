@@ -53,7 +53,7 @@ func GetQueue(LastId, Limit uint64) (q Queue, err error) {
 	for _, r := range resp {
 		switch r.Class {
 		case "CoverageReport":
-			v := Report{}
+			v := Report{QueueId: r.QueueId}
 			if err = json.Unmarshal(*r.Data, &v); err != nil {
 				return
 			}
@@ -80,6 +80,8 @@ func convertReport(in Report) (out coverage.Report) {
 	out = *coverage.NewReport()
 
 	out.ObjectId = in.Id
+	out.QueueId = in.QueueId
+
 	tz := time.Now().Format("MST")
 	out.DateBounds.Start, _ = time.Parse(MySQLTime, in.DateBounds.Start+tz)
 	out.DateBounds.End, _ = time.Parse(MySQLTime, in.DateBounds.End+tz)
