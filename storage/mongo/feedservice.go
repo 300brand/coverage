@@ -59,6 +59,10 @@ func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId) (f *coverage.Feed, err err
 }
 
 func (m *Mongo) UpdateFeed(f *coverage.Feed) (err error) {
+	if err = m.EnsureIndexSet(FeedCollection, indexes[FeedCollection]); err != nil {
+		return
+	}
+
 	_, err = m.db.C(FeedCollection).UpsertId(f.ID, f)
 	if err != nil {
 		return

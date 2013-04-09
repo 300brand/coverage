@@ -30,6 +30,13 @@ func init() {
 			Sparse:     false,
 			Unique:     false,
 		},
+		mgo.Index{
+			Key:        []string{"feedid"},
+			Background: true,
+			DropDups:   false,
+			Sparse:     false,
+			Unique:     false,
+		},
 	}
 }
 
@@ -49,6 +56,10 @@ func (m *Mongo) GetArticle(query interface{}) (a *coverage.Article, err error) {
 }
 
 func (m *Mongo) UpdateArticle(a *coverage.Article) (err error) {
+	if err = m.EnsureIndexSet(ArticleCollection, indexes[ArticleCollection]); err != nil {
+		return
+	}
+
 	_, err = m.db.C(ArticleCollection).UpsertId(a.ID, a)
 	if err != nil {
 		return

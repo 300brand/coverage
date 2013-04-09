@@ -37,10 +37,15 @@ func (m *Mongo) Connect() (err error) {
 
 func (m *Mongo) EnsureIndexes() (err error) {
 	for name, indexSet := range indexes {
-		for _, index := range indexSet {
-			if err = m.db.C(name).EnsureIndex(index); err != nil {
-				return
-			}
+		m.EnsureIndexSet(name, indexSet)
+	}
+	return
+}
+
+func (m *Mongo) EnsureIndexSet(collection string, set []mgo.Index) (err error) {
+	for _, index := range set {
+		if err = m.db.C(collection).EnsureIndex(index); err != nil {
+			return
 		}
 	}
 	return
