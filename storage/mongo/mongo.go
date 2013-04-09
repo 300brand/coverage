@@ -32,7 +32,6 @@ func (m *Mongo) Connect() (err error) {
 		return
 	}
 	m.db = m.s.DB(m.DBName)
-	err = m.EnsureIndexes()
 	return
 }
 
