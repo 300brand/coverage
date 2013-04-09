@@ -6,7 +6,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"net/rpc"
 	"sync"
@@ -23,8 +22,13 @@ type clientCodec struct {
 	// Package rpc expects both.
 	// We save the request method in pending when sending a request
 	// and then look it up by request ID when filling out the rpc Response.
-	mutex   sync.Mutex          // protects pending
-	pending chan *http.Response // map request id to method name
+	mutex   sync.Mutex   // protects pending
+	pending chan pending // map request id to method name
+}
+
+type pending struct {
+	response *http.Response
+	method   string
 }
 
 var _ rpc.ClientCodec = &clientCodec{}
@@ -47,7 +51,7 @@ func NewClient(url string) *rpc.Client {
 func NewClientCodec(url string) rpc.ClientCodec {
 	return &clientCodec{
 		url:     url,
-		pending: make(chan *http.Response, 1),
+		pending: make(chan pending, 1),
 	}
 }
 
@@ -74,7 +78,7 @@ func (c *clientCodec) WriteRequest(r *rpc.Request, param interface{}) error {
 		return err
 	}
 
-	c.pending <- resp
+	c.pending <- pending{resp, r.ServiceMethod}
 
 	return nil
 }
@@ -92,10 +96,10 @@ func (r *clientResponse) reset() {
 }
 
 func (c *clientCodec) ReadResponseHeader(r *rpc.Response) error {
-	resp := <-c.pending
+	p := <-c.pending
 
-	dec := json.NewDecoder(resp.Body)
-	defer resp.Body.Close()
+	dec := json.NewDecoder(p.response.Body)
+	defer p.response.Body.Close()
 
 	c.resp.reset()
 	if err := dec.Decode(&c.resp); err != nil {
@@ -104,7 +108,8 @@ func (c *clientCodec) ReadResponseHeader(r *rpc.Response) error {
 
 	r.Error = ""
 	r.Seq = c.resp.Id
-	log.Println(r.ServiceMethod)
+	r.ServiceMethod = p.method
+
 	if c.resp.Error != nil {
 		x, ok := c.resp.Error.(string)
 		if !ok {
