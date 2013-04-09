@@ -11,7 +11,12 @@ type Report struct {
 	QueueId         uint64
 	ObjectId        uint64
 	PreviousResults []*url.URL
-	Feeds           []*url.URL
+	Feeds           []*url.URL `bson:"-"`
+	FeedIds         []bson.ObjectId
+	Log             logger.Entries
+	Added           time.Time
+	Updated         time.Time
+	Summaries       []Summary
 	DateBounds      struct {
 		Start time.Time
 		End   time.Time
