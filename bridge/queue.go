@@ -38,12 +38,12 @@ type queueResponse struct {
 
 const MySQLTime = "2006-01-02 15:04:05MST"
 
-func GetQueue(LastId, Limit int) (q Queue, err error) {
+func GetQueue(LastId, Limit uint64) (q Queue, err error) {
 	b := New()
 	defer b.Close()
 
 	resp := make([]queueResponse, 0, Limit)
-	err = b.Call("queue", []int{LastId, Limit}, &resp)
+	err = b.Call("queue", []uint64{LastId, Limit}, &resp)
 	if err != nil {
 		return
 	}
