@@ -6,5 +6,5 @@ import (
 )
 
 func New() *rpc.Client {
-	return NewClient(&Conn{Address: config.RPC.Address})
+	return NewClient(config.RPC.Address)
 }
