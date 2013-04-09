@@ -25,6 +25,13 @@ func init() {
 			Sparse:     false,
 			Unique:     true,
 		},
+		mgo.Index{
+			Key:        []string{"disabled"},
+			Background: true,
+			DropDups:   false,
+			Sparse:     false,
+			Unique:     false,
+		},
 	}
 }
 
