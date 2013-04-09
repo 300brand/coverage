@@ -69,11 +69,7 @@ func GetQueue(LastId, Limit int) (q Queue, err error) {
 			}
 			q.RemoveFeeds = append(q.RemoveFeeds, v)
 		}
-		func(in, a *uint64) {
-			if *a > *in {
-				*in = *a
-			}
-		}(&q.LastId, &r.QueueId)
+		q.LastId = r.QueueId
 	}
 	return
 }
