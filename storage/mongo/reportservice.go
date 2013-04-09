@@ -37,6 +37,14 @@ func (m *Mongo) UpdateReport(r *coverage.Report) (err error) {
 		r.Added = time.Now()
 	}
 
+	if len(r.Feeds) > 0 {
+		r.FeedIds, err = m.FeedIds(r.Feeds)
+		if err != nil {
+			return err
+		}
+
+	}
+
 	_, err = m.db.C(ReportCollection).UpsertId(r.ID, r)
 	return
 }

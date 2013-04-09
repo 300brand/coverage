@@ -5,6 +5,7 @@ import (
 	"git.300brand.com/coverage/service"
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
+	"net/url"
 )
 
 type FeedService struct {
@@ -34,6 +35,25 @@ func NewFeedService(m *Mongo) *FeedService {
 func (s *FeedService) Update(f *coverage.Feed) error {
 	f.Log.Service("mongo.FeedService")
 	return s.m.UpdateFeed(f)
+}
+
+func (m *Mongo) FeedIds(urls []*url.URL) (ids []bson.ObjectId, err error) {
+	out := make([]struct {
+		Id bson.ObjectId `bson:"_id"`
+	}, 0, len(urls))
+	err = m.db.C(FeedCollection).Find(bson.M{
+		"url": bson.M{
+			"$in": urls,
+		},
+	}).Select(bson.M{"_id": 1}).All(&out)
+	if err != nil {
+		return
+	}
+	ids = make([]bson.ObjectId, len(out))
+	for i := range out {
+		ids[i] = out[i].Id
+	}
+	return
 }
 
 func (m *Mongo) GetFeed(query interface{}) (f *coverage.Feed, err error) {
