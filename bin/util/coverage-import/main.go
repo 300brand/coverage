@@ -71,7 +71,7 @@ func init() {
 	}
 
 	conn.ArticleStmt, err = conn.MySQL.Prepare(`
-		SELECT id, parent_id, title, url, IFNULL(published, ''), _added
+		SELECT id, parent_id, IFNULL(title, ''), url, IFNULL(published, ''), _added
 		FROM Page
 		WHERE id > ?
 			AND parent_id IS NOT NULL
