@@ -3,7 +3,6 @@ package main
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
-	"labix.org/v2/mgo/bson"
 	"log"
 	"net/url"
 	"time"
@@ -67,8 +66,5 @@ func ConvertFeed(in Feed) (out *coverage.Feed, err error) {
 	if out.Added, err = time.ParseInLocation(timeLayout, in.Added, loc); err != nil {
 		return
 	}
-
-	out.ID = bson.NewObjectIdWithTime(out.Added)
-
 	return
 }
