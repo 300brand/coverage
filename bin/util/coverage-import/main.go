@@ -105,17 +105,18 @@ func main() {
 		}
 	}(processed)
 
-	batch := make([]Article, 0, batchSize)
+	batch := make([]Article, batchSize)
 	for {
 		log.Printf("Processing batch of %d starting at %d", batchSize, start)
-		if err := GetBatch(start, batch); err != nil {
+		n, err := GetBatch(start, batch)
+		if err != nil {
 			log.Fatal(err)
 		}
-		log.Printf("Batch size: %d", len(batch))
-		if len(batch) == 0 {
+		log.Printf("Batch size: %d", n)
+		if n == 0 {
 			break
 		}
-		start = ProcessBatch(batch, processed)
+		start = ProcessBatch(batch[:n], processed)
 		<-batchAdvance
 	}
 

@@ -4,22 +4,22 @@ import (
 	"log"
 )
 
-func GetBatch(lastId uint64, batch []Article) (err error) {
-	log.Printf("lastId: %d limit: %d", lastId, cap(batch))
-	rows, err := conn.ArticleStmt.Query(lastId, cap(batch))
+func GetBatch(lastId uint64, batch []Article) (n int, err error) {
+	log.Printf("lastId: %d limit: %d", lastId, len(batch))
+	rows, err := conn.ArticleStmt.Query(lastId, len(batch))
 	if err != nil {
 		return
 	}
-	for rows.Next() {
+	for n = 0; rows.Next(); n++ {
 		a := Article{}
 		err = rows.Scan(&a.Id, &a.FeedId, &a.Title, &a.Url, &a.Published, &a.Added)
 		if err != nil {
 			return
 		}
-		batch = append(batch, a)
+		batch[n] = a
 	}
-	log.Printf("Batch size: %d", len(batch))
-	return rows.Err()
+	err = rows.Err()
+	return
 }
 
 func ProcessBatch(batch []Article, ch chan interface{}) (newStart uint64) {
