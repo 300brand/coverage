@@ -94,7 +94,7 @@ func main() {
 	defer close(processed)
 
 	if err := ImportFeeds(); err != nil {
-		log.Fatal(err)
+		log.Println("Already imported")
 	}
 
 	go func(ch chan interface{}) {

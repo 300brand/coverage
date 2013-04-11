@@ -39,8 +39,11 @@ func FeedId(id uint64) (fid bson.ObjectId, err error) {
 		return
 	}
 
-	f, err := conn.Mongo.GetFeed(bson.M{"objectid": id})
+	f, err := conn.Mongo.GetFeed(bson.M{"feedid": id})
 	if err != nil {
+		if err.Error() == "not found" {
+			err = fmt.Errorf("Could not find feed: %d", id)
+		}
 		return
 	}
 	fid = f.ID
