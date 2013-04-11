@@ -60,6 +60,10 @@ func init() {
 		mongo.NewArticleService(conn.Mongo),
 	}
 
+	fServices = []service.FeedService{
+		mongo.NewFeedService(conn.Mongo),
+	}
+
 	if conn.MySQL, err = sql.Open("mysql", "root:@/haha?charset=utf8"); err != nil {
 		log.Fatal(err)
 	}
@@ -87,6 +91,10 @@ func main() {
 	defer conn.Mongo.Close()
 	defer close(processed)
 
+	if err := ImportFeeds(); err != nil {
+		log.Fatal(err)
+	}
+
 	go func(ch chan interface{}) {
 		var i uint64 = 0
 		for c := range ch {
@@ -105,7 +113,7 @@ func main() {
 		}
 	}(processed)
 
-	batch := make([]Article, batchSize)
+	batch := make([]Article, 0)
 	for {
 		log.Printf("Processing batch of %d starting at %d", batchSize, start)
 		n, err := GetBatch(start, batch)
