@@ -28,7 +28,6 @@ func ProcessBatch(batch []Article, ch chan interface{}) (newStart uint64) {
 		go func(in Article) {
 			a, err := ConvertArticle(in)
 			if err != nil {
-				log.Print(err)
 				ch <- err
 				return
 			}
