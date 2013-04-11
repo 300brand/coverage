@@ -3,7 +3,7 @@ package main
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
-	"github.com/skynetservices/mgo/bson"
+	"labix.org/v2/mgo/bson"
 	"log"
 	"net/url"
 	"time"
