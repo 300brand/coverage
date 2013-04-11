@@ -22,11 +22,11 @@ type Article struct {
 	Added     string
 }
 
-var conn = struct {
+var conn struct {
 	MySQL       *sql.DB
 	Mongo       *mongo.Mongo
 	ArticleStmt *sql.Stmt
-}{}
+}
 
 const timeLayout = "2006-01-02 15:04:05"
 
@@ -80,16 +80,17 @@ func init() {
 func main() {
 	flag.Parse()
 
-	defer conn.MySQL.Close()
-	defer conn.Mongo.Close()
-
 	processed := make(chan interface{}, batchSize)
 	batchAdvance := make(chan bool)
+
+	defer conn.MySQL.Close()
+	defer conn.Mongo.Close()
+	defer close(processed)
 
 	go func(ch chan interface{}) {
 		var i uint64 = 0
 		for c := range ch {
-			switch t := (c).(type) {
+			switch t := c.(type) {
 			case error:
 				log.Printf("[%03d] Error: %s", i, t)
 			case *coverage.Article:
@@ -104,11 +105,15 @@ func main() {
 		}
 	}(processed)
 
-	for batch := make([]Article, 1); len(batch) > 0; {
+	batch := make([]Article, 0, batchSize)
+	for {
 		log.Printf("Processing batch of %d starting at %d", batchSize, start)
-		batch, err := GetBatch(start, batchSize)
-		if err != nil {
+		if err := GetBatch(start, batch); err != nil {
 			log.Fatal(err)
+		}
+		log.Printf("Batch size: %d", len(batch))
+		if len(batch) == 0 {
+			break
 		}
 		start = ProcessBatch(batch, processed)
 		<-batchAdvance

@@ -4,9 +4,9 @@ import (
 	"log"
 )
 
-func GetBatch(lastId, limit uint64) (batch []Article, err error) {
-	batch = make([]Article, 0, limit)
-	rows, err := conn.ArticleStmt.Query(lastId, limit)
+func GetBatch(lastId uint64, batch []Article) (err error) {
+	log.Printf("lastId: %d limit: %d", lastId, cap(batch))
+	rows, err := conn.ArticleStmt.Query(lastId, cap(batch))
 	if err != nil {
 		return
 	}
@@ -18,8 +18,8 @@ func GetBatch(lastId, limit uint64) (batch []Article, err error) {
 		}
 		batch = append(batch, a)
 	}
-	err = rows.Err()
-	return
+	log.Printf("Batch size: %d", len(batch))
+	return rows.Err()
 }
 
 func ProcessBatch(batch []Article, ch chan interface{}) (newStart uint64) {
