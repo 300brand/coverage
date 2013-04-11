@@ -45,6 +45,8 @@ func init() {
 	flag.Uint64Var(&batchSize, "batch", 100, "Batch size")
 	flag.Uint64Var(&start, "start", 0, "Page ID to start with")
 
+	log.SetFlags(log.Lmicroseconds)
+
 	if loc, err = time.LoadLocation("America/New_York"); err != nil {
 		log.Fatal(err)
 	}
@@ -113,7 +115,7 @@ func main() {
 		}
 	}(processed)
 
-	batch := make([]Article, 0)
+	batch := make([]Article, batchSize)
 	for {
 		log.Printf("Processing batch of %d starting at %d", batchSize, start)
 		n, err := GetBatch(start, batch)
