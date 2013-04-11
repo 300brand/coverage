@@ -1,11 +1,6 @@
 package main
 
-import (
-	"log"
-)
-
 func GetBatch(lastId uint64, batch []Article) (n int, err error) {
-	log.Printf("lastId: %d limit: %d", lastId, len(batch))
 	rows, err := conn.ArticleStmt.Query(lastId, len(batch))
 	if err != nil {
 		return
