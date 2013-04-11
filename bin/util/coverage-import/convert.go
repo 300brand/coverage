@@ -30,6 +30,9 @@ func ConvertArticle(in Article) (out *coverage.Article, err error) {
 	if out.FeedId, err = FeedId(in.FeedId); err != nil {
 		return
 	}
+
+	out.ID = bson.NewObjectIdWithTime(out.Added)
+
 	return
 }
 
