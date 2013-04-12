@@ -3,26 +3,31 @@ Master {color:#444, shape:dot}
 
 Master -> ArticleDownload
 Master -> ArticleExtract
-Master -> Storage
+Master -> ArticleSocial
 Master -> FeedDownload
-Master -> Queue
 Master -> FeedExtract
+Master -> Queue
+Master -> Storage
 
 ; Service Functions
 ArticleDownload  -> DownloadArticle
 ArticleExtract   -> ArticleBody
 ArticleExtract   -> ArticleLex
+ArticleSocial    -> Disqus
+ArticleSocial    -> Facebook
+ArticleSocial    -> GPlus
+ArticleSocial    -> Twitter
+FeedDownload     -> DownloadFeed
 FeedExtract      -> FeedArticles
+Queue            -> FeedComplete
+Queue            -> NextFeed
 Storage          -> GetArticle
 Storage          -> GetFeed
 Storage          -> GetOldestFeed
+Storage          -> GetPublication
 Storage          -> StoreArticle
 Storage          -> StoreFeed
-Storage          -> GetPublication
 Storage          -> StorePublication
-FeedDownload     -> DownloadFeed
-Queue            -> NextFeed
-Queue            -> FeedComplete
 
 ; Cross-Service Calls
 NextFeed         -> GetOldestFeed
@@ -30,51 +35,64 @@ NextFeed         -> GetOldestFeed
 ; Service Resource Requirements
 da               -> Internet
 df               -> Internet
-smf              -> MongoDB
+FeedComplete     -> AtomicMap
+NextFeed         -> AtomicMap
+sda              -> Internet
+sfa              -> Internet
+sga              -> Internet
+sm               -> MongoDB
 sma              -> MongoDB
+smf              -> MongoDB
 smp              -> MongoDB
 smr              -> MongoDB
-sm               -> MongoDB
-NextFeed         -> AtomicMap
-FeedComplete     -> AtomicMap
+sta              -> Internet
 
 ; ServiceFunctions -> Internal Services
 ArticleBody      -> aba
 ArticleLex       -> ala
+Disqus           -> sda
 DownloadArticle  -> da
 DownloadFeed     -> df
+Facebook         -> sfa
 FeedArticles     -> ff
-StorePublication -> smp
-StoreArticle     -> sma
-StoreFeed        -> smf
 GetArticle       -> sm
 GetFeed          -> sm
 GetOldestFeed    -> sm
 GetPublication   -> sm
+GPlus            -> sga
+StoreArticle     -> sma
+StoreFeed        -> smf
+StorePublication -> smp
+Twitter          -> sta
 
 ; Services
 ArticleDownload  {color:green}
 ArticleExtract   {color:green}
+ArticleSocial    {color:lightgray}
 FeedDownload     {color:green}
 FeedExtract      {color:green}
-Storage          {color:green}
 Queue            {color:green}
+Storage          {color:green}
 
 ; Functions
 ArticleBody      {color:goldenrod}
 ArticleLex       {color:goldenrod}
+Disqus           {color:lightgray}
 DownloadArticle  {color:goldenrod}
 DownloadFeed     {color:goldenrod}
+Facebook         {color:lightgray}
 FeedArticles     {color:goldenrod}
 FeedComplete     {color:goldenrod}
 GetArticle       {color:goldenrod}
 GetFeed          {color:goldenrod}
 GetOldestFeed    {color:goldenrod}
 GetPublication   {color:goldenrod}
+GPlus            {color:lightgray}
 NextFeed         {color:goldenrod}
 StoreArticle     {color:goldenrod}
 StoreFeed        {color:goldenrod}
 StorePublication {color:goldenrod}
+Twitter          {color:lightgray}
 
 ; *Service Calls
 aba              {color:blue, label:article/body/ArticleService}
@@ -82,15 +100,18 @@ ala              {color:blue, label:article/lexer/ArticleService}
 da               {color:blue, label:downloader/ArticleService}
 df               {color:blue, label:downloader/FeedService}
 ff               {color:blue, label:feed/FeedService}
+sda              {color:lightgray, label:social/disqus/ArticleService}
+sfa              {color:lightgray, label:social/facebook/ArticleService}
+sga              {color:lightgray, label:social/gplus/ArticleService}
+sm               {color:blue, label:storage/mongo}
 sma              {color:blue, label:storage/mongo/ArticleService}
 smf              {color:blue, label:storage/mongo/FeedService}
 smp              {color:blue, label:storage/mongo/PublicationService}
 smr              {color:blue, label:storage/mongo/ReportService}
-sm               {color:blue, label:storage/mongo}
-
+sta              {color:lightgray, label:social/twitter/ArticleService}
 
 
 ; External Resources
-MongoDB          {color:#888, shape:dot}
-Internet         {color:#888, shape:dot}
 AtomicMap        {color:magenta, shape:dot}
+Internet         {color:#888, shape:dot}
+MongoDB          {color:#888, shape:dot}
