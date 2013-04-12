@@ -1,0 +1,84 @@
+; Skynet Client
+Master {color:#444, shape:dot}
+
+Master -> ArticleDownload
+Master -> ArticleExtract
+Master -> Storage
+Master -> FeedDownload
+Master -> Queue
+Master -> FeedExtract
+
+; Service Functions
+ArticleDownload  -> DownloadArticle
+ArticleExtract   -> ArticleBody
+ArticleExtract   -> ArticleLex
+FeedExtract      -> FeedArticles
+Storage          -> GetArticle
+Storage          -> GetFeed
+Storage          -> GetOldestFeed
+Storage          -> StoreArticle
+Storage          -> StoreFeed
+Storage          -> GetPublication
+Storage          -> StorePublication
+FeedDownload     -> DownloadFeed
+Queue            -> NextFeed
+Queue            -> FeedComplete
+
+; Cross-Service Calls
+NextFeed         -> GetOldestFeed
+
+; Service Resource Requirements
+ArticleDownload  -> Internet
+FeedDownload     -> Internet
+Storage          -> MongoDB
+
+; ServiceFunctions -> Internal Services
+ArticleBody      -> aba
+ArticleLex       -> ala
+DownloadArticle  -> da
+DownloadFeed     -> df
+FeedExtract      -> ff
+StorePublication -> smp
+StoreArticle     -> sma
+StoreFeed        -> smf
+
+; Services
+ArticleDownload  {color:maroon}
+ArticleExtract   {color:maroon}
+FeedDownload     {color:green}
+FeedExtract      {color:green}
+Storage          {color:green}
+Queue            {color:purple}
+
+; Functions
+ArticleBody      {color:goldenrod}
+ArticleLex       {color:goldenrod}
+DownloadArticle  {color:goldenrod}
+DownloadFeed     {color:goldenrod}
+FeedArticles     {color:goldenrod}
+FeedComplete     {color:goldenrod}
+GetArticle       {color:goldenrod}
+GetFeed          {color:goldenrod}
+GetOldestFeed    {color:goldenrod}
+GetPublication   {color:goldenrod}
+NextFeed         {color:goldenrod}
+StoreArticle     {color:goldenrod}
+StoreFeed        {color:goldenrod}
+StorePublication {color:goldenrod}
+
+; *Service Calls
+aba              {color:blue, label:article/body/ArticleService}
+ala              {color:blue, label:article/lexer/ArticleService}
+da               {color:blue, label:downloader/ArticleService}
+df               {color:blue, label:downloader/FeedService}
+ff               {color:blue, label:feed/FeedService}
+sma              {color:blue, label:storage/mongo/ArticleService}
+smf              {color:blue, label:storage/mongo/FeedService}
+smp              {color:blue, label:storage/mongo/PublicationService}
+smr              {color:blue, label:storage/mongo/ReportService}
+
+
+
+; External Resources
+MongoDB          {color:#888, shape:dot}
+Internet         {color:#888, shape:dot}
