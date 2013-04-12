@@ -22,7 +22,7 @@ func ProcessBatch(batch []Article, ch chan interface{}) (newStart uint64) {
 	for _, b := range batch {
 		//bStart = time.Now()
 		newStart = b.Id
-		func(in Article) {
+		go func(in Article) {
 			a, err := ConvertArticle(in)
 			if err != nil {
 				ch <- err
