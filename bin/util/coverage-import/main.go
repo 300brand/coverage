@@ -58,6 +58,10 @@ func init() {
 		log.Fatal(err)
 	}
 
+	if err = conn.Mongo.EnsureIndexes(); err != nil {
+		log.Fatal(err)
+	}
+
 	services = []service.ArticleService{
 		body.NewArticleService(),
 		lexer.NewArticleService(),
