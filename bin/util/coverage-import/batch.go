@@ -1,5 +1,10 @@
 package main
 
+import (
+	"log"
+	"time"
+)
+
 func GetBatch(lastId uint64, batch []Article) (n int, err error) {
 	rows, err := conn.ArticleStmt.Query(lastId, len(batch))
 	if err != nil {
@@ -18,7 +23,9 @@ func GetBatch(lastId uint64, batch []Article) (n int, err error) {
 }
 
 func ProcessBatch(batch []Article, ch chan interface{}) (newStart uint64) {
+	var bStart, sStart time.Time
 	for _, b := range batch {
+		bStart = time.Now()
 		newStart = b.Id
 		func(in Article) {
 			a, err := ConvertArticle(in)
@@ -27,13 +34,16 @@ func ProcessBatch(batch []Article, ch chan interface{}) (newStart uint64) {
 				return
 			}
 			for _, s := range services {
+				sStart = time.Now()
 				if err := s.Update(a); err != nil {
 					ch <- err
 					return
 				}
+				log.Printf("         Service: %T %s", s, time.Now().Sub(sStart))
 			}
 			ch <- a
 		}(b)
+		log.Printf("         Batch: %s", time.Now().Sub(bStart))
 	}
 	return
 }

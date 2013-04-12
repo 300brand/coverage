@@ -102,9 +102,9 @@ func main() {
 		for c := range ch {
 			switch t := c.(type) {
 			case error:
-				log.Printf("[%03d] Error: %s", i, t)
+				log.Printf("[%06d] Error: %s", i, t)
 			case *coverage.Article:
-				log.Printf("[%03d] %s %s %s", i, t.ID.Hex(), t.FeedId.Hex(), t.Added)
+				log.Printf("[%06d] %s %s %s", i, t.ID.Hex(), t.FeedId.Hex(), t.Added)
 			default:
 				log.Printf("Unknown? %+v", t)
 			}
