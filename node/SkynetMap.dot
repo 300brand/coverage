@@ -4,6 +4,7 @@ Master {color:#444, shape:dot}
 Master -> ArticleDownload
 Master -> ArticleExtract
 Master -> ArticleSocial
+Master -> Graphite
 Master -> FeedDownload
 Master -> FeedExtract
 Master -> Indexer
@@ -18,6 +19,8 @@ ArticleSocial    -> Disqus
 ArticleSocial    -> Facebook
 ArticleSocial    -> GPlus
 ArticleSocial    -> Twitter
+Graphite         -> BodySize
+Graphite         -> Error
 FeedDownload     -> DownloadFeed
 FeedExtract      -> FeedArticles
 Indexer          -> IndexKeywords
@@ -38,6 +41,7 @@ NextFeed         -> GetOldestFeed
 da               -> Internet
 df               -> Internet
 FeedComplete     -> AtomicMap
+gg               -> GraphiteServer
 NextFeed         -> AtomicMap
 sda              -> Internet
 sfa              -> Internet
@@ -52,9 +56,11 @@ sta              -> Internet
 ; ServiceFunctions -> Internal Services
 ArticleBody      -> aba
 ArticleLex       -> ala
+BodySize         -> gg
 Disqus           -> sda
 DownloadArticle  -> da
 DownloadFeed     -> df
+Error            -> gg
 Facebook         -> sfa
 FeedArticles     -> ff
 GetArticle       -> sm
@@ -72,6 +78,7 @@ Twitter          -> sta
 ArticleDownload  {color:green}
 ArticleExtract   {color:green}
 ArticleSocial    {color:lightgray}
+Graphite         {color:lightgray}
 FeedDownload     {color:green}
 FeedExtract      {color:green}
 Indexer          {color:lightgray}
@@ -81,9 +88,11 @@ Storage          {color:green}
 ; Functions
 ArticleBody      {color:goldenrod}
 ArticleLex       {color:goldenrod}
+BodySize         {color:lightgray}
 Disqus           {color:lightgray}
 DownloadArticle  {color:goldenrod}
 DownloadFeed     {color:goldenrod}
+Error            {color:lightgray}
 Facebook         {color:lightgray}
 FeedArticles     {color:goldenrod}
 FeedComplete     {color:goldenrod}
@@ -105,6 +114,7 @@ ala              {color:blue, label:article/lexer/ArticleService}
 da               {color:blue, label:downloader/ArticleService}
 df               {color:blue, label:downloader/FeedService}
 ff               {color:blue, label:feed/FeedService}
+gg               {color:lightgray, label:graphite/GraphiteService}
 sda              {color:lightgray, label:social/disqus/ArticleService}
 sfa              {color:lightgray, label:social/facebook/ArticleService}
 sga              {color:lightgray, label:social/gplus/ArticleService}
@@ -120,3 +130,4 @@ sta              {color:lightgray, label:social/twitter/ArticleService}
 AtomicMap        {color:magenta, shape:dot}
 Internet         {color:#888, shape:dot}
 MongoDB          {color:#888, shape:dot}
+GraphiteServer   {color:#888, shape:dot, label:Graphite}
