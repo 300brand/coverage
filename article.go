@@ -14,8 +14,8 @@ type Article struct {
 	Title     string
 	URL       *url.URL
 	Words     Words
-	HTML      []byte `bson:"-"`
-	Body      Body   `bson:"-"`
+	HTML      []byte
+	Body      Body
 	Added     time.Time
 	Updated   time.Time
 	LastCheck time.Time

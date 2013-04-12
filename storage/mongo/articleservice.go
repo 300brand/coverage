@@ -73,12 +73,14 @@ func (m *Mongo) UpdateArticle(a *coverage.Article) (err error) {
 	}
 	log.Printf("             UpsertId: %s", time.Now().Sub(start))
 
-	for i, f := range a.Files() {
-		start = time.Now()
-		if err = m.storeFile(ArticleCollection, &f); err != nil {
-			return
+	/*
+		for i, f := range a.Files() {
+			start = time.Now()
+			if err = m.storeFile(ArticleCollection, &f); err != nil {
+				return
+			}
+			log.Printf("             StoreFile[%d]: %s", i, time.Now().Sub(start))
 		}
-		log.Printf("             StoreFile[%d]: %s", i, time.Now().Sub(start))
-	}
+	*/
 	return
 }
