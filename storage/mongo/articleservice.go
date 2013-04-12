@@ -25,22 +25,20 @@ func init() {
 			Sparse:     false,
 			Unique:     true,
 		},
-		/*
-			mgo.Index{
-				Key:        []string{"words.keywords"},
-				Background: true,
-				DropDups:   false,
-				Sparse:     false,
-				Unique:     false,
-			},
-			mgo.Index{
-				Key:        []string{"feedid"},
-				Background: true,
-				DropDups:   false,
-				Sparse:     false,
-				Unique:     false,
-			},
-		*/
+		mgo.Index{
+			Key:        []string{"words.keywords"},
+			Background: true,
+			DropDups:   false,
+			Sparse:     false,
+			Unique:     false,
+		},
+		mgo.Index{
+			Key:        []string{"feedid"},
+			Background: true,
+			DropDups:   false,
+			Sparse:     false,
+			Unique:     false,
+		},
 	}
 }
 
