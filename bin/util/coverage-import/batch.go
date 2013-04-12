@@ -20,7 +20,7 @@ func GetBatch(lastId uint64, batch []Article) (n int, err error) {
 func ProcessBatch(batch []Article, ch chan interface{}) (newStart uint64) {
 	for _, b := range batch {
 		newStart = b.Id
-		go func(in Article) {
+		func(in Article) {
 			a, err := ConvertArticle(in)
 			if err != nil {
 				ch <- err
