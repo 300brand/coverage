@@ -6,6 +6,7 @@ import (
 	"git.300brand.com/coverage"
 	"io/ioutil"
 	"labix.org/v2/mgo/bson"
+	"log"
 	"net/url"
 	"os"
 	"time"
@@ -16,7 +17,9 @@ var feedIdCache = map[uint64]bson.ObjectId{}
 func ConvertArticle(in Article) (out *coverage.Article, err error) {
 	out = coverage.NewArticle()
 
+	start := time.Now()
 	out.HTML, err = ArticleHTML(in.Id)
+	log.Printf("         Read HTML %s", time.Now().Sub(start))
 
 	if out.URL, err = url.Parse(string(in.Url)); err != nil {
 		return
