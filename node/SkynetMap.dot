@@ -28,27 +28,37 @@ Queue            -> FeedComplete
 NextFeed         -> GetOldestFeed
 
 ; Service Resource Requirements
-ArticleDownload  -> Internet
-FeedDownload     -> Internet
-Storage          -> MongoDB
+da               -> Internet
+df               -> Internet
+smf              -> MongoDB
+sma              -> MongoDB
+smp              -> MongoDB
+smr              -> MongoDB
+sm               -> MongoDB
+NextFeed         -> AtomicMap
+FeedComplete     -> AtomicMap
 
 ; ServiceFunctions -> Internal Services
 ArticleBody      -> aba
 ArticleLex       -> ala
 DownloadArticle  -> da
 DownloadFeed     -> df
-FeedExtract      -> ff
+FeedArticles     -> ff
 StorePublication -> smp
 StoreArticle     -> sma
 StoreFeed        -> smf
+GetArticle       -> sm
+GetFeed          -> sm
+GetOldestFeed    -> sm
+GetPublication   -> sm
 
 ; Services
-ArticleDownload  {color:maroon}
-ArticleExtract   {color:maroon}
+ArticleDownload  {color:green}
+ArticleExtract   {color:green}
 FeedDownload     {color:green}
 FeedExtract      {color:green}
 Storage          {color:green}
-Queue            {color:purple}
+Queue            {color:green}
 
 ; Functions
 ArticleBody      {color:goldenrod}
@@ -76,9 +86,11 @@ sma              {color:blue, label:storage/mongo/ArticleService}
 smf              {color:blue, label:storage/mongo/FeedService}
 smp              {color:blue, label:storage/mongo/PublicationService}
 smr              {color:blue, label:storage/mongo/ReportService}
+sm               {color:blue, label:storage/mongo}
 
 
 
 ; External Resources
 MongoDB          {color:#888, shape:dot}
 Internet         {color:#888, shape:dot}
+AtomicMap        {color:magenta, shape:dot}
