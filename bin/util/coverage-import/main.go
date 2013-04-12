@@ -32,6 +32,7 @@ const timeLayout = "2006-01-02 15:04:05"
 
 var (
 	batchSize uint64
+	once      bool
 	start     uint64
 	loc       *time.Location
 	path      string
@@ -41,6 +42,7 @@ var (
 func init() {
 	var err error
 
+	flag.BoolVar(&once, "once", false, "Only run one batch")
 	flag.StringVar(&path, "path", "/media/bodies", "Path to article bodies")
 	flag.Uint64Var(&batchSize, "batch", 100, "Batch size")
 	flag.Uint64Var(&start, "start", 0, "Page ID to start with")
@@ -127,6 +129,9 @@ func main() {
 			break
 		}
 		start = ProcessBatch(batch[:n], processed)
+		if once {
+			break
+		}
 		<-batchAdvance
 	}
 
