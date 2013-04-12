@@ -6,6 +6,7 @@ Master -> ArticleExtract
 Master -> ArticleSocial
 Master -> FeedDownload
 Master -> FeedExtract
+Master -> Indexer
 Master -> Queue
 Master -> Storage
 
@@ -19,6 +20,7 @@ ArticleSocial    -> GPlus
 ArticleSocial    -> Twitter
 FeedDownload     -> DownloadFeed
 FeedExtract      -> FeedArticles
+Indexer          -> IndexKeywords
 Queue            -> FeedComplete
 Queue            -> NextFeed
 Storage          -> GetArticle
@@ -41,10 +43,10 @@ sda              -> Internet
 sfa              -> Internet
 sga              -> Internet
 sm               -> MongoDB
-sma              -> MongoDB
-smf              -> MongoDB
-smp              -> MongoDB
-smr              -> MongoDB
+sma              -> sm
+smf              -> sm
+smp              -> sm
+smr              -> sm
 sta              -> Internet
 
 ; ServiceFunctions -> Internal Services
@@ -60,6 +62,7 @@ GetFeed          -> sm
 GetOldestFeed    -> sm
 GetPublication   -> sm
 GPlus            -> sga
+IndexKeywords    -> sm
 StoreArticle     -> sma
 StoreFeed        -> smf
 StorePublication -> smp
@@ -71,6 +74,7 @@ ArticleExtract   {color:green}
 ArticleSocial    {color:lightgray}
 FeedDownload     {color:green}
 FeedExtract      {color:green}
+Indexer          {color:lightgray}
 Queue            {color:green}
 Storage          {color:green}
 
@@ -88,6 +92,7 @@ GetFeed          {color:goldenrod}
 GetOldestFeed    {color:goldenrod}
 GetPublication   {color:goldenrod}
 GPlus            {color:lightgray}
+IndexKeywords    {color:lightgray}
 NextFeed         {color:goldenrod}
 StoreArticle     {color:goldenrod}
 StoreFeed        {color:goldenrod}
