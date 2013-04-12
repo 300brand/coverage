@@ -4,8 +4,6 @@ import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
 	"labix.org/v2/mgo"
-	"log"
-	"time"
 )
 
 type ArticleService struct {
@@ -58,18 +56,10 @@ func (m *Mongo) GetArticle(query interface{}) (a *coverage.Article, err error) {
 }
 
 func (m *Mongo) UpdateArticle(a *coverage.Article) (err error) {
-	start := time.Now()
-	if err = m.EnsureIndexSet(ArticleCollection, indexes[ArticleCollection]); err != nil {
-		return
-	}
-	log.Printf("             EnsureIndex: %s", time.Now().Sub(start))
-
-	start = time.Now()
 	_, err = m.db.C(ArticleCollection).UpsertId(a.ID, a)
 	if err != nil {
 		return
 	}
-	log.Printf("             UpsertId: %s", time.Now().Sub(start))
 
 	// TODO Remove file storage
 	/*
