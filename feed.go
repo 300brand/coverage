@@ -14,7 +14,7 @@ type Feed struct {
 	FeedId       uint64        // From MySQL Feed table
 	URL          *url.URL
 	Disabled     bool
-	Content      []byte     `bson:"-"`
+	Content      []byte
 	Articles     []*Article `bson:"-"` // Temporary Article storage
 	URLs         []*url.URL
 	Log          logger.Entries
@@ -44,6 +44,7 @@ func (f *Feed) AddURL(u *url.URL) bool {
 	return true
 }
 
+// TODO remove file storage
 func (f *Feed) Files() []File {
 	return []File{
 		{

@@ -94,10 +94,13 @@ func (m *Mongo) UpdateFeed(f *coverage.Feed) (err error) {
 	if err != nil {
 		return
 	}
-	for _, file := range f.Files() {
-		if err = m.storeFile(FeedCollection, &file); err != nil {
-			return
+	// TODO remove file storage
+	/*
+		for _, file := range f.Files() {
+			if err = m.storeFile(FeedCollection, &file); err != nil {
+				return
+			}
 		}
-	}
+	*/
 	return
 }
