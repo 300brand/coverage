@@ -33,6 +33,7 @@ func NewArticle() (a *Article) {
 	return
 }
 
+// TODO remove file storage
 func (a *Article) Files() []File {
 	return []File{
 		{

@@ -73,6 +73,7 @@ func (m *Mongo) UpdateArticle(a *coverage.Article) (err error) {
 	}
 	log.Printf("             UpsertId: %s", time.Now().Sub(start))
 
+	// TODO Remove file storage
 	/*
 		for i, f := range a.Files() {
 			start = time.Now()
