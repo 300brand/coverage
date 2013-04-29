@@ -111,5 +111,9 @@ func connect(t *testing.T) (m *Mongo) {
 		t.Error(err)
 		return
 	}
+	if err := m.EnsureIndexes(); err != nil {
+		t.Error(err)
+		return
+	}
 	return
 }
