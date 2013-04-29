@@ -6,5 +6,6 @@ import (
 )
 
 func TestTypes(t *testing.T) {
-	var _ service.ServiceDelegate = &SkynetFeed{}
+	var _ service.ServiceDelegate = &StorageReader{}
+	var _ service.ServiceDelegate = &StorageWriter{}
 }
