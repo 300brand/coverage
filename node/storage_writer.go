@@ -1,12 +1,14 @@
 package node
 
 import (
+	"git.300brand.com/coverage/storage/mongo"
 	"github.com/skynetservices/skynet"
 	"github.com/skynetservices/skynet/service"
 )
 
 type StorageWriter struct {
-	Log skynet.SemanticLogger
+	Log   skynet.SemanticLogger
+	Mongo *mongo.Mongo
 }
 
 var _ service.ServiceDelegate = &StorageWriter{}
