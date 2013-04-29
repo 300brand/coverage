@@ -16,12 +16,14 @@ type SkynetFeed struct {
 
 var _ service.ServiceDelegate = &SkynetFeed{}
 
-func (s *SkynetFeed) Registered(service *service.Service)                      {}
-func (s *SkynetFeed) Unregistered(service *service.Service)                    {}
-func (s *SkynetFeed) Started(service *service.Service)                         {}
-func (s *SkynetFeed) Stopped(service *service.Service)                         { s.Log.Trace("Stopped") }
-func (s *SkynetFeed) MethodCalled(method string)                               {}
-func (s *SkynetFeed) MethodCompleted(method string, duration int64, err error) {}
+func (s *SkynetFeed) Registered(service *service.Service)   { s.Log.Trace("Registered") }
+func (s *SkynetFeed) Unregistered(service *service.Service) { s.Log.Trace("Unregistered") }
+func (s *SkynetFeed) Started(service *service.Service)      { s.Log.Trace("Started") }
+func (s *SkynetFeed) Stopped(service *service.Service)      { s.Log.Trace("Stopped") }
+func (s *SkynetFeed) MethodCalled(method string)            { s.Log.Trace("MethodCalled") }
+func (s *SkynetFeed) MethodCompleted(method string, duration int64, err error) {
+	s.Log.Trace("MethodCompleted")
+}
 
 // in will be nil
 func (s *SkynetFeed) Download(r *skynet.RequestInfo, in *coverage.Feed, out *coverage.Feed) (err error) {
