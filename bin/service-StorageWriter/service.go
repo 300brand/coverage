@@ -1,4 +1,4 @@
-package node
+package main
 
 import (
 	"git.300brand.com/coverage/storage/mongo"
