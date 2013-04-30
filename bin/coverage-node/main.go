@@ -11,7 +11,7 @@ var services = make(map[string]func(*skynet.ServiceConfig) service.ServiceDelega
 func main() {
 	config, args := skynet.GetServiceConfig()
 	log.Printf("%+v", args)
-	config.Name = args[0]
+	config.Name = "StorageReader"
 
 	if _, ok := services[config.Name]; !ok {
 		log.Fatalf("Unknown service: %s", config.Name)
