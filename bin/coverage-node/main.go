@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"github.com/skynetservices/skynet"
 	"github.com/skynetservices/skynet/service"
 	"log"
@@ -10,10 +9,9 @@ import (
 var services = make(map[string]func(*skynet.ServiceConfig) service.ServiceDelegate)
 
 func main() {
-	flag.Parse()
-
-	config, _ := skynet.GetServiceConfig()
-	config.Name = flag.Arg(0)
+	config, args := skynet.GetServiceConfig()
+	log.Printf("%+v", args)
+	config.Name = args[0]
 
 	if _, ok := services[config.Name]; !ok {
 		log.Fatalf("Unknown service: %s", config.Name)
