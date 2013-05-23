@@ -14,6 +14,7 @@ var (
 func main() {
 	config, _ := skynet.GetServiceConfig()
 	config.Name = "PublicationAdder"
+	config.Version = "1.0.0"
 
 	s := &PublicationAdder{
 		Log:       skynet.NewConsoleSemanticLogger(config.Name, os.Stdout),
