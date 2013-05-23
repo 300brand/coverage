@@ -29,6 +29,7 @@ func (s *PublicationAdder) Unregistered(service *service.Service) {
 func (s *PublicationAdder) Started(service *service.Service) {
 	s.Log.Trace("Started")
 	s.m = mongo.New(s.MongoHost, s.MongoDb)
+	s.Log.Trace("Connecting to MongoDB: " + s.MongoHost + " " + s.MongoDb)
 	if err := s.m.Connect(); err != nil {
 		s.Log.Fatal(err.Error())
 	}
@@ -53,7 +54,8 @@ func (s *PublicationAdder) MethodCompleted(method string, duration int64, err er
 	s.Log.Trace("MethodCompleted")
 }
 
-func (s *PublicationAdder) Add(ri *skynet.RequestInfo, req *coverage.Publication, resp struct{}) (err error) {
+func (s *PublicationAdder) Add(ri *skynet.RequestInfo, req *coverage.Publication, resp *coverage.Publication) (err error) {
+	*resp = *req
 	errs := make([]string, 0, 2)
 	if req.Title == "" {
 		errs = append(errs, "Publication cannot have a blank title")
