@@ -1,10 +1,12 @@
 package main
 
 import (
+	"errors"
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/storage/mongo"
 	"github.com/skynetservices/skynet"
 	"github.com/skynetservices/skynet/service"
+	"strings"
 )
 
 type PublicationAdder struct {
@@ -51,6 +53,22 @@ func (s *PublicationAdder) MethodCompleted(method string, duration int64, err er
 	s.Log.Trace("MethodCompleted")
 }
 
-func (s *PublicationAdder) Add(ri *skynet.RequestInfo, req *coverage.Publication, resp *bool) (err error) {
+func (s *PublicationAdder) Add(ri *skynet.RequestInfo, req *coverage.Publication, resp struct{}) (err error) {
+	errs := make([]string, 0, 2)
+	if req.Title == "" {
+		errs = append(errs, "Publication cannot have a blank title")
+	}
+	if req.URL == nil {
+		errs = append(errs, "Publication cannot have a blank URL")
+	}
+	if len(errs) > 0 {
+		errMsg := strings.Join(errs, "; ")
+		s.Log.Error(errMsg)
+		return errors.New(errMsg)
+	}
+
+	if err = s.m.UpdatePublication(req); err != nil {
+		s.Log.Error(err.Error())
+	}
 	return
 }
