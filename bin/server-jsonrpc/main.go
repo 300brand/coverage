@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"github.com/gorilla/handlers"
-	"github.com/gorilla/rpc"
-	"github.com/gorilla/rpc/json"
+	rpc "github.com/gorilla/rpc/v2"
+	"github.com/gorilla/rpc/v2/json"
 	"log"
 	"net/http"
 	"os"
