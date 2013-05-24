@@ -9,24 +9,24 @@ import (
 	"strings"
 )
 
-type PublicationAdder struct {
+type Publication struct {
 	Log       skynet.SemanticLogger
 	MongoHost string
 	MongoDb   string
 	m         *mongo.Mongo
 }
 
-var _ service.ServiceDelegate = &PublicationAdder{}
+var _ service.ServiceDelegate = &Publication{}
 
-func (s *PublicationAdder) Registered(service *service.Service) {
+func (s *Publication) Registered(service *service.Service) {
 	s.Log.Trace("Registered")
 }
 
-func (s *PublicationAdder) Unregistered(service *service.Service) {
+func (s *Publication) Unregistered(service *service.Service) {
 	s.Log.Trace("Unregistered")
 }
 
-func (s *PublicationAdder) Started(service *service.Service) {
+func (s *Publication) Started(service *service.Service) {
 	s.Log.Trace("Started")
 	s.m = mongo.New(s.MongoHost, s.MongoDb)
 	s.Log.Trace("Connecting to MongoDB: " + s.MongoHost + " " + s.MongoDb)
@@ -40,21 +40,21 @@ func (s *PublicationAdder) Started(service *service.Service) {
 	s.Log.Trace("Ensured indexes")
 }
 
-func (s *PublicationAdder) Stopped(service *service.Service) {
+func (s *Publication) Stopped(service *service.Service) {
 	s.Log.Trace("Stopped")
 	s.m.Close()
 	s.Log.Trace("Closed connection to MongoDB")
 }
 
-func (s *PublicationAdder) MethodCalled(method string) {
+func (s *Publication) MethodCalled(method string) {
 	s.Log.Trace("MethodCalled")
 }
 
-func (s *PublicationAdder) MethodCompleted(method string, duration int64, err error) {
+func (s *Publication) MethodCompleted(method string, duration int64, err error) {
 	s.Log.Trace("MethodCompleted")
 }
 
-func (s *PublicationAdder) Add(ri *skynet.RequestInfo, req *coverage.Publication, resp *coverage.Publication) (err error) {
+func (s *Publication) Add(ri *skynet.RequestInfo, req *coverage.Publication, resp *coverage.Publication) (err error) {
 	*resp = *req
 	errs := make([]string, 0, 2)
 	if req.Title == "" {
