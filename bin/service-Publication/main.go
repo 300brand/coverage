@@ -14,7 +14,7 @@ var (
 
 func main() {
 	config, _ := skynet.GetServiceConfig()
-	config.Name = "PublicationAdder"
+	config.Name = "Publication"
 	config.Version = "1"
 
 	s := &PublicationAdder{
