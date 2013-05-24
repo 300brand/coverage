@@ -5,14 +5,19 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/rpc"
 	"github.com/gorilla/rpc/json"
+	"github.com/skynetservices/skynet"
+	"github.com/skynetservices/skynet/client"
 	"log"
 	"net/http"
 	"os"
 )
 
 var (
-	s      = rpc.NewServer()
-	listen = flag.String("l", ":8080", "Address to listen on")
+	c        *client.Client
+	config   *skynet.ClientConfig
+	listen   = flag.String("l", ":8080", "Address to listen on")
+	s        = rpc.NewServer()
+	services = make(map[string]*client.ServiceClient)
 )
 
 func init() {
@@ -20,9 +25,21 @@ func init() {
 }
 
 func main() {
-	flag.Parse()
+	config, _ = skynet.GetClientConfig()
 
-	log.Print("Starting...")
+	config.Log = skynet.NewConsoleSemanticLogger("SkynetRPC", os.Stderr)
+	c = client.NewClient(config)
+
+	log.Print("Listening on " + *listen)
 	http.Handle("/rpc", handlers.LoggingHandler(os.Stdout, s))
 	log.Fatal(http.ListenAndServe(*listen, nil))
+}
+
+func GetService(name string) (s *client.ServiceClient) {
+	s, ok := services[name]
+	if !ok {
+		s = c.GetService(name, "", "", "")
+		services[name] = s
+	}
+	return
 }
