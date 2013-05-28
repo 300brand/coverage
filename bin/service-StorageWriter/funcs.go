@@ -10,6 +10,7 @@ func (s *StorageWriter) UpdateArticle(ri *skynet.RequestInfo, in *coverage.Artic
 }
 
 func (s *StorageWriter) UpdateFeed(ri *skynet.RequestInfo, in *coverage.Feed, out *coverage.Feed) (err error) {
+	*out = *in
 	return s.Mongo.UpdateFeed(in)
 }
 
