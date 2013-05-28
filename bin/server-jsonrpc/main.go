@@ -14,8 +14,8 @@ import (
 
 var (
 	c        *client.Client
-	config   *skynet.ClientConfig
-	listen   = flag.String("l", ":8080", "Address to listen on")
+	flagset  = flag.NewFlagSet("main", flag.ContinueOnError)
+	listen   = flagset.String("l", ":8080", "Address to listen on")
 	s        = rpc.NewServer()
 	services = make(map[string]*client.ServiceClient)
 )
@@ -25,7 +25,13 @@ func init() {
 }
 
 func main() {
-	config, _ = skynet.GetClientConfig()
+	flagsetArgs, skynetArgs := skynet.SplitFlagsetFromArgs(flagset, os.Args[1:])
+
+	if err := flagset.Parse(flagsetArgs); err != nil {
+		log.Fatal(err)
+	}
+
+	config, _ := skynet.GetClientConfigFromFlags(skynetArgs)
 
 	config.Log = skynet.NewConsoleSemanticLogger("SkynetRPC", os.Stderr)
 	c = client.NewClient(config)
