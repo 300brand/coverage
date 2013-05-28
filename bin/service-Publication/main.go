@@ -2,25 +2,30 @@ package main
 
 import (
 	"github.com/skynetservices/skynet"
+	"github.com/skynetservices/skynet/client"
 	"github.com/skynetservices/skynet/service"
 	"os"
 )
 
-// Note: Environment variables cascade down from the machine skydaemon runs on
-var (
-	mongoDb   = skynet.GetDefaultEnvVar("SERVICE_MONGO_DB", "Coverage")
-	mongoHost = skynet.GetDefaultEnvVar("SERVICE_MONGO_HOST", "localhost")
-)
+var c *client.Client
 
 func main() {
+	StartClient()
+	StartService()
+}
+
+func StartClient() {
+	config, _ := skynet.GetClientConfig()
+	c = client.NewClient(config)
+}
+
+func StartService() {
 	config, _ := skynet.GetServiceConfig()
 	config.Name = "Publication"
 	config.Version = "1"
 
-	s := &PublicationAdder{
-		Log:       skynet.NewConsoleSemanticLogger(config.Name, os.Stdout),
-		MongoHost: mongoHost,
-		MongoDb:   mongoDb,
+	s := &Publication{
+		Log: skynet.NewConsoleSemanticLogger(config.Name, os.Stdout),
 	}
 
 	service := service.CreateService(s, config)
