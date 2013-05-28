@@ -14,5 +14,6 @@ func (s *StorageWriter) UpdateFeed(ri *skynet.RequestInfo, in *coverage.Feed, ou
 }
 
 func (s *StorageWriter) UpdatePublication(ri *skynet.RequestInfo, in *coverage.Publication, out *coverage.Publication) (err error) {
+	*out = *in
 	return s.Mongo.UpdatePublication(in)
 }
