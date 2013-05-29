@@ -8,6 +8,7 @@ import (
 )
 
 func (s *Feed) Add(ri *skynet.RequestInfo, in *coverage.Feed, out *coverage.Feed) (err error) {
+	// TODO Add check to make sure Feed with URL doesn't already exist
 	errs := make([]string, 0, 1)
 	if in.URL == nil {
 		errs = append(errs, "Feed cannot have a blank URL")

@@ -8,6 +8,7 @@ import (
 )
 
 func (s *Publication) Add(ri *skynet.RequestInfo, in *coverage.Publication, out *coverage.Publication) (err error) {
+	// TODO Add check to make sure Publication with URL doesn't already exist
 	errs := make([]string, 0, 2)
 	if in.Title == "" {
 		errs = append(errs, "Publication cannot have a blank title")
