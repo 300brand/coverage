@@ -5,16 +5,16 @@ import (
 	"github.com/skynetservices/skynet"
 )
 
-func (s *StorageWriter) UpdateArticle(ri *skynet.RequestInfo, in *coverage.Article, out *coverage.Article) (err error) {
+func (s *StorageWriter) SaveArticle(ri *skynet.RequestInfo, in *coverage.Article, out *coverage.Article) (err error) {
 	return s.Mongo.UpdateArticle(in)
 }
 
-func (s *StorageWriter) UpdateFeed(ri *skynet.RequestInfo, in *coverage.Feed, out *coverage.Feed) (err error) {
+func (s *StorageWriter) SaveFeed(ri *skynet.RequestInfo, in *coverage.Feed, out *coverage.Feed) (err error) {
 	*out = *in
 	return s.Mongo.UpdateFeed(in)
 }
 
-func (s *StorageWriter) UpdatePublication(ri *skynet.RequestInfo, in *coverage.Publication, out *coverage.Publication) (err error) {
+func (s *StorageWriter) SavePublication(ri *skynet.RequestInfo, in *coverage.Publication, out *coverage.Publication) (err error) {
 	*out = *in
 	return s.Mongo.UpdatePublication(in)
 }

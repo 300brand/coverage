@@ -22,7 +22,7 @@ func (s *Publication) Add(ri *skynet.RequestInfo, in *coverage.Publication, out 
 		return errors.New(errMsg)
 	}
 
-	if err = s.Writer.SendOnce(nil, "UpdatePublication", in, out); err != nil {
+	if err = s.Writer.SendOnce(nil, "SavePublication", in, out); err != nil {
 		s.Log.Error(err.Error())
 	}
 	return

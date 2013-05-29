@@ -19,7 +19,7 @@ func (s *Feed) Add(ri *skynet.RequestInfo, in *coverage.Feed, out *coverage.Feed
 		return errors.New(errMsg)
 	}
 
-	if err = s.Writer.SendOnce(nil, "UpdateFeed", in, out); err != nil {
+	if err = s.Writer.SendOnce(nil, "SaveFeed", in, out); err != nil {
 		s.Log.Error(err.Error())
 	}
 	return
