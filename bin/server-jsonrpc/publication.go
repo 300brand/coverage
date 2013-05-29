@@ -2,7 +2,6 @@ package main
 
 import (
 	"git.300brand.com/coverage"
-	"labix.org/v2/mgo/bson"
 	"net/http"
 	"net/url"
 )
@@ -14,25 +13,17 @@ type PubAddArgs struct {
 	URL   string
 }
 
-type PubAddReply struct {
-	Id bson.ObjectId
-}
-
 func init() {
 	s.RegisterService(new(Publication), "")
 }
 
-func (p *Publication) Add(r *http.Request, in *PubAddArgs, out *PubAddReply) (err error) {
+func (p *Publication) Add(r *http.Request, in *PubAddArgs, out *coverage.Publication) (err error) {
 
 	pubIn := coverage.NewPublication()
 	pubIn.Title = in.Title
 	if pubIn.URL, err = url.Parse(in.URL); err != nil {
 		return
 	}
-	pubOut := &coverage.Publication{}
-
-	err = GetService("Publication").Send(nil, "Add", pubIn, pubOut)
-
-	out.Id = pubOut.ID
+	err = GetService("Publication").Send(nil, "Add", pubIn, out)
 	return
 }
