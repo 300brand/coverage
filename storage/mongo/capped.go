@@ -6,8 +6,10 @@ import (
 	"sync"
 )
 
-// Mongo reports this size for CappedDoc documents
-const CappedDocSize = 68
+const (
+	CappedDocSize   = 68 // Mongo reports this size for CappedDoc documents
+	DefaultCapacity = 100
+)
 
 type Capped struct {
 	Collection *mgo.Collection
@@ -21,7 +23,7 @@ type CappedDoc struct {
 	Processing bool
 }
 
-func (m *Mongo) CappedCollection(name string, maxDocs int) (c *Capped, err error) {
+func (m *Mongo) CappedIdCollection(name string, maxDocs int) (c *Capped, err error) {
 	c = &Capped{
 		Collection: m.db.C(name),
 	}
@@ -47,11 +49,24 @@ func (m *Mongo) CappedCollection(name string, maxDocs int) (c *Capped, err error
 	return
 }
 
+func (c *Capped) All() (ids []bson.ObjectId, err error) {
+	idset := make([]struct{ Id bson.ObjectId }, 0, DefaultCapacity)
+	err = c.Collection.Find(bson.M{"processing": false}).Select(bson.M{"_id": 0, "id": 1}).All(&idset)
+	if err != nil {
+		return
+	}
+	ids = make([]bson.ObjectId, len(idset))
+	for i := range idset {
+		ids[i] = idset[i].Id
+	}
+	return
+}
+
 func (c *Capped) Insert(id bson.ObjectId, priority int) error {
 	return c.Collection.Insert(&CappedDoc{Id: id, Priority: priority})
 }
 
-func (c *Capped) NextId() (id bson.ObjectId, err error) {
+func (c *Capped) Next() (id bson.ObjectId, err error) {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
 	doc := &CappedDoc{}
