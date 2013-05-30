@@ -20,10 +20,9 @@ type QueueAddOut struct {
 }
 
 func (q *Queue) AddFeed(r *http.Request, in *QueueAddIn, out *QueueAddOut) (err error) {
-	out = &QueueAddOut{
-		Added: make([]bson.ObjectId, 0, in.Count),
-	}
-	srv := c.GetService("Queue", "", "", "")
-	err = srv.Send(nil, "AddFeed", nil, &out.Added)
+	out.Added = make([]bson.ObjectId, 0, in.Count)
+	var id bson.ObjectId
+	err = GetService("Queue").Send(nil, "AddFeeds", nil, &id)
+	out.Added = append(out.Added, id)
 	return
 }

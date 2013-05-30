@@ -18,6 +18,6 @@ func (s *Queue) AddFeed(ri *skynet.RequestInfo, in *interface{}, out *bson.Objec
 	if err = s.FeedQ.Push(feed.ID); err != nil {
 		return
 	}
-	out = &feed.ID
+	*out = feed.ID
 	return
 }
