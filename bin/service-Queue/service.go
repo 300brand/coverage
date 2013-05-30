@@ -22,9 +22,9 @@ func (s *Queue) Unregistered(service *service.Service) {
 func (s *Queue) Started(service *service.Service) {
 	s.Log.Trace("Started")
 	if err := s.FeedQ.Connect(); err != nil {
-		panic(err)
+		s.Log.Fatal(err.Error())
 	}
-	s.Log.Trace("Connected to doozer for queue storage")
+	s.Log.Trace("Connected to doozer [" + s.FeedQ.Addr + "] for queue storage")
 }
 func (s *Queue) Stopped(service *service.Service) {
 	s.Log.Trace("Closing connection to doozer for queue storage")

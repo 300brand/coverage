@@ -2,13 +2,18 @@ package main
 
 import (
 	"git.300brand.com/coverage"
+	"git.300brand.com/coverage/doozer/idqueue"
 	"github.com/skynetservices/skynet"
 	"labix.org/v2/mgo/bson"
 )
 
-func (s *Queue) AddFeed(ri *skynet.RequestInfo, in *interface{}, out *bson.ObjectId) (err error) {
+type AddFeedResponse struct {
+	Id bson.ObjectId
+}
+
+func (s *Queue) AddFeed(ri *skynet.RequestInfo, in *interface{}, out *AddFeedResponse) (err error) {
 	ids, err := s.FeedQ.Get()
-	if err != nil {
+	if err != nil && err != idqueue.ErrEOQ {
 		return
 	}
 	feed := &coverage.Feed{}
@@ -18,6 +23,6 @@ func (s *Queue) AddFeed(ri *skynet.RequestInfo, in *interface{}, out *bson.Objec
 	if err = s.FeedQ.Push(feed.ID); err != nil {
 		return
 	}
-	*out = feed.ID
+	out.Id = feed.ID
 	return
 }
