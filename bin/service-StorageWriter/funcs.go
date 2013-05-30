@@ -7,19 +7,6 @@ import (
 	"github.com/skynetservices/skynet"
 )
 
-func (s *StorageWriter) EnqueueNextFeed(ri *skynet.RequestInfo, in interface{}, out interface{}) (err error) {
-	r := c.GetService("StorageReader", "", "", "")
-	ids := make([]bson.ObjectId, 0, mongo.DefaultCapacity)
-	if err = r.Send(ri, "QueueFeedIds", nil, ids); err != nil {
-		return
-	}
-	feed := &coverage.Feed{}
-	if err = r.Send(ri, "OldestFeed", ids, feed); err != nil {
-		return
-	}
-	return
-}
-
 func (s *StorageWriter) SaveArticle(ri *skynet.RequestInfo, in *coverage.Article, out *coverage.Article) (err error) {
 	return s.Mongo.UpdateArticle(in)
 }
