@@ -62,6 +62,10 @@ func (q *IdQueue) Get() (ids []bson.ObjectId, err error) {
 	if err != nil {
 		return
 	}
+	// Nothing there, send back an empty array
+	if len(b) == 0 {
+		return
+	}
 	q.buf.Reset()
 	if _, err = q.buf.Write(b); err != nil {
 		return
