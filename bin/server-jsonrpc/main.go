@@ -13,6 +13,7 @@ import (
 )
 
 var (
+	Null     = &struct{}{}
 	c        *client.Client
 	flagset  = flag.NewFlagSet("main", flag.ContinueOnError)
 	listen   = flagset.String("l", ":8080", "Address to listen on")
