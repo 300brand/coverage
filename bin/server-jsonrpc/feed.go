@@ -17,7 +17,7 @@ func init() {
 	s.RegisterService(new(Feed), "")
 }
 
-func (p *Feed) Add(r *http.Request, in *FeedAddArgs, out *coverage.Feed) (err error) {
+func (f *Feed) Add(r *http.Request, in *FeedAddArgs, out *coverage.Feed) (err error) {
 	feedIn := coverage.NewFeed()
 	feedIn.ObjectId = in.RemoteId
 	if feedIn.URL, err = url.Parse(in.URL); err != nil {
