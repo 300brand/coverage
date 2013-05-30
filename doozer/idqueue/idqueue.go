@@ -22,7 +22,10 @@ type IdQueue struct {
 	hitex  *sync.Mutex // High-Level Mutex - Push/Unshift
 }
 
-var EOQ = errors.New("End of queue")
+var (
+	EOQ     = errors.New("End of queue")
+	bufSize = 27*100 + 1 // Size of 100 JSON-encoded BSON ObjectIds
+)
 
 func (q *IdQueue) Connect() (err error) {
 	if q.conn, err = doozer.Dial(q.Addr); err != nil {
@@ -34,7 +37,7 @@ func (q *IdQueue) Connect() (err error) {
 	}
 	q.file = fmt.Sprintf("/queue/%s", q.Name)
 
-	q.buf = bytes.NewBuffer(make([]byte, 12*100))
+	q.buf = bytes.NewBuffer(make([]byte, bufSize))
 	q.dec, q.enc = json.NewDecoder(q.buf), json.NewEncoder(q.buf)
 
 	q.lowtex = &sync.Mutex{}
