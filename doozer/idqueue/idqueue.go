@@ -13,6 +13,7 @@ import (
 type IdQueue struct {
 	Name   string
 	Addr   string
+	Max    int
 	conn   *doozer.Conn
 	file   string
 	dec    *json.Decoder
@@ -23,8 +24,8 @@ type IdQueue struct {
 }
 
 var (
-	EOQ     = errors.New("End of queue")
-	bufSize = 27*100 + 1 // Size of 100 JSON-encoded BSON ObjectIds
+	ErrEOQ  = errors.New("End of queue")
+	ErrFull = errors.New("Queue full")
 )
 
 func (q *IdQueue) Connect() (err error) {
@@ -35,8 +36,12 @@ func (q *IdQueue) Connect() (err error) {
 	if q.Name == "" {
 		q.Name = fmt.Sprintf("ids-%d", rev)
 	}
+	if q.Max == 0 {
+		q.Max = 100
+	}
 	q.file = fmt.Sprintf("/queue/%s", q.Name)
 
+	bufSize := 27*q.Max + 1 // Size of q.Max JSON-encoded BSON ObjectIds
 	q.buf = bytes.NewBuffer(make([]byte, bufSize))
 	q.dec, q.enc = json.NewDecoder(q.buf), json.NewEncoder(q.buf)
 
@@ -89,6 +94,9 @@ func (q *IdQueue) Push(id bson.ObjectId) (err error) {
 	if err != nil {
 		return
 	}
+	if len(ids) >= q.Max {
+		return ErrFull
+	}
 	ids = append(ids, id)
 	return q.Put(ids)
 }
@@ -102,7 +110,7 @@ func (q *IdQueue) Unshift() (id bson.ObjectId, err error) {
 		return
 	}
 	if len(ids) == 0 {
-		err = EOQ
+		err = ErrEOQ
 		return
 	}
 	id = ids[0]
