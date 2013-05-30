@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-var c *client.ServiceClient
+var c *client.Client
 
 func main() {
 	StartClient()
