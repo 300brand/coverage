@@ -2,8 +2,6 @@ package main
 
 import (
 	"git.300brand.com/coverage"
-	"git.300brand.com/coverage/storage/mongo"
-	"github.com/skynetservices/mgo/bson"
 	"github.com/skynetservices/skynet"
 )
 
