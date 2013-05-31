@@ -14,4 +14,4 @@ type ObjectId struct {
 
 type NullType struct{}
 
-var Null NullType
+var Null = &NullType{}

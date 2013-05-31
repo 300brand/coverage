@@ -12,6 +12,6 @@ func init() {
 }
 
 func (q *Queue) AddFeed(r *http.Request, in *skytypes.NullType, out *skytypes.ObjectId) (err error) {
-	err = GetService("Queue").Send(nil, "AddFeed", *in, *out)
+	err = GetService("Queue").Send(nil, "AddFeed", in, out)
 	return
 }
