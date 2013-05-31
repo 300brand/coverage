@@ -3,15 +3,11 @@ package main
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/doozer/idqueue"
+	"git.300brand.com/coverage/skytypes"
 	"github.com/skynetservices/skynet"
-	"labix.org/v2/mgo/bson"
 )
 
-type AddFeedResponse struct {
-	Id bson.ObjectId
-}
-
-func (s *Queue) AddFeed(ri *skynet.RequestInfo, in *interface{}, out *AddFeedResponse) (err error) {
+func (s *Queue) AddFeed(ri *skynet.RequestInfo, in *skytypes.NullType, out *skytypes.ObjectId) (err error) {
 	ids, err := s.FeedQ.Get()
 	if err != nil && err != idqueue.ErrEOQ {
 		return
