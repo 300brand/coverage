@@ -14,8 +14,12 @@ func TestConnect(t *testing.T) {
 func TestGetBlank(t *testing.T) {
 	q := connect(t, "TestGetBlank")
 	defer close(q)
-	if _, err := q.Get(); err == nil {
-		t.Fatal("Expected EOF error")
+	ids, err := q.Get()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(ids) != 0 {
+		t.Error("Expected id length of 0")
 	}
 }
 
