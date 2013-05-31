@@ -1,5 +1,5 @@
 #!/bin/bash
-SERVICES="service-StorageReader service-StorageWriter service-Publication service-Feed service-Queue"
+SERVICES="service-StorageReader service-StorageWriter service-Publication service-Feed service-Queue server-jsonrpc"
 ARGS=$*
 
 declare -a PIDS
