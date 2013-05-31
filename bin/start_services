@@ -1,0 +1,34 @@
+#!/bin/bash
+SERVICES="service-StorageReader service-StorageWriter service-Publication service-Feed service-Queue"
+ARGS=$*
+
+declare -a PIDS
+
+trap on_sigint SIGINT
+
+function on_sigint() {
+	echo "SIGINT caught"
+	for PID in $PIDS[@]; do
+		kill -SIGINT $PID
+	done
+	sleep 1
+	start_services $SERVICES
+}
+
+function start_services() {
+	for S in $*; do
+		local N=${#PIDS[*]}
+		local CMD="$S $ARGS"
+		echo "Starting $CMD"
+		$CMD &
+		PID=$!
+		echo "Started with pid: $PID"
+		PIDS[$N]=$PID
+	done
+}
+
+start_services $SERVICES
+
+while [[ true ]]; do
+	sleep 1
+done
