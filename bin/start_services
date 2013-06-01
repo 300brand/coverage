@@ -24,6 +24,7 @@ function start_services() {
 		PID=$!
 		echo "Started with pid: $PID"
 		PIDS[$N]=$PID
+		sleep 1
 	done
 }
 
