@@ -2,6 +2,7 @@ package main
 
 import (
 	"git.300brand.com/coverage"
+	"git.300brand.com/coverage/skytypes"
 	"net/http"
 	"net/url"
 )
@@ -25,4 +26,8 @@ func (f *Feed) Add(r *http.Request, in *FeedAddArgs, out *coverage.Feed) (err er
 	}
 	err = GetService("Feed").Send(nil, "Add", feedIn, out)
 	return
+}
+
+func (f *Feed) Oldest(r *http.Request, in *skytypes.NullType, out *coverage.Feed) (err error) {
+	return GetService("StorageReader").Send(nil, "OldestFeed", skytypes.Null, out)
 }
