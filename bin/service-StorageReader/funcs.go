@@ -6,7 +6,7 @@ import (
 	"github.com/skynetservices/skynet"
 )
 
-func (s *StorageReader) OldestFeed(ri *skynet.RequestInfo, in skytypes.ObjectIds, out *coverage.Feed) (err error) {
+func (s *StorageReader) OldestFeed(ri *skynet.RequestInfo, in *skytypes.ObjectIds, out *coverage.Feed) (err error) {
 	out, err = s.Mongo.GetOldestFeed(in.Ids)
 	return
 }
