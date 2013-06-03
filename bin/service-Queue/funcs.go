@@ -18,8 +18,9 @@ func (s *Queue) AddFeed(ri *skynet.RequestInfo, in *skytypes.NullType, out *skyt
 	}
 	s.Log.Debug(fmt.Sprintf("Queue retrieved with length of: %d", len(ids)))
 	feed := &coverage.Feed{}
+	skyIds := &skytypes.ObjectIds{Ids: ids}
 	s.Log.Debug("Fetching oldest feed")
-	if err = c.GetService("StorageReader", "", "", "").Send(ri, "OldestFeed", ids, feed); err != nil {
+	if err = c.GetService("StorageReader", "", "", "").Send(nil, "OldestFeed", skyIds, feed); err != nil {
 		s.Log.Error(err.Error())
 		return
 	}
