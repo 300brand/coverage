@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/doozer/idqueue"
@@ -23,6 +24,11 @@ func (s *Queue) AddFeed(ri *skynet.RequestInfo, in *skytypes.NullType, out *skyt
 		return
 	}
 	s.Log.Debug(fmt.Sprintf("Oldest feed ID: %s", feed.ID))
+	if feed.ID.Hex() == "" {
+		err = errors.New("No feed found")
+		s.Log.Error(err.Error())
+		return
+	}
 	if err = s.FeedQ.Push(feed.ID); err != nil {
 		s.Log.Error(err.Error())
 		return
