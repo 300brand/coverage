@@ -7,6 +7,14 @@ import (
 	"github.com/skynetservices/skynet"
 )
 
+func (s *StorageReader) GetFeed(ri *skynet.RequestInfo, in *skytypes.ObjectId, out *coverage.Feed) (err error) {
+	s.Log.Debug(fmt.Sprintf("GetFeed.in: %+v", in))
+	f, err := s.Mongo.GetFeed(in.Id)
+	*out = *f
+	s.Log.Debug(fmt.Sprintf("GetFeed.out: %+v", out))
+	return
+}
+
 func (s *StorageReader) OldestFeed(ri *skynet.RequestInfo, in *skytypes.ObjectIds, out *coverage.Feed) (err error) {
 	s.Log.Debug(fmt.Sprintf("OldestFeed.in: %+v", in))
 	oldest, err := s.Mongo.GetOldestFeed(in.Ids)

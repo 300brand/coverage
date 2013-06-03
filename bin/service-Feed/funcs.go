@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"git.300brand.com/coverage"
+	"git.300brand.com/coverage/skytypes"
 	"github.com/skynetservices/skynet"
 	"strings"
 )
@@ -23,4 +24,12 @@ func (s *Feed) Add(ri *skynet.RequestInfo, in *coverage.Feed, out *coverage.Feed
 		s.Log.Error(err.Error())
 	}
 	return
+}
+
+func (s *Feed) Get(ri *skynet.RequestInfo, in *skytypes.ObjectId, out *coverage.Feed) (err error) {
+	return c.GetService("StorageReader", "", "", "").Send(ri, "GetFeed", in, out)
+}
+
+func (s *Feed) Oldest(ri *skynet.RequestInfo, in *skytypes.ObjectIds, out *coverage.Feed) (err error) {
+	return c.GetService("StorageReader", "", "", "").Send(ri, "OldestFeed", in, out)
 }
