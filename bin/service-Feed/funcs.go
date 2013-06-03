@@ -34,6 +34,13 @@ func (s *Feed) Oldest(ri *skynet.RequestInfo, in *skytypes.ObjectIds, out *cover
 	return c.GetService("StorageReader", "", "", "").Send(ri, "OldestFeed", in, out)
 }
 
-func (s *Feed) Process(ri *skynet.RequestInfo, in *coverage.Feed, out *skytypes.ObjectId) (err error) {
-	return c.GetService("FeedDownload", "", "", "").Send(ri, "Process", in, out)
+func (s *Feed) Process(ri *skynet.RequestInfo, in *coverage.Feed, out *coverage.Feed) (err error) {
+	if err = c.GetService("FeedDownload", "", "", "").Send(ri, "Download", in, out); err != nil {
+		return
+	}
+	*in = *out
+	if err = c.GetService("FeedProcess", "", "", "").Send(ri, "Process", in, out); err != nil {
+		return
+	}
+	return
 }

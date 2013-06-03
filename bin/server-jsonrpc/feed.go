@@ -36,7 +36,7 @@ func (f *Feed) Oldest(r *http.Request, in *skytypes.NullType, out *coverage.Feed
 	return GetService("Feed").Send(nil, "Oldest", in, out)
 }
 
-func (f *Feed) ProcessId(r *http.Request, in *skytypes.ObjectId, out *skytypes.ObjectId) (err error) {
+func (f *Feed) ProcessId(r *http.Request, in *skytypes.ObjectId, out *coverage.Feed) (err error) {
 	feed := &coverage.Feed{}
 	srv := GetService("Feed")
 	if err = srv.Send(nil, "Get", in, feed); err != nil {
