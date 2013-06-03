@@ -33,3 +33,7 @@ func (s *Feed) Get(ri *skynet.RequestInfo, in *skytypes.ObjectId, out *coverage.
 func (s *Feed) Oldest(ri *skynet.RequestInfo, in *skytypes.ObjectIds, out *coverage.Feed) (err error) {
 	return c.GetService("StorageReader", "", "", "").Send(ri, "OldestFeed", in, out)
 }
+
+func (s *Feed) Process(ri *skynet.RequestInfo, in *coverage.Feed, out *skytypes.ObjectId) (err error) {
+	return c.GetService("FeedDownload", "", "", "").Send(ri, "Process", in, out)
+}
