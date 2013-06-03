@@ -22,7 +22,10 @@ func NewFeedService() *FeedService {
 
 func (s *FeedService) Update(f *coverage.Feed) error {
 	f.Log.Service("feed.FeedService")
+	return Process(f)
+}
 
+func Process(f *coverage.Feed) error {
 	// Parse
 	d, err := parser.Parse(f.Content)
 	if err != nil {
