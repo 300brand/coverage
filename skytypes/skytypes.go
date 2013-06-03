@@ -4,6 +4,8 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
+type NullType struct{}
+
 type ObjectIds struct {
 	Ids []bson.ObjectId
 }
@@ -11,7 +13,5 @@ type ObjectIds struct {
 type ObjectId struct {
 	Id bson.ObjectId
 }
-
-type NullType struct{}
 
 var Null = &NullType{}
