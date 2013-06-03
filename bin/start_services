@@ -8,10 +8,12 @@ trap on_sigint SIGINT
 
 function on_sigint() {
 	echo "SIGINT caught"
-	for PID in $PIDS[@]; do
-		kill -SIGINT $PID
-	done
+	PID=${PIDS[$((${#PIDS[@]}-1))]}
+	echo ALL PIDS: ${PIDS[@]}
+	echo KILLING:  $PID
+	kill  $PID
 	sleep 1
+	unset PIDS
 	start_services $SERVICES
 }
 
