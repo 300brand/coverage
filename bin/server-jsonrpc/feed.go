@@ -28,6 +28,10 @@ func (f *Feed) Add(r *http.Request, in *FeedAddArgs, out *coverage.Feed) (err er
 	return
 }
 
+func (f *Feed) Get(r *http.Request, in *skytypes.ObjectId, out *coverage.Feed) (err error) {
+	return GetService("Feed").Send(nil, "Get", in, out)
+}
+
 func (f *Feed) Oldest(r *http.Request, in *skytypes.NullType, out *coverage.Feed) (err error) {
-	return GetService("StorageReader").Send(nil, "OldestFeed", skytypes.Null, out)
+	return GetService("Feed").Send(nil, "Oldest", in, out)
 }
