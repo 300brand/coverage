@@ -7,7 +7,10 @@ import (
 	"os"
 )
 
-var c *client.Client
+var (
+	SCQueue *client.ServiceClient
+	c       *client.Client
+)
 
 func main() {
 	StartClient()

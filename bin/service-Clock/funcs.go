@@ -21,7 +21,7 @@ func (s *Clock) QueueFeedAdder(ri *skynet.RequestInfo, in *skytypes.ClockCommand
 
 func (s *Clock) queueFeedAdder() {
 	id := &skytypes.ObjectId{}
-	if err := c.GetService("Queue", "", "", "").Send(nil, "AddFeed", skytypes.Null, id); err != nil {
+	if err := SCQueue.Send(nil, "AddFeed", skytypes.Null, id); err != nil {
 		s.Log.Error(err.Error())
 		return
 	}

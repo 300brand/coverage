@@ -24,6 +24,9 @@ var _ service.ServiceDelegate = &Clock{}
 
 func (s *Clock) Registered(service *service.Service) {
 	s.Log.Trace("Registered")
+
+	SCQueue = c.GetService("Queue", "", "", "")
+
 	for name, t := range s.Tickers {
 		s.Log.Trace("Starting " + name)
 		go runner(t)
