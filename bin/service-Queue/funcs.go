@@ -17,6 +17,9 @@ func (s *Queue) AddFeed(ri *skynet.RequestInfo, in *skytypes.NullType, out *skyt
 		return
 	}
 	s.Log.Debug(fmt.Sprintf("Queue retrieved with length of: %d", len(ids)))
+	if len(ids) >= s.FeedQ.Max {
+		return idqueue.ErrFull
+	}
 	feed := &coverage.Feed{}
 	skyIds := &skytypes.ObjectIds{Ids: ids}
 	s.Log.Debug("Fetching oldest feed")
