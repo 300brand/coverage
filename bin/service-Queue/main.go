@@ -30,6 +30,7 @@ func StartService() {
 		FeedQ: &idqueue.IdQueue{
 			Name: "feeds",
 			Addr: config.DoozerConfig.BootUri,
+			Max:  10,
 		},
 	}
 
