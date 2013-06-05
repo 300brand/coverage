@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/skynetservices/skynet"
+	"github.com/skynetservices/skynet/client"
 	"github.com/skynetservices/skynet/service"
 	"time"
 )
@@ -9,6 +10,8 @@ import (
 type Manager struct {
 	Log     skynet.SemanticLogger
 	Tickers map[string]*Ticker
+	Feed    *client.ServiceClient
+	Queue   *client.ServiceClient
 }
 
 type Ticker struct {
@@ -22,10 +25,22 @@ type Ticker struct {
 
 var _ service.ServiceDelegate = &Manager{}
 
+func NewTicker(f func(), d time.Duration) *Ticker {
+	return &Ticker{
+		F:      f,
+		Once:   make(chan bool, 1),
+		Start:  make(chan bool, 1),
+		Stop:   make(chan bool, 1),
+		Tick:   d,
+		Ticker: &time.Ticker{},
+	}
+}
+
 func (s *Manager) Registered(service *service.Service) {
 	s.Log.Trace("Registered")
 
-	SCQueue = c.GetService("Queue", "", "", "")
+	s.Feed = c.GetService("Feed", "", "", "")
+	s.Queue = c.GetService("Queue", "", "", "")
 
 	for name, t := range s.Tickers {
 		s.Log.Trace("Starting " + name)
@@ -38,14 +53,9 @@ func (s *Manager) Unregistered(service *service.Service) {
 }
 func (s *Manager) Started(service *service.Service) {
 	s.Log.Trace("Started")
-	s.Tickers = map[string]*Ticker{}
-	s.Tickers["QueueFeedAdder"] = &Ticker{
-		F:      s.queueFeedAdder,
-		Once:   make(chan bool, 1),
-		Start:  make(chan bool, 1),
-		Stop:   make(chan bool, 1),
-		Tick:   time.Second * 10,
-		Ticker: &time.Ticker{},
+	s.Tickers = map[string]*Ticker{
+		"QueueFeedAdder":  NewTicker(s.queueFeedAdder, time.Second*10),
+		"ProcessNextFeed": NewTicker(s.processNextFeed, time.Second*10),
 	}
 }
 func (s *Manager) Stopped(service *service.Service) {
