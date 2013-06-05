@@ -17,6 +17,10 @@ func NewArticleService() ArticleService {
 }
 
 func (s ArticleService) Update(a *coverage.Article) error {
+	return Article(a)
+}
+
+func Article(a *coverage.Article) error {
 	a.Log.Service("downloader.ArticleService")
 	r, err := Fetch(a.URL.String())
 	if err != nil {
