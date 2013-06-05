@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type Clock struct {
+type Manager struct {
 	Log     skynet.SemanticLogger
 	Tickers map[string]*Ticker
 }
@@ -20,9 +20,9 @@ type Ticker struct {
 	Ticker *time.Ticker
 }
 
-var _ service.ServiceDelegate = &Clock{}
+var _ service.ServiceDelegate = &Manager{}
 
-func (s *Clock) Registered(service *service.Service) {
+func (s *Manager) Registered(service *service.Service) {
 	s.Log.Trace("Registered")
 
 	SCQueue = c.GetService("Queue", "", "", "")
@@ -33,10 +33,10 @@ func (s *Clock) Registered(service *service.Service) {
 		t.Start <- true
 	}
 }
-func (s *Clock) Unregistered(service *service.Service) {
+func (s *Manager) Unregistered(service *service.Service) {
 	s.Log.Trace("Unregistered")
 }
-func (s *Clock) Started(service *service.Service) {
+func (s *Manager) Started(service *service.Service) {
 	s.Log.Trace("Started")
 	s.Tickers = map[string]*Ticker{}
 	s.Tickers["QueueFeedAdder"] = &Ticker{
@@ -48,16 +48,16 @@ func (s *Clock) Started(service *service.Service) {
 		Ticker: &time.Ticker{},
 	}
 }
-func (s *Clock) Stopped(service *service.Service) {
+func (s *Manager) Stopped(service *service.Service) {
 	s.Log.Trace("Stopped")
 	for name, t := range s.Tickers {
 		s.Log.Trace("Stopping " + name)
 		t.Stop <- true
 	}
 }
-func (s *Clock) MethodCalled(method string) {
+func (s *Manager) MethodCalled(method string) {
 	s.Log.Trace("MethodCalled")
 }
-func (s *Clock) MethodCompleted(method string, duration int64, err error) {
+func (s *Manager) MethodCompleted(method string, duration int64, err error) {
 	s.Log.Trace("MethodCompleted")
 }

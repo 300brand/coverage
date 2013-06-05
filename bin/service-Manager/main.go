@@ -24,10 +24,10 @@ func StartClient() {
 
 func StartService() {
 	config, _ := skynet.GetServiceConfig()
-	config.Name = "Clock"
+	config.Name = "Manager"
 	config.Version = "1"
 
-	s := &Clock{
+	s := &Manager{
 		Log: skynet.NewConsoleSemanticLogger(config.Name, os.Stdout),
 	}
 

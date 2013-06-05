@@ -7,19 +7,19 @@ import (
 	"time"
 )
 
-func (s *Clock) Article(ri *skynet.RequestInfo, in *skytypes.ClockCommand, out *skytypes.ClockResult) (err error) {
+func (s *Manager) Article(ri *skynet.RequestInfo, in *skytypes.ClockCommand, out *skytypes.ClockResult) (err error) {
 	return
 }
 
-func (s *Clock) Feed(ri *skynet.RequestInfo, in *skytypes.ClockCommand, out *skytypes.ClockResult) (err error) {
+func (s *Manager) Feed(ri *skynet.RequestInfo, in *skytypes.ClockCommand, out *skytypes.ClockResult) (err error) {
 	return
 }
 
-func (s *Clock) QueueFeedAdder(ri *skynet.RequestInfo, in *skytypes.ClockCommand, out *skytypes.NullType) (err error) {
+func (s *Manager) QueueFeedAdder(ri *skynet.RequestInfo, in *skytypes.ClockCommand, out *skytypes.NullType) (err error) {
 	return s.processCommand(s.Tickers["QueueFeedAdder"], in)
 }
 
-func (s *Clock) queueFeedAdder() {
+func (s *Manager) queueFeedAdder() {
 	id := &skytypes.ObjectId{}
 	if err := SCQueue.Send(nil, "AddFeed", skytypes.Null, id); err != nil {
 		s.Log.Error(err.Error())
@@ -28,7 +28,7 @@ func (s *Clock) queueFeedAdder() {
 	s.Log.Trace("Added to feed queue: " + id.Id.Hex())
 }
 
-func (s *Clock) processCommand(t *Ticker, cmd *skytypes.ClockCommand) (err error) {
+func (s *Manager) processCommand(t *Ticker, cmd *skytypes.ClockCommand) (err error) {
 	switch cmd.Command {
 	case "once":
 		t.Once <- true
