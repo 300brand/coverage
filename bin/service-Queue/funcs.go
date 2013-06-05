@@ -23,7 +23,7 @@ func (s *Queue) AddFeed(ri *skynet.RequestInfo, in *skytypes.NullType, out *skyt
 	feed := &coverage.Feed{}
 	skyIds := &skytypes.ObjectIds{Ids: ids}
 	s.Log.Debug("Fetching oldest feed")
-	if err = c.GetService("Feed", "", "", "").Send(nil, "Oldest", skyIds, feed); err != nil {
+	if err = s.Feed.Send(nil, "Oldest", skyIds, feed); err != nil {
 		s.Log.Error(err.Error())
 		return
 	}
@@ -49,5 +49,5 @@ func (s *Queue) NextFeed(ri *skynet.RequestInfo, in *skytypes.NullType, out *cov
 		return
 	}
 	s.Log.Debug(fmt.Sprintf("Got ID: %s", id.Id))
-	return c.GetService("Feed", "", "", "").Send(nil, "Get", id, out)
+	return s.Feed.Send(nil, "Get", id, out)
 }

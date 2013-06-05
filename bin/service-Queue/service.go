@@ -3,18 +3,21 @@ package main
 import (
 	"git.300brand.com/coverage/doozer/idqueue"
 	"github.com/skynetservices/skynet"
+	"github.com/skynetservices/skynet/client"
 	"github.com/skynetservices/skynet/service"
 )
 
 type Queue struct {
 	Log   skynet.SemanticLogger
 	FeedQ *idqueue.IdQueue
+	Feed  *client.ServiceClient
 }
 
 var _ service.ServiceDelegate = &Queue{}
 
 func (s *Queue) Registered(service *service.Service) {
 	s.Log.Trace("Registered")
+	s.Feed = c.GetService("Feed", "", "", "")
 }
 func (s *Queue) Unregistered(service *service.Service) {
 	s.Log.Trace("Unregistered")
