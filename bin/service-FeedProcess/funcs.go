@@ -13,6 +13,6 @@ func (s *FeedProcess) Process(ri *skynet.RequestInfo, in *coverage.Feed, out *co
 		return
 	}
 	*out = *in
-	s.Log.Debug(fmt.Sprintf("%v", out))
+	s.Log.Debug(fmt.Sprintf("%v", out.URLs))
 	return
 }

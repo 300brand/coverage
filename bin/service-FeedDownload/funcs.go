@@ -13,6 +13,6 @@ func (s *FeedDownload) Download(ri *skynet.RequestInfo, in *coverage.Feed, out *
 		return
 	}
 	*out = *in
-	s.Log.Debug(fmt.Sprintf("%v", out))
+	s.Log.Debug(fmt.Sprintf("RSS XML len: %d", len(out.Content)))
 	return
 }
