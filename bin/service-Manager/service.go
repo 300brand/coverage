@@ -45,7 +45,7 @@ func (s *Manager) Registered(service *service.Service) {
 	for name, t := range s.Tickers {
 		s.Log.Trace("Starting " + name)
 		go runner(t)
-		t.Start <- true
+		//t.Start <- true
 	}
 }
 func (s *Manager) Unregistered(service *service.Service) {
