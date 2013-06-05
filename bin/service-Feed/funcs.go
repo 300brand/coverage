@@ -42,5 +42,10 @@ func (s *Feed) Process(ri *skynet.RequestInfo, in *coverage.Feed, out *coverage.
 	if err = c.GetService("FeedProcess", "", "", "").Send(ri, "Process", in, out); err != nil {
 		return
 	}
+	*in = *out
+	if err = c.GetService("StorageWriter", "", "", "").Send(ri, "SaveFeed", in, out); err != nil {
+		return
+	}
+	// TODO Save all articles to database; Add ArticleIds to queue
 	return
 }
