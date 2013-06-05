@@ -7,15 +7,21 @@ import (
 )
 
 type Feed struct {
-	Log    skynet.SemanticLogger
-	Reader *client.ServiceClient
-	Writer *client.ServiceClient
+	Log           skynet.SemanticLogger
+	FeedDownload  *client.ServiceClient
+	FeedProcess   *client.ServiceClient
+	StorageReader *client.ServiceClient
+	StorageWriter *client.ServiceClient
 }
 
 var _ service.ServiceDelegate = &Feed{}
 
 func (s *Feed) Registered(service *service.Service) {
 	s.Log.Trace("Registered")
+	s.FeedDownload = c.GetService("FeedDownload", "", "", "")
+	s.FeedProcess = c.GetService("FeedProcess", "", "", "")
+	s.StorageReader = c.GetService("StorageReader", "", "", "")
+	s.StorageWriter = c.GetService("StorageWriter", "", "", "")
 }
 
 func (s *Feed) Unregistered(service *service.Service) {
@@ -24,8 +30,6 @@ func (s *Feed) Unregistered(service *service.Service) {
 
 func (s *Feed) Started(service *service.Service) {
 	s.Log.Trace("Started")
-	s.Reader = c.GetService("StorageReader", "", "", "")
-	s.Writer = c.GetService("StorageWriter", "", "", "")
 }
 
 func (s *Feed) Stopped(service *service.Service) {

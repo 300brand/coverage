@@ -20,30 +20,30 @@ func (s *Feed) Add(ri *skynet.RequestInfo, in *coverage.Feed, out *coverage.Feed
 		return errors.New(errMsg)
 	}
 
-	if err = s.Writer.SendOnce(nil, "SaveFeed", in, out); err != nil {
+	if err = s.StorageWriter.SendOnce(nil, "SaveFeed", in, out); err != nil {
 		s.Log.Error(err.Error())
 	}
 	return
 }
 
 func (s *Feed) Get(ri *skynet.RequestInfo, in *skytypes.ObjectId, out *coverage.Feed) (err error) {
-	return c.GetService("StorageReader", "", "", "").Send(ri, "GetFeed", in, out)
+	return s.StorageReader.Send(ri, "GetFeed", in, out)
 }
 
 func (s *Feed) Oldest(ri *skynet.RequestInfo, in *skytypes.ObjectIds, out *coverage.Feed) (err error) {
-	return c.GetService("StorageReader", "", "", "").Send(ri, "OldestFeed", in, out)
+	return s.StorageReader.Send(ri, "OldestFeed", in, out)
 }
 
 func (s *Feed) Process(ri *skynet.RequestInfo, in *coverage.Feed, out *coverage.Feed) (err error) {
-	if err = c.GetService("FeedDownload", "", "", "").Send(ri, "Download", in, out); err != nil {
+	if err = s.FeedDownload.Send(ri, "Download", in, out); err != nil {
 		return
 	}
 	*in = *out
-	if err = c.GetService("FeedProcess", "", "", "").Send(ri, "Process", in, out); err != nil {
+	if err = s.FeedProcess.Send(ri, "Process", in, out); err != nil {
 		return
 	}
 	*in = *out
-	if err = c.GetService("StorageWriter", "", "", "").Send(ri, "SaveFeed", in, out); err != nil {
+	if err = s.StorageWriter.Send(ri, "SaveFeed", in, out); err != nil {
 		return
 	}
 	// TODO Save all articles to database; Add ArticleIds to queue
