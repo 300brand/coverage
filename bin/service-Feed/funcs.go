@@ -33,19 +33,3 @@ func (s *Feed) Get(ri *skynet.RequestInfo, in *skytypes.ObjectId, out *coverage.
 func (s *Feed) Oldest(ri *skynet.RequestInfo, in *skytypes.ObjectIds, out *coverage.Feed) (err error) {
 	return s.StorageReader.Send(ri, "OldestFeed", in, out)
 }
-
-func (s *Feed) Process(ri *skynet.RequestInfo, in *coverage.Feed, out *coverage.Feed) (err error) {
-	if err = s.FeedDownload.Send(ri, "Download", in, out); err != nil {
-		return
-	}
-	*in = *out
-	if err = s.FeedProcess.Send(ri, "Process", in, out); err != nil {
-		return
-	}
-	*in = *out
-	if err = s.StorageWriter.Send(ri, "SaveFeed", in, out); err != nil {
-		return
-	}
-	// TODO Save all articles to database; Add ArticleIds to queue
-	return
-}

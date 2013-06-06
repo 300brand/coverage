@@ -8,8 +8,6 @@ import (
 
 type Feed struct {
 	Log           skynet.SemanticLogger
-	FeedDownload  *client.ServiceClient
-	FeedProcess   *client.ServiceClient
 	StorageReader *client.ServiceClient
 	StorageWriter *client.ServiceClient
 }
@@ -18,8 +16,6 @@ var _ service.ServiceDelegate = &Feed{}
 
 func (s *Feed) Registered(service *service.Service) {
 	s.Log.Trace("Registered")
-	s.FeedDownload = c.GetService("FeedDownload", "", "", "")
-	s.FeedProcess = c.GetService("FeedProcess", "", "", "")
 	s.StorageReader = c.GetService("StorageReader", "", "", "")
 	s.StorageWriter = c.GetService("StorageWriter", "", "", "")
 }

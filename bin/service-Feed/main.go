@@ -7,13 +7,7 @@ import (
 	"os"
 )
 
-var (
-	SCFeedDownload  *client.ServiceClient
-	SCFeedProcess   *client.ServiceClient
-	SCStorageReader *client.ServiceClient
-	SCStorageWriter *client.ServiceClient
-	c               *client.Client
-)
+var c *client.Client
 
 func main() {
 	StartClient()
