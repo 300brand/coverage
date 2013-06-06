@@ -8,10 +8,12 @@ import (
 )
 
 type Manager struct {
-	Log     skynet.SemanticLogger
-	Tickers map[string]*Ticker
-	Feed    *client.ServiceClient
-	Queue   *client.ServiceClient
+	Log          skynet.SemanticLogger
+	Tickers      map[string]*Ticker
+	Feed         *client.ServiceClient
+	FeedDownload *client.ServiceClient
+	FeedProcess  *client.ServiceClient
+	Queue        *client.ServiceClient
 }
 
 type Ticker struct {
@@ -40,6 +42,9 @@ func (s *Manager) Registered(service *service.Service) {
 	s.Log.Trace("Registered")
 
 	s.Feed = c.GetService("Feed", "", "", "")
+	s.FeedDownload = c.GetService("FeedDownload", "", "", "")
+	s.FeedDownload.SetTimeout(0, 60*time.Second)
+	s.FeedProcess = c.GetService("FeedProcess", "", "", "")
 	s.Queue = c.GetService("Queue", "", "", "")
 
 	for name, t := range s.Tickers {
@@ -54,8 +59,8 @@ func (s *Manager) Unregistered(service *service.Service) {
 func (s *Manager) Started(service *service.Service) {
 	s.Log.Trace("Started")
 	s.Tickers = map[string]*Ticker{
-		"QueueFeedAdder":  NewTicker(s.queueFeedAdder, time.Second*10),
-		"ProcessNextFeed": NewTicker(s.processNextFeed, time.Second*10),
+		"QueueFeedAdder": NewTicker(s.queueFeedAdder, time.Second*10),
+		//"ProcessNextFeed": NewTicker(s.processNextFeed, time.Second*10),
 	}
 }
 func (s *Manager) Stopped(service *service.Service) {
