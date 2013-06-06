@@ -28,6 +28,16 @@ func (f *Feed) Add(r *http.Request, in *FeedAddArgs, out *coverage.Feed) (err er
 	return
 }
 
+func (f *Feed) Download(r *http.Request, in *skytypes.ObjectId, out *coverage.Feed) (err error) {
+	if err = GetService("Feed").Send(nil, "Get", in, out); err != nil {
+		return
+	}
+	if err = GetService("FeedDownload").Send(nil, "Download", out, out); err != nil {
+		return
+	}
+	return
+}
+
 func (f *Feed) Get(r *http.Request, in *skytypes.ObjectId, out *coverage.Feed) (err error) {
 	return GetService("Feed").Send(nil, "Get", in, out)
 }
