@@ -30,9 +30,9 @@ var _ service.ServiceDelegate = &Manager{}
 func NewTicker(f func(), d time.Duration) *Ticker {
 	return &Ticker{
 		F:      f,
-		Once:   make(chan bool, 1),
-		Start:  make(chan bool, 1),
-		Stop:   make(chan bool, 1),
+		Once:   make(chan bool),
+		Start:  make(chan bool),
+		Stop:   make(chan bool),
 		Tick:   d,
 		Ticker: &time.Ticker{},
 	}
@@ -50,7 +50,9 @@ func (s *Manager) Registered(service *service.Service) {
 	for name, t := range s.Tickers {
 		s.Log.Trace("Starting " + name)
 		go runner(t)
-		//t.Start <- true
+		// if autoStart {
+		// 	t.Start <- true
+		// }
 	}
 }
 func (s *Manager) Unregistered(service *service.Service) {
