@@ -8,16 +8,17 @@ import (
 )
 
 type Manager struct {
-	Log          skynet.SemanticLogger
-	Tickers      map[string]*Ticker
-	Feed         *client.ServiceClient
-	FeedDownload *client.ServiceClient
-	FeedProcess  *client.ServiceClient
-	Queue        *client.ServiceClient
+	Log           skynet.SemanticLogger
+	Tickers       map[string]*Ticker
+	Feed          *client.ServiceClient
+	FeedDownload  *client.ServiceClient
+	FeedProcess   *client.ServiceClient
+	Queue         *client.ServiceClient
+	StorageWriter *client.ServiceClient
 }
 
 type Ticker struct {
-	F      func()
+	F      func() error
 	Once   chan bool
 	Start  chan bool
 	Stop   chan bool
@@ -27,7 +28,7 @@ type Ticker struct {
 
 var _ service.ServiceDelegate = &Manager{}
 
-func NewTicker(f func(), d time.Duration) *Ticker {
+func NewTicker(f func() error, d time.Duration) *Ticker {
 	return &Ticker{
 		F:      f,
 		Once:   make(chan bool),
@@ -45,7 +46,9 @@ func (s *Manager) Registered(service *service.Service) {
 	s.FeedDownload = c.GetService("FeedDownload", "", "", "")
 	s.FeedDownload.SetTimeout(0, 60*time.Second)
 	s.FeedProcess = c.GetService("FeedProcess", "", "", "")
+	s.FeedProcess.SetTimeout(0, 30*time.Second)
 	s.Queue = c.GetService("Queue", "", "", "")
+	s.StorageWriter = c.GetService("StorageWriter", "", "", "")
 
 	for name, t := range s.Tickers {
 		s.Log.Trace("Starting " + name)
@@ -62,7 +65,7 @@ func (s *Manager) Started(service *service.Service) {
 	s.Log.Trace("Started")
 	s.Tickers = map[string]*Ticker{
 		"QueueFeedAdder": NewTicker(s.queueFeedAdder, time.Second*10),
-		//"ProcessNextFeed": NewTicker(s.processNextFeed, time.Second*10),
+		"FeedProcessor":  NewTicker(s.feedProcessor, time.Second*10),
 	}
 }
 func (s *Manager) Stopped(service *service.Service) {
