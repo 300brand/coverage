@@ -1,9 +1,9 @@
 package mongo
 
 import (
-	"git.300brand.com/coverage/bridge"
-	"labix.org/v2/mgo"
-	"labix.org/v2/mgo/bson"
+	//"git.300brand.com/coverage/bridge"
+	//"labix.org/v2/mgo"
+	//"labix.org/v2/mgo/bson"
 	"time"
 )
 
@@ -17,6 +17,7 @@ const (
 	QueueLogCollection   = "QueueLog"
 )
 
+/*
 func (m *Mongo) QueueLastId() (id uint64, err error) {
 	s := &queueState{}
 	q := m.db.C(QueueStateCollection).Find(nil)
@@ -63,3 +64,4 @@ func (m *Mongo) UpdateQueue(q bridge.Queue) (err error) {
 	_, err = m.db.C(QueueStateCollection).Upsert(nil, state)
 	return
 }
+*/
