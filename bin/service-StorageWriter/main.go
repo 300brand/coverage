@@ -1,17 +1,14 @@
 package main
 
 import (
+	"git.300brand.com/coverage/config"
 	"github.com/skynetservices/skynet"
 	"github.com/skynetservices/skynet/client"
 	"github.com/skynetservices/skynet/service"
 	"os"
 )
 
-var (
-	c         *client.Client
-	mongoDb   = skynet.GetDefaultEnvVar("SERVICE_MONGO_DB", "Coverage")
-	mongoHost = skynet.GetDefaultEnvVar("SERVICE_MONGO_HOST", "localhost")
-)
+var c *client.Client
 
 func main() {
 	StartClient()
@@ -19,22 +16,22 @@ func main() {
 }
 
 func StartClient() {
-	config, _ := skynet.GetClientConfig()
-	c = client.NewClient(config)
+	cConfig, _ := skynet.GetClientConfig()
+	c = client.NewClient(cConfig)
 }
 
 func StartService() {
-	config, _ := skynet.GetServiceConfig()
-	config.Name = "StorageWriter"
-	config.Version = "1"
+	sConfig, _ := skynet.GetServiceConfig()
+	sConfig.Name = "StorageWriter"
+	sConfig.Version = "1"
 
 	s := &StorageWriter{
-		Log:       skynet.NewConsoleSemanticLogger(config.Name, os.Stdout),
-		MongoHost: mongoHost,
-		MongoDb:   mongoDb,
+		Log:       skynet.NewConsoleSemanticLogger(sConfig.Name, os.Stdout),
+		MongoHost: config.Mongo.Host,
+		MongoDb:   config.Mongo.Database,
 	}
 
-	service := service.CreateService(s, config)
+	service := service.CreateService(s, sConfig)
 	defer service.Shutdown()
 
 	waiter := service.Start(true)

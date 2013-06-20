@@ -1,6 +1,7 @@
 package main
 
 import (
+	"git.300brand.com/coverage/config"
 	"git.300brand.com/coverage/doozer/idqueue"
 	"github.com/skynetservices/skynet"
 	"github.com/skynetservices/skynet/client"
@@ -16,25 +17,25 @@ func main() {
 }
 
 func StartClient() {
-	config, _ := skynet.GetClientConfig()
-	c = client.NewClient(config)
+	cConfig, _ := skynet.GetClientConfig()
+	c = client.NewClient(cConfig)
 }
 
 func StartService() {
-	config, _ := skynet.GetServiceConfig()
-	config.Name = "Queue"
-	config.Version = "1"
+	sConfig, _ := skynet.GetServiceConfig()
+	sConfig.Name = "Queue"
+	sConfig.Version = "1"
 
 	s := &Queue{
-		Log: skynet.NewConsoleSemanticLogger(config.Name, os.Stdout),
+		Log: skynet.NewConsoleSemanticLogger(sConfig.Name, os.Stdout),
 		FeedQ: &idqueue.IdQueue{
 			Name: "feeds",
-			Addr: config.DoozerConfig.BootUri,
+			Addr: config.Doozer.Address,
 			Max:  10,
 		},
 	}
 
-	service := service.CreateService(s, config)
+	service := service.CreateService(s, sConfig)
 	defer service.Shutdown()
 
 	waiter := service.Start(true)
