@@ -1,0 +1,5 @@
+{
+	"method": "Manager.StopQueue",
+	"params": [{}],
+	"id": 1
+}

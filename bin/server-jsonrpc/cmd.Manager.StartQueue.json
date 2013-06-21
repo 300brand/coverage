@@ -1,0 +1,5 @@
+{
+	"method": "Manager.StartQueue",
+	"params": [{}],
+	"id": 1
+}
