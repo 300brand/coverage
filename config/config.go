@@ -11,6 +11,7 @@ import (
 type config struct {
 	Doozer    *doozer
 	Mongo     *mongo
+	RPCServer *rpcserver
 	Zookeeper *zookeeper
 }
 
@@ -21,6 +22,10 @@ type doozer struct {
 type mongo struct {
 	Database string
 	Host     string
+}
+
+type rpcserver struct {
+	Address string
 }
 
 type zookeeper struct {
@@ -37,12 +42,16 @@ var (
 		Database: "Coverage",
 		Host:     "localhost",
 	}
+	RPCServer = rpcserver{
+		Address: ":8080",
+	}
 	Zookeeper = zookeeper{
 		Address: "",
 	}
 	all = &config{
 		Doozer:    &Doozer,
 		Mongo:     &Mongo,
+		RPCServer: &RPCServer,
 		Zookeeper: &Zookeeper,
 	}
 )
