@@ -71,6 +71,10 @@ func (s *Manager) processCommand(t *Ticker, cmd *skytypes.ClockCommand) (err err
 	case "once":
 		t.Once <- true
 		return t.F()
+	case "start":
+		t.Start <- true
+	case "stop":
+		t.Stop <- true
 	default:
 		err = errors.New("Unknown command: " + cmd.Command)
 	}
