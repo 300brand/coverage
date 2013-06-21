@@ -1,0 +1,5 @@
+{
+	"method": "Manager.StartFeeds",
+	"params": [{}],
+	"id": 1
+}
