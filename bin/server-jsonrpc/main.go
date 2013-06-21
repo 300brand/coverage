@@ -7,13 +7,13 @@ import (
 	"github.com/gorilla/rpc/json"
 	"github.com/skynetservices/skynet"
 	"github.com/skynetservices/skynet/client"
+	"github.com/skynetservices/skynet/service"
 	"log"
 	"net/http"
 	"os"
 )
 
 var (
-	Null     = &struct{}{}
 	c        *client.Client
 	flagset  = flag.NewFlagSet("main", flag.ContinueOnError)
 	listen   = flagset.String("l", ":8080", "Address to listen on")
@@ -26,6 +26,9 @@ func init() {
 }
 
 func main() {
+	StartClient()
+	go StartService()
+
 	flagsetArgs, skynetArgs := skynet.SplitFlagsetFromArgs(flagset, os.Args[1:])
 
 	if err := flagset.Parse(flagsetArgs); err != nil {
@@ -49,4 +52,25 @@ func GetService(name string) (s *client.ServiceClient) {
 		services[name] = s
 	}
 	return
+}
+
+func StartClient() {
+	cConfig, _ := skynet.GetClientConfig()
+	c = client.NewClient(cConfig)
+}
+
+func StartService() {
+	sConfig, _ := skynet.GetServiceConfig()
+	sConfig.Name = "ServerJSONRPC"
+	sConfig.Version = "1"
+
+	s := &ServerJSONRPC{
+		Log: skynet.NewConsoleSemanticLogger(sConfig.Name, os.Stdout),
+	}
+
+	service := service.CreateService(s, sConfig)
+	defer service.Shutdown()
+
+	waiter := service.Start(true)
+	waiter.Wait()
 }
