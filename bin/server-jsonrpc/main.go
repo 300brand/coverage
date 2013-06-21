@@ -1,7 +1,7 @@
 package main
 
 import (
-	"flag"
+	"git.300brand.com/coverage/config"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/rpc"
 	"github.com/gorilla/rpc/json"
@@ -9,14 +9,13 @@ import (
 	"github.com/skynetservices/skynet/client"
 	"github.com/skynetservices/skynet/service"
 	"log"
+	"net"
 	"net/http"
 	"os"
 )
 
 var (
 	c        *client.Client
-	flagset  = flag.NewFlagSet("main", flag.ContinueOnError)
-	listen   = flagset.String("l", ":8080", "Address to listen on")
 	s        = rpc.NewServer()
 	services = make(map[string]*client.ServiceClient)
 )
@@ -26,23 +25,20 @@ func init() {
 }
 
 func main() {
-	StartClient()
-	go StartService()
-
-	flagsetArgs, skynetArgs := skynet.SplitFlagsetFromArgs(flagset, os.Args[1:])
-
-	if err := flagset.Parse(flagsetArgs); err != nil {
+	listener, err := net.Listen("tcp", config.RPCServer.Address)
+	if err != nil {
 		log.Fatal(err)
 	}
+	defer listener.Close()
 
-	config, _ := skynet.GetClientConfigFromFlags(skynetArgs)
+	go func(l net.Listener) {
+		log.Printf("Listening on %s", l)
+		http.Handle("/rpc", handlers.LoggingHandler(os.Stdout, s))
+		log.Fatal(http.Serve(l, nil))
+	}(listener)
 
-	config.Log = skynet.NewConsoleSemanticLogger("SkynetRPC", os.Stderr)
-	c = client.NewClient(config)
-
-	log.Print("Listening on " + *listen)
-	http.Handle("/rpc", handlers.LoggingHandler(os.Stdout, s))
-	log.Fatal(http.ListenAndServe(*listen, nil))
+	StartClient()
+	StartService()
 }
 
 func GetService(name string) (s *client.ServiceClient) {
