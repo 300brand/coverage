@@ -3,7 +3,7 @@ package main
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/downloader"
-	"github.com/bketelsen/skynet"
+	"github.com/skynetservices/skynet"
 )
 
 func (s *ArticleDownload) Download(ri *skynet.RequestInfo, in *coverage.Article, out *coverage.Article) (err error) {
