@@ -1,0 +1,800 @@
+{
+	"id": 1,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 13360,
+		"url": "http://feeds.feedburner.com/securityweek"
+	}]
+}
+{
+	"id": 2,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 1154,
+		"url": "http://feeds.pcworld.com/pcworld/businesscenter/tech_inciter/"
+	}]
+}
+{
+	"id": 3,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 105,
+		"url": "http://feeds.chicagotribune.com/chicago-law"
+	}]
+}
+{
+	"id": 4,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 197,
+		"url": "http://blogs.cio.com/blog/movers-and-shakers/feed"
+	}]
+}
+{
+	"id": 5,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 358,
+		"url": "http://www.computerworld.com/s/feed/topic/140/Network+Hardware"
+	}]
+}
+{
+	"id": 6,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 1558,
+		"url": "http://feeds.washingtonpost.com/rss/rss_crime-scene"
+	}]
+}
+{
+	"id": 7,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 14486,
+		"url": "http://www.digitaltrends.com/feed/"
+	}]
+}
+{
+	"id": 8,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 1265,
+		"url": "http://rcpmag.com/rss-feeds/bekkers-blog.aspx"
+	}]
+}
+{
+	"id": 9,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 1442,
+		"url": "http://content.usatoday.com/marketing/rss/rsstrans.aspx?feedId=sports20&xml=true"
+	}]
+}
+{
+	"id": 10,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 1648,
+		"url": "http://feeds.washingtonpost.com/rss/entertainment/music"
+	}]
+}
+{
+	"id": 11,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 14396,
+		"url": "http://feeds.reuters.com/reuters/telecomsectorNews"
+	}]
+}
+{
+	"id": 12,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 432,
+		"url": "http://www.computerworld.com/s/feed/topic/133/Retail"
+	}]
+}
+{
+	"id": 13,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 442,
+		"url": "http://www.computerworld.com/s/feed/author/9000021/ScotFinnie"
+	}]
+}
+{
+	"id": 14,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 77,
+		"url": "http://campustechnology.com/rss-feeds/news.aspx"
+	}]
+}
+{
+	"id": 15,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 11897,
+		"url": "http://feeds.feedburner.com/careersinfosecurity/in"
+	}]
+}
+{
+	"id": 16,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 11873,
+		"url": "http://feeds.feedburner.com/ComputeruserBlogs"
+	}]
+}
+{
+	"id": 17,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 14315,
+		"url": "http://www.moneycontrol.com/rss/internationalmarkets.xml"
+	}]
+}
+{
+	"id": 18,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 14392,
+		"url": "http://feeds.reuters.com/reuters/USmediaDiversifiedNews"
+	}]
+}
+{
+	"id": 19,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 1687,
+		"url": "http://washingtontimes.feedsportal.com/c/34503/fe.ed/www.washingtontimes.com/rss/headlines/sports/other/"
+	}]
+}
+{
+	"id": 20,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 280,
+		"url": "http://www.cioinsight.com/rss-feeds-66.xml"
+	}]
+}
+{
+	"id": 21,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 1409,
+		"url": "http://content.usatoday.com/marketing/rss/rsstrans.aspx?feedId=news55&xml=true"
+	}]
+}
+{
+	"id": 22,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 14482,
+		"url": "http://blogs.windows.com/windows_phone/b/windowsphone/rss.aspx"
+	}]
+}
+{
+	"id": 23,
+	"method": "Feed.Add",
+	"params": [{
+		"remote_id": 14232,
+		"url": "http://miamiherald.typepad.com/dolphins_in_depth/rss.xml"
+	}]
+}
+{
+"id": 24,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 825,
+		"url": "http://www.fiercehealthit.com/feed"
+	}]
+}
+{
+"id": 25,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 9952,
+		"url": "http://www.complianceweek.com/pages/rss.aspx?sectionid=1846"
+	}]
+}
+{
+"id": 26,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14293,
+		"url": "http://miamiherald.typepad.com/gator_clause/rss.xml"
+	}]
+}
+{
+"id": 27,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 93,
+		"url": "http://feeds.feedburner.com/chicagotribune/theskyline"
+	}]
+}
+{
+"id": 28,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1047,
+		"url": "http://feeds.feedburner.com/MultichannelNews-BusinessNewsNews"
+	}]
+}
+{
+"id": 29,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 605,
+		"url": "http://feeds.feedburner.com/economist/SlNh"
+	}]
+}
+{
+"id": 30,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 460,
+		"url": "http://feeds.computerworld.com/s/feed/author/572/RobertL.Mitchell"
+	}]
+}
+{
+"id": 31,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 89,
+		"url": "http://feeds.feedburner.com/chicagotribune/cloutstreet/"
+	}]
+}
+{
+"id": 32,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1504,
+		"url": "http://feeds.washingtonpost.com/rss/politics/federal-government"
+	}]
+}
+{
+"id": 33,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14340,
+		"url": "http://www.techinvestornews.com/Green/Latest-Green-Tech-News-RSS"
+	}]
+}
+{
+"id": 34,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 500,
+		"url": "http://blogs.computerworld.com/blog/187/feed"
+	}]
+}
+{
+"id": 35,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 11627,
+		"url": "http://rss.tmcnet.com/rss/crss.ashx?cnl=IVR+Service+Provider"
+	}]
+}
+{
+"id": 36,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 11829,
+		"url": "http://www.cnbc.com/id/26203268/device/rss/rss.xml"
+	}]
+}
+{
+"id": 37,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 11854,
+		"url": "http://www.cnbc.com/id/15838342/device/rss/rss.xml"
+	}]
+}
+{
+"id": 38,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 372,
+		"url": "http://www.computerworld.com/s/feed/topic/83/Business+Continuity"
+	}]
+}
+{
+"id": 39,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14375,
+		"url": "http://feeds.reuters.com/reuters/globalmarketsNews"
+	}]
+}
+{
+"id": 40,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1566,
+		"url": "http://feeds.washingtonpost.com/rss/rss_post_now"
+	}]
+}
+{
+"id": 41,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14422,
+		"url": "http://feeds.reuters.com/reuters/blogs/jackshafer"
+	}]
+}
+{
+"id": 42,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 505,
+		"url": "http://blogs.computerworld.com/blog/28/feed"
+	}]
+}
+{
+"id": 43,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1524,
+		"url": "http://feeds.washingtonpost.com/rss/rss_omblog"
+	}]
+}
+{
+"id": 44,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 351,
+		"url": "http://www.computerworld.com/s/feed/topic/89/Operating+Systems"
+	}]
+}
+{
+"id": 45,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 793,
+		"url": "http://www.eetimes.com/RSS/RSSResult?contentType=10&contentSubtype=IP/EDA&classificationGroupId=27"
+	}]
+}
+{
+"id": 46,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 10285,
+		"url": "http://energy.gov/cio/cio-blog-archive?view=rss"
+	}]
+}
+{
+"id": 47,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1476,
+		"url": "http://content.usatoday.com/marketing/rss/rsstrans.aspx?feedId=life1&xml=true"
+	}]
+}
+{
+"id": 48,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1602,
+		"url": "http://feeds.washingtonpost.com/rss/rss_checkpoint-washington"
+	}]
+}
+{
+"id": 49,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1451,
+		"url": "http://content.usatoday.com/marketing/rss/rsstrans.aspx?feedId=tech2&xml=true"
+	}]
+}
+{
+"id": 50,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 179,
+		"url": "http://feeds.feedburner.com/chicagotribune/condo-adviser"
+	}]
+}
+{
+"id": 51,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 108,
+		"url": "http://feeds.feedburner.com/chicagotribune/rosenthal"
+	}]
+}
+{
+"id": 52,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 413,
+		"url": "http://www.computerworld.com/s/feed/topic/167/Internet"
+	}]
+}
+{
+"id": 53,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1539,
+		"url": "http://feeds.washingtonpost.com/rss/local/dc-politics"
+	}]
+}
+{
+"id": 54,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14387,
+		"url": "http://feeds.reuters.com/reuters/cyclicalconsumergoodsNews"
+	}]
+}
+{
+"id": 55,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 796,
+		"url": "http://www.eetimes.com/RSS/RSSResult?contentType=10&contentSubtype=Operating%20Systems&classificationGroupId=30"
+	}]
+}
+{
+"id": 56,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 12,
+		"url": "http://www.americanbanker.com/resources/consumerfinance.xml"
+	}]
+}
+{
+"id": 57,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 11687,
+		"url": "http://rss.tmcnet.com/rss/crss.ashx?cnl=IP+Fax"
+	}]
+}
+{
+"id": 58,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1787,
+		"url": "http://www.govexec.com/rss/all/"
+	}]
+}
+{
+"id": 59,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 11769,
+		"url": "http://redmondmag.com/rss-feeds/it-decision-maker.aspx"
+	}]
+}
+{
+"id": 60,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 11895,
+		"url": "http://feeds.feedburner.com/careersinfosecurity/uk"
+	}]
+}
+{
+"id": 61,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1101,
+		"url": "http://feeds.delicious.com/v2/rss/OracleTechnologyNetwork/otntecharticle"
+	}]
+}
+{
+"id": 62,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 118,
+		"url": "http://feeds.feedburner.com/chicagotribune/illinois"
+	}]
+}
+{
+"id": 63,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 436,
+		"url": "http://www.computerworld.com/s/feed/author/9000601/MaryBrandel"
+	}]
+}
+{
+"id": 64,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14548,
+		"url": "http://feeds.labnol.org/labnol"
+	}]
+}
+{
+"id": 65,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14395,
+		"url": "http://feeds.reuters.com/reuters/UStechnologyTelcomNews"
+	}]
+}
+{
+"id": 66,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 403,
+		"url": "http://www.computerworld.com/s/feed/topic/120/CRM"
+	}]
+}
+{
+"id": 67,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 518,
+		"url": "http://www.cujournal.com/resources/technology.xml"
+	}]
+}
+{
+"id": 68,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 445,
+		"url": "http://www.computerworld.com/s/feed/author/9000240/SharonGaudin"
+	}]
+}
+{
+"id": 69,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 11606,
+		"url": "http://blogs.technet.com/b/uspartner_eastregion/rsscomments.aspx"
+	}]
+}
+{
+"id": 70,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 183,
+		"url": "http://feeds.feedburner.com/chicagotribune/jobs"
+	}]
+}
+{
+"id": 71,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 26,
+		"url": "http://bankdirector.com/index.php/tools/blocks/page_list/rss?bID=1339&cID=67&arHandle=Main%20Content"
+	}]
+}
+{
+"id": 72,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 11685,
+		"url": "http://rss.tmcnet.com/rss/crss.ashx?cnl=Google+Apps+-+News"
+	}]
+}
+{
+"id": 73,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1636,
+		"url": "http://feeds.washingtonpost.com/rss/lifestyle/magazine"
+	}]
+}
+{
+"id": 74,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 10333,
+		"url": "http://cdn.auntminnie.com/rss/rss.aspx"
+	}]
+}
+{
+"id": 75,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 73,
+		"url": "http://www.bsminfo.com/rssfeeds.mvc/Rssdownloads"
+	}]
+}
+{
+"id": 76,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14391,
+		"url": "http://feeds.reuters.com/reuters/industrialsNews"
+	}]
+}
+{
+"id": 77,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 798,
+		"url": "http://www.eetimes.com/RSS/RSSResult?contentType=10&contentSubtype=Passives&classificationGroupId=32"
+	}]
+}
+{
+"id": 78,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 134,
+		"url": "http://feeds.feedburner.com/chicagotribune/joe-trost"
+	}]
+}
+{
+"id": 79,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 364,
+		"url": "http://www.computerworld.com/s/feed/topic/201/Mobile+OSes"
+	}]
+}
+{
+"id": 80,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14476,
+		"url": "http://blogs.windows.com/windows/b/windowsexperience/rss.aspx"
+	}]
+}
+{
+"id": 81,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1036,
+		"url": "http://feeds.feedburner.com/mmh/rss/recentlyfiled"
+	}]
+}
+{
+"id": 82,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1725,
+		"url": "http://washingtontimes.feedsportal.com/c/34503/fe.ed/www.washingtontimes.com/rss/weblogs/technology/"
+	}]
+}
+{
+"id": 83,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1642,
+		"url": "http://feeds.washingtonpost.com/rss/rss_reliable-source"
+	}]
+}
+{
+"id": 84,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1651,
+		"url": "http://feeds.washingtonpost.com/rss/entertainment/blogs-columns"
+	}]
+}
+{
+"id": 85,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14168,
+		"url": "http://www.chron.com/opinion/editorials/collectionRss/Opinion-Editorials-Headline-List-10567.php"
+	}]
+}
+{
+"id": 86,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 483,
+		"url": "http://www.computerworld.com/s/feed/keyword/SAP"
+	}]
+}
+{
+"id": 87,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 414,
+		"url": "http://www.computerworld.com/s/feed/topic/211/Browsers"
+	}]
+}
+{
+"id": 88,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 353,
+		"url": "http://www.computerworld.com/s/feed/topic/123/Mac+OS"
+	}]
+}
+{
+"id": 89,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14261,
+		"url": "http://www.miamiherald.com/news/issues-ideas/index.xml"
+	}]
+}
+{
+"id": 90,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14193,
+		"url": "http://finance.yahoo.com/rss/GasUtilities"
+	}]
+}
+{
+"id": 91,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1411,
+		"url": "http://content.usatoday.com/marketing/rss/rsstrans.aspx?feedId=news5&xml=true"
+	}]
+}
+{
+"id": 92,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1450,
+		"url": "http://content.usatoday.com/marketing/rss/rsstrans.aspx?feedId=tech1&xml=true"
+	}]
+}
+{
+"id": 93,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 10240,
+		"url": "http://www.nytimes.com/services/xml/rss/nyt/companies.xml"
+	}]
+}
+{
+"id": 94,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14240,
+		"url": "http://www.miamiherald.com/news/latest-top-stories/index.xml"
+	}]
+}
+{
+"id": 95,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1414,
+		"url": "http://content.usatoday.com/marketing/rss/rsstrans.aspx?feedId=news8&xml=true"
+	}]
+}
+{
+"id": 96,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 11615,
+		"url": "http://rss.tmcnet.com/rss/crss.ashx?cnl=Contact+Center+Transformation"
+	}]
+}
+{
+"id": 97,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 11689,
+		"url": "http://rss.tmcnet.com/rss/crss.ashx?cnl=IP+Phone+Maker"
+	}]
+}
+{
+"id": 98,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1572,
+		"url": "http://feeds.washingtonpost.com/rss/rss_virginia-schools-insider"
+	}]
+}
+{
+"id": 99,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 1249,
+		"url": "http://www.powermag.com/rss/nuclear/rss.xml"
+	}]
+}
+{
+"id": 100,
+"method": "Feed.Add",
+"params": [{
+		"remote_id": 14543,
+		"url": "http://feeds.feedburner.com/osxdaily"
+	}]
+}
