@@ -8,22 +8,27 @@ import (
 )
 
 type Manager struct {
-	Log           skynet.SemanticLogger
-	Tickers       map[string]*Ticker
-	Feed          *client.ServiceClient
-	FeedDownload  *client.ServiceClient
-	FeedProcess   *client.ServiceClient
-	Queue         *client.ServiceClient
-	StorageWriter *client.ServiceClient
+	Log             skynet.SemanticLogger
+	Tickers         map[string]*Ticker
+	ArticleBody     *client.ServiceClient
+	ArticleDownload *client.ServiceClient
+	ArticleLexer    *client.ServiceClient
+	Feed            *client.ServiceClient
+	FeedDownload    *client.ServiceClient
+	FeedProcess     *client.ServiceClient
+	Queue           *client.ServiceClient
+	StorageWriter   *client.ServiceClient
 }
-
-
 
 var _ service.ServiceDelegate = &Manager{}
 
 func (s *Manager) Registered(service *service.Service) {
 	s.Log.Trace("Registered")
 
+	s.ArticleBody = c.GetService("ArticleBody", "", "", "")
+	s.ArticleDownload = c.GetService("ArticleDownload", "", "", "")
+	s.ArticleDownload.SetTimeout(0, 60*time.Second)
+	s.ArticleLexer = c.GetService("ArticleLexer", "", "", "")
 	s.Feed = c.GetService("Feed", "", "", "")
 	s.FeedDownload = c.GetService("FeedDownload", "", "", "")
 	s.FeedDownload.SetTimeout(0, 60*time.Second)

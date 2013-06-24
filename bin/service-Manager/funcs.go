@@ -9,6 +9,26 @@ import (
 )
 
 func (s *Manager) articleProcessor(a *coverage.Article) (err error) {
+	in := &coverage.Article{}
+	out := a
+
+	if err = s.ArticleDownload.Send(nil, "Download", in, out); err != nil {
+		s.Log.Error(err.Error())
+		return
+	}
+
+	*in = *out
+	if err = s.ArticleBody.Send(nil, "Process", in, out); err != nil {
+		s.Log.Error(err.Error())
+		return
+	}
+
+	*in = *out
+	if err = s.StorageWriter.Send(nil, "SaveArticle", in, out); err != nil {
+		s.Log.Error(err.Error())
+		return
+	}
+
 	return
 }
 
@@ -44,6 +64,8 @@ func (s *Manager) feedProcessor() (err error) {
 	}
 	s.Log.Trace(fmt.Sprintf("%s Processed", out.ID.Hex()))
 
+	articles := in.Articles
+
 	*in = *out
 	if err = s.StorageWriter.Send(nil, "SaveFeed", in, out); err != nil {
 		s.Log.Error(err.Error())
@@ -56,9 +78,9 @@ func (s *Manager) feedProcessor() (err error) {
 		return
 	}
 
-	for _, a := range out.Articles {
-		if err := articleProcessor(a); err != nil {
-			
+	for _, a := range articles {
+		if err := s.articleProcessor(a); err != nil {
+			s.Log.Error(err.Error())
 		}
 	}
 	return
