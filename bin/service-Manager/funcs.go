@@ -12,24 +12,24 @@ func (s *Manager) articleProcessor(a *coverage.Article) (err error) {
 	in := &coverage.Article{}
 	out := a
 
-	s.Log.Trace("Downloading Article")
+	s.Log.Trace(fmt.Sprintf("Downloading Article %s", a.ID))
 	*in = *out
 	if err = s.ArticleDownload.Send(nil, "Download", in, out); err != nil {
-		s.Log.Error(err.Error())
+		s.Log.Error(fmt.Sprintf("Error Downloading: %s", err.Error()))
 		return
 	}
 
-	s.Log.Trace("Processing Article")
+	s.Log.Trace(fmt.Sprintf("Processing Article %s", a.ID))
 	*in = *out
 	if err = s.ArticleBody.Send(nil, "Process", in, out); err != nil {
-		s.Log.Error(err.Error())
+		s.Log.Error(fmt.Sprintf("Error Processing: %s", err.Error()))
 		return
 	}
 
-	s.Log.Trace("Saving Article")
+	s.Log.Trace(fmt.Sprintf("Saving Article %s", a.ID))
 	*in = *out
 	if err = s.StorageWriter.Send(nil, "SaveArticle", in, out); err != nil {
-		s.Log.Error(err.Error())
+		s.Log.Error(fmt.Sprintf("Error Saving: %s", err.Error()))
 		return
 	}
 
@@ -53,7 +53,7 @@ func (s *Manager) feedProcessor() (err error) {
 	*in = *out
 	if err = s.FeedDownload.Send(nil, "Download", in, out); err != nil {
 		s.Log.Error(out.Log.Error(err).Error())
-		s.StorageWriter.Send(nil, "SaveFeed", out, in)
+		s.StorageWriter.Send(nil, "SaveFeed", in, out)
 		return
 	}
 	s.Log.Trace(fmt.Sprintf("%s Downloaded", out.ID.Hex()))
@@ -61,7 +61,7 @@ func (s *Manager) feedProcessor() (err error) {
 	*in = *out
 	if err = s.FeedProcess.Send(nil, "Process", in, out); err != nil {
 		s.Log.Error(out.Log.Error(err).Error())
-		s.StorageWriter.Send(nil, "SaveFeed", out, in)
+		s.StorageWriter.Send(nil, "SaveFeed", in, out)
 		return
 	}
 	s.Log.Trace(fmt.Sprintf("%s Processed", out.ID.Hex()))
