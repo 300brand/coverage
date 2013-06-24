@@ -17,27 +17,9 @@ type Manager struct {
 	StorageWriter *client.ServiceClient
 }
 
-type Ticker struct {
-	F      func() error
-	Once   chan bool
-	Start  chan bool
-	Stop   chan bool
-	Tick   time.Duration
-	Ticker *time.Ticker
-}
+
 
 var _ service.ServiceDelegate = &Manager{}
-
-func NewTicker(f func() error, d time.Duration) *Ticker {
-	return &Ticker{
-		F:      f,
-		Once:   make(chan bool),
-		Start:  make(chan bool),
-		Stop:   make(chan bool),
-		Tick:   d,
-		Ticker: &time.Ticker{},
-	}
-}
 
 func (s *Manager) Registered(service *service.Service) {
 	s.Log.Trace("Registered")
