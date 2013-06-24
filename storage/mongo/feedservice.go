@@ -89,7 +89,7 @@ func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId) (f *coverage.Feed, err err
 func (m *Mongo) UpdateFeed(f *coverage.Feed) (err error) {
 	l := len(f.Articles)
 	f.Articles = f.Articles[:0]
-	defer func(l int) { f.Articles = f.Articles[:l] }(l)
+	defer func() { f.Articles = f.Articles[:l] }()
 
 	f.Updated = time.Now()
 	_, err = m.db.C(FeedCollection).UpsertId(f.ID, f)
