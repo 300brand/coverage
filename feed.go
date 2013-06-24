@@ -15,7 +15,7 @@ type Feed struct {
 	URL          *url.URL
 	Disabled     bool
 	Content      []byte
-	Articles     []*Article `bson:"-"` // Temporary Article storage
+	Articles     []*Article // Temporary Article storage; cleared before each save
 	URLs         []*url.URL
 	Log          logger.Entries
 	Added        time.Time
