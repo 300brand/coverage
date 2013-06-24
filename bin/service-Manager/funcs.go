@@ -12,17 +12,21 @@ func (s *Manager) articleProcessor(a *coverage.Article) (err error) {
 	in := &coverage.Article{}
 	out := a
 
+	s.Log.Trace("Downloading Article")
+	*in = *out
 	if err = s.ArticleDownload.Send(nil, "Download", in, out); err != nil {
 		s.Log.Error(err.Error())
 		return
 	}
 
+	s.Log.Trace("Processing Article")
 	*in = *out
 	if err = s.ArticleBody.Send(nil, "Process", in, out); err != nil {
 		s.Log.Error(err.Error())
 		return
 	}
 
+	s.Log.Trace("Saving Article")
 	*in = *out
 	if err = s.StorageWriter.Send(nil, "SaveArticle", in, out); err != nil {
 		s.Log.Error(err.Error())
@@ -46,8 +50,6 @@ func (s *Manager) feedProcessor() (err error) {
 	}
 	s.Log.Trace(fmt.Sprintf("%s Got ID", out.ID.Hex()))
 
-	// store URLs to later determine additions
-	oldURLs := out.URLs
 	*in = *out
 	if err = s.FeedDownload.Send(nil, "Download", in, out); err != nil {
 		s.Log.Error(out.Log.Error(err).Error())
@@ -64,8 +66,6 @@ func (s *Manager) feedProcessor() (err error) {
 	}
 	s.Log.Trace(fmt.Sprintf("%s Processed", out.ID.Hex()))
 
-	articles := in.Articles
-
 	*in = *out
 	if err = s.StorageWriter.Send(nil, "SaveFeed", in, out); err != nil {
 		s.Log.Error(err.Error())
@@ -73,12 +73,9 @@ func (s *Manager) feedProcessor() (err error) {
 	}
 	s.Log.Trace(fmt.Sprintf("%s Saved", out.ID.Hex()))
 
-	if len(out.URLs) == len(oldURLs) {
-		s.Log.Trace("No new URLs found")
-		return
-	}
-
-	for _, a := range articles {
+	s.Log.Trace(fmt.Sprintf("Processing %d articles", len(out.Articles)))
+	for _, a := range out.Articles {
+		s.Log.Trace(fmt.Sprintf("Processing Article %s", a.ID))
 		if err := s.articleProcessor(a); err != nil {
 			s.Log.Error(err.Error())
 		}
