@@ -91,7 +91,7 @@ func runner(t *Ticker) {
 		case <-t.Stop:
 			t.Ticker.Stop()
 		case <-t.Ticker.C:
-			t.F()
+			go t.F()
 		}
 	}
 }
