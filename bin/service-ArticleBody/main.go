@@ -10,8 +10,8 @@ import (
 func main() {
 	s := &ArticleBody{}
 	config, _ := skynet.GetServiceConfig()
-
 	config.Name = "ArticleBody"
+	config.Version = "1"
 
 	s.Log = skynet.NewConsoleSemanticLogger(config.Name, os.Stdout)
 	config.Log = s.Log
