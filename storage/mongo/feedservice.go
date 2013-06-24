@@ -6,6 +6,7 @@ import (
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 	"net/url"
+	"time"
 )
 
 type FeedService struct {
@@ -86,21 +87,10 @@ func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId) (f *coverage.Feed, err err
 }
 
 func (m *Mongo) UpdateFeed(f *coverage.Feed) (err error) {
-	if err = m.EnsureIndexSet(FeedCollection, indexes[FeedCollection]); err != nil {
-		return
-	}
-
+	f.Updated = time.Now()
 	_, err = m.db.C(FeedCollection).UpsertId(f.ID, f)
 	if err != nil {
 		return
 	}
-	// TODO remove file storage
-	/*
-		for _, file := range f.Files() {
-			if err = m.storeFile(FeedCollection, &file); err != nil {
-				return
-			}
-		}
-	*/
 	return
 }

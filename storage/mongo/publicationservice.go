@@ -4,6 +4,7 @@ import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
 	"labix.org/v2/mgo"
+	"time"
 )
 
 type PublicationService struct {
@@ -34,6 +35,7 @@ func (m *Mongo) GetPublication(query interface{}) (p *coverage.Publication, err 
 }
 
 func (m *Mongo) UpdatePublication(p *coverage.Publication) (err error) {
+	p.Updated = time.Now()
 	_, err = m.db.C(PublicationCollection).UpsertId(p.ID, p)
 	return
 }
