@@ -15,21 +15,21 @@ func (s *Manager) articleProcessor(a *coverage.Article) (err error) {
 	s.Log.Trace(fmt.Sprintf("Downloading Article %s", a.ID))
 	*in = *out
 	if err = s.ArticleDownload.Send(nil, "Download", in, out); err != nil {
-		s.Log.Error(fmt.Sprintf("Error Downloading: %s", err.Error()))
+		s.Log.Error(fmt.Sprintf("Error Downloading %s: %s", a.ID, err.Error()))
 		return
 	}
 
 	s.Log.Trace(fmt.Sprintf("Processing Article %s", a.ID))
 	*in = *out
 	if err = s.ArticleBody.Send(nil, "Process", in, out); err != nil {
-		s.Log.Error(fmt.Sprintf("Error Processing: %s", err.Error()))
+		s.Log.Error(fmt.Sprintf("Error Processing %s: %s", a.ID, err.Error()))
 		return
 	}
 
 	s.Log.Trace(fmt.Sprintf("Saving Article %s", a.ID))
 	*in = *out
 	if err = s.StorageWriter.Send(nil, "SaveArticle", in, out); err != nil {
-		s.Log.Error(fmt.Sprintf("Error Saving: %s", err.Error()))
+		s.Log.Error(fmt.Sprintf("Error Saving %s: %s", a.ID, err.Error()))
 		return
 	}
 
