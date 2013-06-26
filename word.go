@@ -1,8 +1,8 @@
 package coverage
 
 type Word struct {
-	Word  string
-	Stem  string
+	Word string
+	Stem string
 }
 
 func (w Word) String() string {

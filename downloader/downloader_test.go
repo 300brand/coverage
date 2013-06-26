@@ -51,9 +51,9 @@ func TestDownload(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if string(r.Body) != Success {
+	if string(r.Text.Body) != Success {
 		t.Errorf("Expect: %s", Success)
-		t.Errorf("Got:    %s", r.Body)
+		t.Errorf("Got:    %s", r.Text.Body)
 	}
 }
 
@@ -75,9 +75,9 @@ func TestFileDownload(t *testing.T) {
 		t.Error(err)
 	}
 
-	if string(r.Body) != Success {
+	if string(r.Text.Body) != Success {
 		t.Errorf("Expect: %s", Success)
-		t.Errorf("Got:    %s", r.Body)
+		t.Errorf("Got:    %s", r.Text.Body)
 	}
 }
 

@@ -37,9 +37,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	//lexer.StemmingEnabled = true
-	words := lexer.GetWords(in)
-	for _, w := range words {
-		fmt.Printf("%-3d %-15s %-15s\n", w.Index, w.Word, w.Stem)
+	for _, w := range lexer.Words(in) {
+		fmt.Printf("All: %s\n", w)
+	}
+	for _, w := range lexer.Keywords(in) {
+		fmt.Printf("Keyword: %s\n", w)
 	}
 }

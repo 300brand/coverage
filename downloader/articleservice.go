@@ -27,7 +27,7 @@ func Article(a *coverage.Article) error {
 		return a.Log.Error(err)
 	}
 	a.LastCheck = time.Now()
-	a.HTML = r.Body
+	a.Text.HTML = r.Body
 	if a.URL.String() != r.RealURL {
 		a.Log.Debug("Updating URL from [%s] to [%s]", a.URL.String(), r.RealURL)
 		if a.URL, err = url.Parse(r.RealURL); err != nil {

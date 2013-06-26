@@ -49,10 +49,12 @@ func TestGridFSSave(t *testing.T) {
 	m := connect(t)
 	defer cleanup(m)
 	a := coverage.NewArticle()
-	a.HTML = []byte("<!DOCTYPE html><html><body><p>Test</p></body></html>")
-	a.Body = coverage.Body{
-		HTML: []byte("<p>Test</p>"),
-		Text: []byte("Test"),
+	a.Text = coverage.Text{
+		HTML: []byte("<!DOCTYPE html><html><body><p>Test</p></body></html>"),
+		Body: coverage.Body{
+			HTML: []byte("<p>Test</p>"),
+			Text: []byte("Test"),
+		},
 	}
 	if err := m.UpdateArticle(a); err != nil {
 		t.Error(err)
@@ -64,10 +66,10 @@ func TestGridFSUpdate(t *testing.T) {
 	defer cleanup(m)
 	a := coverage.NewArticle()
 
-	a.HTML = []byte("This is the first document")
+	a.Text.HTML = []byte("This is the first document")
 	m.UpdateArticle(a)
 
-	a.HTML = []byte("This is the second document")
+	a.Text.HTML = []byte("This is the second document")
 	m.UpdateArticle(a)
 }
 

@@ -18,7 +18,7 @@ func ConvertArticle(in Article) (out *coverage.Article, err error) {
 	out = coverage.NewArticle()
 
 	start := time.Now()
-	out.HTML, err = ArticleHTML(in.Id)
+	out.Text.HTML, err = ArticleHTML(in.Id)
 	log.Printf("         Read HTML %s", time.Now().Sub(start))
 
 	if out.URL, err = url.Parse(string(in.Url)); err != nil {

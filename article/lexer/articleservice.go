@@ -16,11 +16,11 @@ func NewArticleService() *ArticleService {
 
 func (s *ArticleService) Update(a *coverage.Article) error {
 	a.Log.Service("lexer.ArticleService")
-	if len(a.Body.Text) == 0 {
+	if len(a.Text.Body.Text) == 0 {
 		return a.Log.Error(errors.New("Article body is empty, did you run body.ArticleService?"))
 	}
-	a.Words.All = Words(a.Body.Text)
-	a.Words.Keywords = Keywords(a.Body.Text)
+	a.Text.Words.All = Words(a.Text.Body.Text)
+	a.Text.Words.Keywords = Keywords(a.Text.Body.Text)
 	a.Modified("Words")
 	return nil
 }
