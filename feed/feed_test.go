@@ -16,9 +16,10 @@ import (
 )
 
 type test struct {
-	Type  string
-	Feed  *coverage.Feed
-	Files struct {
+	Filename string
+	Type     string
+	Feed     *coverage.Feed
+	Files    struct {
 		Times string
 		URLs  string
 	}
@@ -36,19 +37,21 @@ func init() {
 			log.Fatal(err)
 		}
 		for _, filename := range list {
-			t := test{}
+			t := test{
+				Filename: filename,
+				Type:     ext,
+			}
 			t.Files.URLs = strings.Replace(filename, "."+ext, ".urls", 1)
 			t.Files.Times = strings.Replace(filename, "."+ext, ".times", 1)
-			t.Type = ext
 
 			t.Feed = coverage.NewFeed()
 			if t.Feed.Content, err = ioutil.ReadFile(filename); err != nil {
-				log.Fatal(err)
+				log.Fatalf("Parsing %s: %s", filename, err)
 			}
 
 			s := NewFeedService()
 			if err = s.Update(t.Feed); err != nil {
-				log.Fatal(err)
+				log.Fatalf("Parsing %s: %s", filename, err)
 			}
 			tests = append(tests, t)
 		}
@@ -94,12 +97,15 @@ func TestTimes(t *testing.T) {
 
 		times := strings.FieldsFunc(string(b), func(r rune) bool { return r == '\n' })
 		if l := len(test.Feed.Articles); l != len(times) {
+			for _, a := range test.Feed.Articles {
+				t.Logf("%s", a.Published)
+			}
 			t.Fatalf("Invalid time count\nExpect: %d\nGot: %d", len(times), l)
 		}
 
 		for i, exp := range times {
 			if aTime := test.Feed.Articles[i].Published; exp != aTime.String() {
-				t.Logf("%s", aTime)
+				t.Logf("Expected: %s; Got: %s", exp, aTime)
 			}
 		}
 	}
@@ -109,7 +115,7 @@ func TestType(t *testing.T) {
 	for _, test := range tests {
 		typ, err := parser.Type(test.Feed.Content)
 		if err != nil {
-			t.Errorf("Decoder error: %s", err)
+			t.Errorf("Decoder error [%s] test: %s", test.Filename, err)
 		}
 		if typ != test.Type {
 			t.Errorf("Invalid type\nExpect: %s\nGot: %s", test.Type, typ)
