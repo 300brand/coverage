@@ -1,5 +1,7 @@
 package main
 
+/*
+ * Redacted for later refinement
 import (
 	"flag"
 	"git.300brand.com/coverage/bridge"
@@ -58,3 +60,4 @@ func main() {
 		log.Fatalf("q.UpdateQueue: %s", err)
 	}
 }
+*/
