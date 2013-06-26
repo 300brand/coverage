@@ -32,7 +32,7 @@ var formats = []string{
 func (t Time) Parse() (ts time.Time, err error) {
 	s := strings.TrimSpace(string(t))
 	// Support for Bitpipe timestamps using 24:00:00
-	//s = strings.Replace(s, " 24:", " 00:", 1)
+	s = strings.Replace(s, " 24:", " 00:", 1)
 	for _, layout := range formats {
 		if ts, err = time.Parse(layout, s); err == nil {
 			return
