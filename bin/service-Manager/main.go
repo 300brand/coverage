@@ -16,6 +16,8 @@ func main() {
 
 func StartClient() {
 	config, _ := skynet.GetClientConfig()
+	config.IdleConnectionsToInstance = 4
+	config.MaxConnectionsToInstance = config.MaxConnectionsToInstance * 2
 	c = client.NewClient(config)
 }
 
