@@ -13,9 +13,7 @@ type Article struct {
 	FeedId    bson.ObjectId `bson:",omitempty"`
 	Title     string
 	URL       *url.URL
-	Words     Words
-	HTML      []byte
-	Body      Body
+	Text      Text
 	Added     time.Time
 	Updated   time.Time
 	LastCheck time.Time
@@ -31,27 +29,6 @@ func NewArticle() (a *Article) {
 	}
 	a.Log.Debug("Created: %s", a.ID.Hex())
 	return
-}
-
-// TODO remove file storage
-func (a *Article) Files() []File {
-	return []File{
-		{
-			Name:        a.ID.Hex() + ".html",
-			ContentType: "text/html",
-			Data:        a.HTML,
-		},
-		{
-			Name:        a.ID.Hex() + ".body.html",
-			ContentType: "text/html",
-			Data:        a.Body.HTML,
-		},
-		{
-			Name:        a.ID.Hex() + ".body.text",
-			ContentType: "text/plain",
-			Data:        a.Body.Text,
-		},
-	}
 }
 
 func (a *Article) Modified(fields ...string) {
