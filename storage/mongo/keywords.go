@@ -33,7 +33,8 @@ func (m *Mongo) ReduceKeywords(query interface{}) (info *mgo.MapReduceInfo, err 
 			list.count = list.articles.length
 			return list
 		}`,
-		Out: bson.M{"reduce": KeywordCollection},
+		Out:     bson.M{"reduce": KeywordCollection},
+		Verbose: true,
 	}
 	return m.db.C(ArticleCollection).Find(query).MapReduce(job, nil)
 }
