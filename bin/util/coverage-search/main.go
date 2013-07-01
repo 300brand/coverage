@@ -18,6 +18,7 @@ var (
 	to             = time.Now()
 	strFrom        = flag.String("from", from.Format(layout), "From search bounds")
 	strTo          = flag.String("to", to.Format(layout), "To search bounds")
+	toJSON         = flag.Bool("json", false, "Print article IDs as a JSON array")
 )
 
 func init() {
@@ -32,10 +33,12 @@ func main() {
 
 	flag.Parse()
 
-	if from, err = time.Parse(layout, *strFrom); err != nil {
+	loc := time.Local
+
+	if from, err = time.ParseInLocation(layout, *strFrom, loc); err != nil {
 		log.Fatal(err)
 	}
-	if to, err = time.Parse(layout, *strTo); err != nil {
+	if to, err = time.ParseInLocation(layout, *strTo, loc); err != nil {
 		log.Fatal(err)
 	}
 
@@ -49,7 +52,7 @@ func main() {
 		start := bson.NewObjectIdWithTime(from)
 		end := bson.NewObjectIdWithTime(to)
 
-		log.Printf("Starting keyword map-reduce between %s and %s", from, to)
+		log.Printf("Starting keyword map-reduce between %s and %s", start, end)
 		bounds := bson.M{
 			"_id": bson.M{
 				"$lte": end,
@@ -68,13 +71,18 @@ func main() {
 		log.Printf("Time:        %s", time.Duration(info.Time))
 	}
 
-	ids, err := m.KeywordArticleIds(flag.Args(), from, to)
+	now := time.Now()
+	terms := flag.Args()
+	ids, err := m.KeywordArticleIds(terms, from, to)
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Printf("Found %d Article(s) matching %v in %s", len(ids), terms, time.Since(now))
 
-	enc := json.NewEncoder(os.Stdout)
-	if err := enc.Encode(ids); err != nil {
-		log.Fatal(err)
+	if *toJSON {
+		enc := json.NewEncoder(os.Stdout)
+		if err := enc.Encode(ids); err != nil {
+			log.Fatal(err)
+		}
 	}
 }
