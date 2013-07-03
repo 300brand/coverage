@@ -105,18 +105,18 @@ func (m *Mongo) KeywordSearch(keywords []string, from, to time.Time, kwChan chan
 		"hash": bson.M{
 			"$in": hashes,
 		},
-		"date": bson.M{
+	}
+	if from.Equal(time.Time{}) && to.Equal(time.Time{}) {
+		query["date"] = bson.M{
 			"$gte": from.Truncate(24 * time.Hour),
 			"$lte": to.Truncate(24 * time.Hour),
-		},
+		}
 	}
 
 	iter := m.kdb.C(KeywordCollection).Find(query).Iter()
 	kw := &coverage.Keyword{}
 	for iter.Next(kw) {
-		//if kw.Date.After(from) && kw.Date.Before(to) {
 		kwChan <- *kw
-		//}
 	}
 	close(kwChan)
 	if err = iter.Close(); err != nil {
