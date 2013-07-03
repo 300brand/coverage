@@ -7,10 +7,12 @@ import (
 )
 
 type Mongo struct {
-	DBName string
-	URL    string
-	db     *mgo.Database
-	s      *mgo.Session
+	DBName    string
+	KeywordDB string
+	URL       string
+	db        *mgo.Database
+	kdb       *mgo.Database // Keyword database
+	s         *mgo.Session
 }
 
 var indexes = map[string][]mgo.Index{}
@@ -32,6 +34,7 @@ func (m *Mongo) Connect() (err error) {
 		return
 	}
 	m.db = m.s.DB(m.DBName)
+	m.kdb = m.s.DB(m.KeywordDB)
 	return
 }
 

@@ -1,12 +1,14 @@
 package mongo
 
 import (
+	"git.300brand.com/coverage"
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
+	"log"
 	"time"
 )
 
-const KeywordCollection = "Keywords3"
+const KeywordCollection = "Keywords"
 
 func (m *Mongo) ReduceKeywords(query interface{}) (info *mgo.MapReduceInfo, err error) {
 	job := &mgo.MapReduce{
@@ -93,7 +95,33 @@ func (m *Mongo) ReduceKeywords(query interface{}) (info *mgo.MapReduceInfo, err 
 	return m.db.C(ArticleCollection).Find(query).MapReduce(job, nil)
 }
 
-func (m *Mongo) KeywordArticleIds(keywords []string, from, to time.Time) (ids []bson.ObjectId, err error) {
+func (m *Mongo) KeywordSearch(keywords []string, from, to time.Time, kwChan chan coverage.Keyword) (err error) {
+	hashes := make([]uint32, len(keywords))
+	for i, w := range keywords {
+		hashes[i] = coverage.KeywordHash(w)
+	}
+
+	query := bson.M{
+		"hash": bson.M{
+			"$in": hashes,
+		},
+		"date": bson.M{
+			"$gte": from.Truncate(24 * time.Hour),
+			"$lte": to.Truncate(24 * time.Hour),
+		},
+	}
+
+	iter := m.kdb.C(KeywordCollection).Find(query).Iter()
+	kw := &coverage.Keyword{}
+	for iter.Next(kw) {
+		//if kw.Date.After(from) && kw.Date.Before(to) {
+		kwChan <- *kw
+		//}
+	}
+	close(kwChan)
+	if err = iter.Close(); err != nil {
+		log.Fatal(err)
+	}
 	/*
 			find := bson.M{
 				"_id:": bson.M{

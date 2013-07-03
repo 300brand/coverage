@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/storage/mongo"
 	"labix.org/v2/mgo/bson"
 	"log"
@@ -11,19 +12,20 @@ import (
 )
 
 var (
-	layout         = "2006.01.02-15.04.05"
-	dbHost, dbName string
-	remap          bool
-	from           = time.Now().Add(-1 * time.Hour)
-	to             = time.Now()
-	strFrom        = flag.String("from", from.Format(layout), "From search bounds")
-	strTo          = flag.String("to", to.Format(layout), "To search bounds")
-	toJSON         = flag.Bool("json", false, "Print article IDs as a JSON array")
+	layout                     = "2006.01.02-15.04.05"
+	dbHost, dbName, dbKeywords string
+	remap                      bool
+	from                       = time.Now().Add(-1 * time.Hour)
+	to                         = time.Now()
+	strFrom                    = flag.String("from", from.Format(layout), "From search bounds")
+	strTo                      = flag.String("to", to.Format(layout), "To search bounds")
+	toJSON                     = flag.Bool("json", false, "Print article IDs as a JSON array")
 )
 
 func init() {
 	flag.StringVar(&dbHost, "dbHost", "localhost", "MongoDB host")
 	flag.StringVar(&dbName, "dbName", "Coverage", "MongoDB database")
+	flag.StringVar(&dbKeywords, "dbKeywords", "Coverage", "MongoDB database")
 	flag.BoolVar(&remap, "remap", false, "Re-run Map-Reduce")
 	log.SetFlags(log.Lmicroseconds)
 }
@@ -43,6 +45,7 @@ func main() {
 	}
 
 	m := mongo.New(dbHost, dbName)
+	m.KeywordDB = "Coverage_keywords"
 	if err := m.Connect(); err != nil {
 		log.Fatal(err)
 	}
@@ -73,15 +76,19 @@ func main() {
 
 	now := time.Now()
 	terms := flag.Args()
-	ids, err := m.KeywordArticleIds(terms, from, to)
-	if err != nil {
-		log.Fatal(err)
+	count := 0
+	kwChan := make(chan coverage.Keyword)
+	go m.KeywordSearch(terms, from, to, kwChan)
+
+	for kw := range kwChan {
+		log.Printf("%+v", kw)
+		count++
 	}
-	log.Printf("Found %d Article(s) matching %v in %s", len(ids), terms, time.Since(now))
+	log.Printf("Found %d Article(s) matching %v in %s", count, terms, time.Since(now))
 
 	if *toJSON {
 		enc := json.NewEncoder(os.Stdout)
-		if err := enc.Encode(ids); err != nil {
+		if err := enc.Encode(""); err != nil {
 			log.Fatal(err)
 		}
 	}
