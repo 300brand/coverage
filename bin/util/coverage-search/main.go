@@ -1,9 +1,11 @@
 package main
 
 import (
+	"math"
 	"encoding/json"
 	"flag"
 	"git.300brand.com/coverage"
+	"git.300brand.com/coverage/search"
 	"git.300brand.com/coverage/storage/mongo"
 	"labix.org/v2/mgo/bson"
 	"log"
@@ -78,17 +80,30 @@ func main() {
 	terms := flag.Args()
 	count := 0
 	kwChan := make(chan coverage.Keyword)
+	filter := search.NewIdFilter(len(terms))
 	go m.KeywordSearch(terms, from, to, kwChan)
 
 	for kw := range kwChan {
-		log.Printf("%+v", kw)
+		filter.Add(&kw)
 		count++
 	}
-	log.Printf("Found %d Article(s) matching %v in %s", count, terms, time.Since(now))
+	log.Printf("Found %d Article IDs matching ANY %v in %s", count, terms, time.Since(now))
+
+	now = time.Now()
+	ids := filter.Ids()
+	log.Printf("Found %d Article IDs matching ALL %v in %s", len(ids), terms, time.Since(now))
+
+	for i := 0; i < 100 && i < len(ids); i++ {
+		a, err := m.GetArticle(bson.M{"_id": ids[i]})
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Println(a.URL)
+	}
 
 	if *toJSON {
 		enc := json.NewEncoder(os.Stdout)
-		if err := enc.Encode(""); err != nil {
+		if err := enc.Encode(ids); err != nil {
 			log.Fatal(err)
 		}
 	}
