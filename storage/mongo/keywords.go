@@ -106,7 +106,7 @@ func (m *Mongo) KeywordSearch(keywords []string, from, to time.Time, kwChan chan
 			"$in": hashes,
 		},
 	}
-	if from.Equal(time.Time{}) && to.Equal(time.Time{}) {
+	if from.After(time.Time{}) || to.After(time.Time{}) {
 		query["date"] = bson.M{
 			"$gte": from.Truncate(24 * time.Hour),
 			"$lte": to.Truncate(24 * time.Hour),
