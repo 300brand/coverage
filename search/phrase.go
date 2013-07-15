@@ -24,3 +24,7 @@ func (p *Phrase) Insensitive(b []byte) bool {
 func (p *Phrase) Match(b []byte) bool {
 	return bytes.Contains(b, p.Phrase)
 }
+
+func (p *Phrase) String() string {
+	return string(p.Phrase)
+}
