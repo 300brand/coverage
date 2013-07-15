@@ -94,6 +94,10 @@ func TestBooleanMatches(t *testing.T) {
 			"a b c",
 			"a AND c OR d",
 		},
+		{
+			"a b c d",
+			"a b AND c d",
+		},
 	}
 	for i, test := range tests {
 		b := NewBoolean(test.Needle)
