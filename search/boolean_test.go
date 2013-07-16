@@ -53,7 +53,49 @@ func TestBooleanTree(t *testing.T) {
 	}
 }
 
-func TestBooleanMatches(t *testing.T) {
+func TestBooleanBadMatches(t *testing.T) {
+	tests := []struct {
+		Haystack string
+		Needle   string
+	}{
+		{
+			"a b c",
+			"d",
+		},
+		{
+			"a b c",
+			"a AND d",
+		},
+		{
+			"a b c",
+			"d OR e",
+		},
+		{
+			"a b c",
+			"e OR d OR f",
+		},
+		{
+			"a b c",
+			"d OR a AND e",
+		},
+		{
+			"a b c",
+			"e OR d OR f AND h AND g",
+		},
+		{
+			"a b c d",
+			"d c AND b a",
+		},
+	}
+	for i, test := range tests {
+		b := NewBoolean(test.Needle)
+		if b.Match([]byte(test.Haystack)) {
+			t.Errorf("[%d] '%s' should not br found in '%s'", i, test.Needle, test.Haystack)
+		}
+	}
+}
+
+func TestBooleanGoodMatches(t *testing.T) {
 	tests := []struct {
 		Haystack string
 		Needle   string
@@ -93,6 +135,10 @@ func TestBooleanMatches(t *testing.T) {
 		{
 			"a b c",
 			"a AND c OR d",
+		},
+		{
+			"a b c d",
+			"a b AND b c",
 		},
 		{
 			"a b c d",
