@@ -5,6 +5,7 @@ import (
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 	"log"
+	"sync"
 	"time"
 )
 
@@ -101,11 +102,7 @@ func (m *Mongo) KeywordSearch(keywords []string, from, to time.Time, kwChan chan
 		hashes[i] = coverage.KeywordHash(w)
 	}
 
-	query := bson.M{
-		"hash": bson.M{
-			"$in": hashes,
-		},
-	}
+	query := bson.M{}
 	if from.After(time.Time{}) || to.After(time.Time{}) {
 		query["date"] = bson.M{
 			"$gte": from.Truncate(24 * time.Hour),
@@ -113,15 +110,29 @@ func (m *Mongo) KeywordSearch(keywords []string, from, to time.Time, kwChan chan
 		}
 	}
 
-	iter := m.kdb.C(KeywordCollection).Find(query).Iter()
-	kw := &coverage.Keyword{}
-	for iter.Next(kw) {
-		kwChan <- *kw
+	var wg sync.WaitGroup
+	for i, word := range keywords {
+		log.Printf("mongo.KeywordSearch: Starting go func(%s)", word)
+		wg.Add(1)
+		go func(i int) {
+			q := bson.M{
+				"hash": hashes[i],
+			}
+			log.Printf("mongo.KeywordSearch: Query %v", q)
+			iter := m.kdb.C(KeywordCollection).Find(q).Iter()
+			kw := &coverage.Keyword{}
+			for iter.Next(kw) {
+				kwChan <- *kw
+			}
+			if err = iter.Close(); err != nil {
+				log.Fatal(err)
+			}
+			wg.Done()
+		}(i)
 	}
+	log.Printf("Waiting for sends to finish")
+	wg.Wait()
 	close(kwChan)
-	if err = iter.Close(); err != nil {
-		log.Fatal(err)
-	}
 	/*
 			find := bson.M{
 				"_id:": bson.M{
