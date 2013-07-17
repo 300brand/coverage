@@ -4,19 +4,12 @@ import (
 	"flag"
 	"fmt"
 	"git.300brand.com/coverage"
+	"hash/fnv"
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 	"log"
 	"time"
 )
-
-type Keyword struct {
-	Hash      uint32 `bson:",minsize"`
-	Keyword   string
-	Date      time.Time
-	ArticleId bson.ObjectId
-	Published time.Time `bson:"-"`
-}
 
 type Stats struct {
 	ArticleCount int
@@ -24,12 +17,13 @@ type Stats struct {
 	BatchSize    int
 	Start        time.Time
 	BatchStart   time.Time
+	Frequency    time.Duration
 }
 
-// primeRK is the prime base used in Rabin-Karp algorithm.
-const primeRK = 16777619
+const BufferSize = 500
 
 var (
+	hasher  = fnv.New32a()
 	layout  = "2006.01.02-15.04.05"
 	from    = time.Now().Add(-1 * time.Hour)
 	to      = time.Now()
@@ -39,29 +33,25 @@ var (
 	strTo   = flag.String("to", to.Format(layout), "To search bounds")
 	toJSON  = flag.Bool("json", false, "Print article IDs as a JSON array")
 	stats   = Stats{
-		BatchSize:  1000,
+		BatchSize:  0,
 		BatchStart: time.Now(),
 		Start:      time.Now(),
+		Frequency:  15 * time.Second,
 	}
 )
 
 func init() {
-	log.SetFlags(log.Lmicroseconds)
+	log.SetFlags(log.Lshortfile | log.Lmicroseconds)
 }
 
 func (s *Stats) Print() {
-	if s.ArticleCount%s.BatchSize != 0 {
+	s.BatchSize++
+	if time.Since(s.BatchStart) < s.Frequency {
 		return
 	}
 	fmt.Printf("Articles: %6d Keywords: %8d Rate: %d/%s\n", s.ArticleCount, s.KeywordCount, s.BatchSize, time.Since(s.BatchStart))
 	s.BatchStart = time.Now()
-}
-
-func hashRK(s string) (hash uint32) {
-	for i := 0; i < len(s); i++ {
-		hash = hash*primeRK + uint32(s[i])
-	}
-	return
+	s.BatchSize = 0
 }
 
 func main() {
@@ -81,13 +71,20 @@ func main() {
 	}
 	defer session.Close()
 
-	KC := session.DB(*dbName + "_keywords").C("Keywords")
-	err = KC.Create(&mgo.CollectionInfo{DisableIdIndex: true})
+	mongos, err := mgo.Dial("data0.coverage.net:27020")
 	if err != nil {
-		log.Print(err)
+		log.Fatal(err)
 	}
-	KC.EnsureIndexKey("hash")
-	//KC.EnsureIndexKey("date")
+	defer mongos.Close()
+
+	KC := mongos.DB("Keywords").C("Keywords2")
+	// if err := KC.Create(&mgo.CollectionInfo{DisableIdIndex: true}); err != nil {
+	// 	log.Print(err)
+	// }
+	// KC.EnsureIndex(mgo.Index{
+	// 	Key:    []string{"_id", "date"},
+	// 	Unique: true,
+	// })
 
 	AC := session.DB(*dbName).C("Articles")
 	query := bson.M{
@@ -105,37 +102,80 @@ func main() {
 	log.Printf("Query: %v", query)
 	iter := AC.Find(query).Select(sel).Iter()
 
-	kw := &Keyword{}
-	kws := make([]interface{}, 512)
-	a := &coverage.Article{}
+	var d time.Time
 	threshold := time.Unix(0, 0)
+	aCh := make(chan coverage.Article, BufferSize)
+	readyChan := make(chan bool)
 
-	for iter.Next(a) {
+	go func() {
+		a := &coverage.Article{}
+		count := 0
+		fmt.Print("Initial Buffer ")
+		for iter.Next(a) {
+			aCh <- *a
+			count++
+			fmt.Print(".")
+
+			if count%BufferSize == 0 {
+				fmt.Println("")
+				readyChan <- true
+				fmt.Print("Buffering ")
+			}
+		}
+		close(aCh)
+		if err = iter.Close(); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	for a := range aCh {
 		stats.ArticleCount++
-		kw.ArticleId = a.ID
 		if a.Published.After(threshold) {
-			kw.Published = a.Published
+			d = a.Published.Truncate(24 * time.Hour)
 		} else {
-			kw.Published = a.Added
+			d = a.Added.Truncate(24 * time.Hour)
 		}
-		kw.Date = kw.Published.Truncate(24 * time.Hour)
-		if l := len(a.Text.Words.Keywords); cap(kws) < l {
-			kws = make([]interface{}, l)
-		}
-		for i, w := range a.Text.Words.Keywords {
+
+		for _, w := range a.Text.Words.Keywords {
 			stats.KeywordCount++
-			kw.Hash = hashRK(w)
-			kw.Keyword = w
-			kws[i] = *kw
+
+			hash := coverage.KeywordHash(w)
+
+			find := bson.M{"hash": hash, "date": d}
+			change := bson.M{
+				"$setOnInsert": bson.M{
+					"hash":    hash,
+					"keyword": w,
+					"date":    d,
+				},
+				"$push": bson.M{
+					"articles": a.ID,
+				},
+			}
+			if _, err := KC.Upsert(find, change); err != nil {
+				log.Fatal(err)
+			}
+			// switch err := KC.Update(find, change); err {
+			// case mgo.ErrNotFound:
+			// 	kw := &coverage.Keyword{
+			// 		Hash:     hash,
+			// 		Keyword:  w,
+			// 		Date:     d,
+			// 		Articles: []bson.ObjectId{a.ID},
+			// 	}
+			// 	if err := KC.Insert(kw); err != nil {
+			// 		log.Fatal(err)
+			// 	}
+			// case nil:
+			// default:
+			// 	log.Fatal(err)
+			// }
 		}
-		if err = KC.Insert(kws[:len(a.Text.Words.Keywords)]...); err != nil {
-			log.Print(err)
+
+		if stats.ArticleCount%BufferSize == 0 {
+			<-readyChan
 		}
 		stats.Print()
-	}
-
-	if err = iter.Close(); err != nil {
-		log.Fatal(err)
 	}
 
 	fmt.Printf("Imported %d Articles and %d Keywords\n", stats.ArticleCount, stats.KeywordCount)

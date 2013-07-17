@@ -1,24 +1,30 @@
 package coverage
 
 import (
+	"hash/fnv"
 	"labix.org/v2/mgo/bson"
+	"sync"
 	"time"
 )
 
 type Keyword struct {
 	Hash      uint32 `bson:",minsize"`
-	Keyword   string
 	Date      time.Time
-	ArticleId bson.ObjectId
-	Published time.Time `bson:"-"`
+	Keyword   string
+	ArticleId bson.ObjectId `bson:"-"`
+	Articles  []bson.ObjectId
 }
 
-// primeRK is the prime base used in Rabin-Karp algorithm.
-const primeRK = 16777619
+var (
+	keywordHasher = fnv.New32a()
+	kHMutex       sync.Mutex
+)
 
 func KeywordHash(s string) (hash uint32) {
-	for i := 0; i < len(s); i++ {
-		hash = hash*primeRK + uint32(s[i])
-	}
+	kHMutex.Lock()
+	defer kHMutex.Unlock()
+	keywordHasher.Write([]byte(s))
+	hash = keywordHasher.Sum32()
+	keywordHasher.Reset()
 	return
 }
