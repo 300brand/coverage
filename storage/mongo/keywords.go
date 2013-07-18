@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-const KeywordCollection = "Keywords"
+const KeywordCollection = "Keywords3"
 
 func (m *Mongo) ReduceKeywords(query interface{}) (info *mgo.MapReduceInfo, err error) {
 	job := &mgo.MapReduce{

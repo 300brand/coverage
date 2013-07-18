@@ -15,8 +15,8 @@ type Keyword struct {
 
 type KeywordId struct {
 	Keyword string
+	Date    time.Time
 	//Hash uint32 `bson:",minsize"`
-	Date time.Time
 }
 
 var (

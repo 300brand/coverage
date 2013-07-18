@@ -1,13 +1,13 @@
 package search
 
 import (
-	"git.300brand.com/coverage"
 	"labix.org/v2/mgo/bson"
 )
 
 type IdFilter struct {
 	IdMap  map[bson.ObjectId]byte
 	Target byte
+	Chan   chan bson.ObjectId
 }
 
 func NewIdFilter(target int) (f *IdFilter) {
@@ -17,8 +17,11 @@ func NewIdFilter(target int) (f *IdFilter) {
 	}
 }
 
-func (f *IdFilter) Add(kw *coverage.Keyword) {
-	f.IdMap[kw.ArticleId]++
+func (f *IdFilter) Add(id bson.ObjectId) {
+	f.IdMap[id]++
+	if f.Chan != nil && f.IdMap[id] == f.Target {
+		f.Chan <- id
+	}
 }
 
 func (f *IdFilter) Ids() (ids []bson.ObjectId) {
@@ -29,4 +32,8 @@ func (f *IdFilter) Ids() (ids []bson.ObjectId) {
 		}
 	}
 	return
+}
+
+func (f *IdFilter) UseChan() {
+	f.Chan = make(chan bson.ObjectId)
 }
