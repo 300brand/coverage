@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"git.300brand.com/coverage"
@@ -8,6 +9,8 @@ import (
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 	"log"
+	"os"
+	"sync"
 	"time"
 )
 
@@ -23,16 +26,17 @@ type Stats struct {
 const BufferSize = 500
 
 var (
-	hasher  = fnv.New32a()
-	layout  = "2006.01.02-15.04.05"
-	from    = time.Now().Add(-1 * time.Hour)
-	to      = time.Now()
-	dbHost  = flag.String("dbHost", "localhost", "MongoDB host")
-	dbName  = flag.String("dbName", "Coverage", "MongoDB database")
-	strFrom = flag.String("from", from.Format(layout), "From search bounds")
-	strTo   = flag.String("to", to.Format(layout), "To search bounds")
-	toJSON  = flag.Bool("json", false, "Print article IDs as a JSON array")
-	stats   = Stats{
+	hasher    = fnv.New32a()
+	layout    = "2006.01.02-15.04.05"
+	from      = time.Now().Add(-1 * time.Hour)
+	to        = time.Now()
+	dbHost    = flag.String("dbHost", "localhost", "MongoDB host")
+	dbName    = flag.String("dbName", "Coverage", "MongoDB database")
+	strFrom   = flag.String("from", from.Format(layout), "From search bounds")
+	strTo     = flag.String("to", to.Format(layout), "To search bounds")
+	toJSON    = flag.Bool("json", false, "Print article IDs as a JSON array")
+	threshold = time.Unix(0, 0)
+	stats     = Stats{
 		BatchSize:  0,
 		BatchStart: time.Now(),
 		Start:      time.Now(),
@@ -41,7 +45,7 @@ var (
 )
 
 func init() {
-	log.SetFlags(log.Lshortfile | log.Lmicroseconds)
+	log.SetFlags(log.Lshortfile)
 }
 
 func (s *Stats) Print() {
@@ -65,6 +69,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	if from.After(to) {
+		log.Fatal("from date comes before to date")
+	}
+
 	session, err := mgo.Dial(*dbHost)
 	if err != nil {
 		log.Fatal(err)
@@ -77,7 +85,7 @@ func main() {
 	}
 	defer mongos.Close()
 
-	KC := mongos.DB("Keywords").C("Keywords2")
+	KC := mongos.DB("Keywords").C("Keywords3")
 	// if err := KC.Create(&mgo.CollectionInfo{DisableIdIndex: true}); err != nil {
 	// 	log.Print(err)
 	// }
@@ -87,96 +95,69 @@ func main() {
 	// })
 
 	AC := session.DB(*dbName).C("Articles")
-	query := bson.M{
-		"_id": bson.M{
-			"$gte": bson.NewObjectIdWithTime(from),
-			"$lte": bson.NewObjectIdWithTime(to),
-		},
-	}
 	sel := bson.M{
 		"_id": 1,
 		"text.words.keywords": 1,
 		"published":           1,
 		"added":               1,
 	}
-	log.Printf("Query: %v", query)
-	iter := AC.Find(query).Select(sel).Iter()
+	a := &coverage.Article{}
+	//hashes := make(map[string]uint32, 4096)
+	var wg sync.WaitGroup
 
-	var d time.Time
-	threshold := time.Unix(0, 0)
-	aCh := make(chan coverage.Article, BufferSize)
-	readyChan := make(chan bool)
+	for t := to; t.After(from); t = t.AddDate(0, 0, -1) {
+		date := t.AddDate(0, 0, -1)
+		query := bson.M{
+			"published": bson.M{
+				"$gte": date,
+				"$lt":  t,
+			},
+		}
+		log.Printf("Date: %s Query:", date)
+		json.NewEncoder(os.Stdout).Encode(query)
 
-	go func() {
-		a := &coverage.Article{}
-		count := 0
-		fmt.Print("Initial Buffer ")
+		kws := make(map[string][]bson.ObjectId, 4096)
+
+		iter := AC.Find(query).Select(sel).Iter()
 		for iter.Next(a) {
-			aCh <- *a
-			count++
-			fmt.Print(".")
-
-			if count%BufferSize == 0 {
-				fmt.Println("")
-				readyChan <- true
-				fmt.Print("Buffering ")
+			stats.ArticleCount++
+			for _, w := range a.Text.Words.Keywords {
+				stats.KeywordCount++
+				//if _, ok := hashes[w]; !ok {
+				//	hashes[w] = coverage.KeywordHash(w)
+				//}
+				kws[w] = append(kws[w], a.ID)
 			}
-		}
-		close(aCh)
-		if err = iter.Close(); err != nil {
-			log.Fatal(err)
-		}
-	}()
-
-	for a := range aCh {
-		stats.ArticleCount++
-		if a.Published.After(threshold) {
-			d = a.Published.Truncate(24 * time.Hour)
-		} else {
-			d = a.Added.Truncate(24 * time.Hour)
+			stats.Print()
 		}
 
-		for _, w := range a.Text.Words.Keywords {
-			stats.KeywordCount++
-
-			hash := coverage.KeywordHash(w)
-
-			find := bson.M{"hash": hash, "date": d}
-			change := bson.M{
-				"$setOnInsert": bson.M{
-					"hash":    hash,
-					"keyword": w,
-					"date":    d,
-				},
-				"$push": bson.M{
-					"articles": a.ID,
-				},
+		wg.Add(1)
+		go func(kws map[string][]bson.ObjectId, date time.Time) {
+			log.Printf("[%s] Inserting Keywords...", date)
+			start := time.Now()
+			docs := make([]interface{}, 0, len(kws))
+			for w, ids := range kws {
+				docs = append(docs, coverage.Keyword{
+					Id: coverage.KeywordId{
+						//Hash: hashes[w],
+						Date:    date,
+						Keyword: w,
+					},
+					Articles: ids,
+				})
 			}
-			if _, err := KC.Upsert(find, change); err != nil {
+			if err := KC.Insert(docs...); err != nil {
+				//fmt.Printf("%+v\n", hashes)
 				log.Fatal(err)
 			}
-			// switch err := KC.Update(find, change); err {
-			// case mgo.ErrNotFound:
-			// 	kw := &coverage.Keyword{
-			// 		Hash:     hash,
-			// 		Keyword:  w,
-			// 		Date:     d,
-			// 		Articles: []bson.ObjectId{a.ID},
-			// 	}
-			// 	if err := KC.Insert(kw); err != nil {
-			// 		log.Fatal(err)
-			// 	}
-			// case nil:
-			// default:
-			// 	log.Fatal(err)
-			// }
-		}
+			log.Printf("[%s] Inserted %d Keywords. Took %s", date, len(kws), time.Since(start))
+			wg.Done()
+		}(kws, date)
 
-		if stats.ArticleCount%BufferSize == 0 {
-			<-readyChan
-		}
-		stats.Print()
 	}
+
+	log.Println("Waiting for inserts to complete...")
+	wg.Wait()
 
 	fmt.Printf("Imported %d Articles and %d Keywords\n", stats.ArticleCount, stats.KeywordCount)
 	fmt.Printf("Completed in %s\n", time.Since(stats.Start))

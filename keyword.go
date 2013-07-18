@@ -1,22 +1,26 @@
 package coverage
 
 import (
-	"hash/fnv"
+	"github.com/jbaikge/rabinkarp"
 	"labix.org/v2/mgo/bson"
 	"sync"
 	"time"
 )
 
 type Keyword struct {
-	Hash      uint32 `bson:",minsize"`
-	Date      time.Time
-	Keyword   string
+	Id        KeywordId     `bson:"_id"`
 	ArticleId bson.ObjectId `bson:"-"`
 	Articles  []bson.ObjectId
 }
 
+type KeywordId struct {
+	Keyword string
+	//Hash uint32 `bson:",minsize"`
+	Date time.Time
+}
+
 var (
-	keywordHasher = fnv.New32a()
+	keywordHasher = rabinkarp.New32()
 	kHMutex       sync.Mutex
 )
 
