@@ -154,7 +154,7 @@ func main() {
 					//fmt.Printf("%+v\n", hashes)
 					log.Fatal(err)
 				}
-				log.Printf("[%s] Inserted %d Keywords. Took %s", date, len(kws[i:l]), time.Since(start))
+				log.Printf("[%s] Inserted %d Keyword docs. Took %s", date, len(docs[i:l]), time.Since(start))
 			}
 			wg.Done()
 		}(kws, date)
