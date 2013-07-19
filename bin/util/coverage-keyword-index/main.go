@@ -146,11 +146,16 @@ func main() {
 					Articles: ids,
 				})
 			}
-			if err := KC.Insert(docs...); err != nil {
-				//fmt.Printf("%+v\n", hashes)
-				log.Fatal(err)
+			for i, l := 0, 1000; i < len(docs); i, l = l, l+1000 {
+				if l > len(docs) {
+					l = len(docs)
+				}
+				if err := KC.Insert(docs[i:l]...); err != nil {
+					//fmt.Printf("%+v\n", hashes)
+					log.Fatal(err)
+				}
+				log.Printf("[%s] Inserted %d Keywords. Took %s", date, len(kws), time.Since(start))
 			}
-			log.Printf("[%s] Inserted %d Keywords. Took %s", date, len(kws), time.Since(start))
 			wg.Done()
 		}(kws, date)
 
