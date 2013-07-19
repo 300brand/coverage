@@ -88,7 +88,7 @@ func main() {
 	}
 	defer mongos.Close()
 
-	KC := mongos.DB("Keywords").C("Keywords3")
+	KC := mongos.DB("Keywords").C("Keywords")
 	// if err := KC.Create(&mgo.CollectionInfo{DisableIdIndex: true}); err != nil {
 	// 	log.Print(err)
 	// }
