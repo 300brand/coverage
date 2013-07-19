@@ -65,9 +65,12 @@ func main() {
 	if from, err = time.ParseInLocation(layout, *strFrom, time.Local); err != nil {
 		log.Fatal(err)
 	}
+	from = from.UTC()
+
 	if to, err = time.ParseInLocation(layout, *strTo, time.Local); err != nil {
 		log.Fatal(err)
 	}
+	to = to.UTC()
 
 	if from.After(to) {
 		log.Fatal("from date comes before to date")
