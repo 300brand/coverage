@@ -27,7 +27,7 @@ const BufferSize = 500
 
 var (
 	hasher    = fnv.New32a()
-	layout    = "2006.01.02-15.04.05"
+	layout    = "2006-01-02"
 	from      = time.Now().Add(-1 * time.Hour)
 	to        = time.Now()
 	dbHost    = flag.String("dbHost", "localhost", "MongoDB host")
@@ -62,15 +62,13 @@ func main() {
 	var err error
 	flag.Parse()
 
-	if from, err = time.ParseInLocation(layout, *strFrom, time.Local); err != nil {
+	if from, err = time.Parse(layout, *strFrom); err != nil {
 		log.Fatal(err)
 	}
-	from = from.UTC()
 
-	if to, err = time.ParseInLocation(layout, *strTo, time.Local); err != nil {
+	if to, err = time.Parse(layout, *strTo); err != nil {
 		log.Fatal(err)
 	}
-	to = to.UTC()
 
 	if from.After(to) {
 		log.Fatal("from date comes before to date")
