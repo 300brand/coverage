@@ -1,6 +1,7 @@
 package search
 
 import (
+	"log"
 	"strings"
 )
 
@@ -28,9 +29,13 @@ func (s *Boolean) Match(b []byte) (matches bool) {
 	for i := range s.Tree {
 		matches = true
 		for j := range s.Tree[i] {
-			matches = matches && s.Tree[i][j].Match(b)
+			if !s.Tree[i][j].Insensitive(b) {
+				matches = false
+				break
+			}
 		}
 		if matches {
+			log.Printf("Matched `%+q` with `%+q`", s.Tree, s.Tree[i])
 			return
 		}
 	}
