@@ -90,7 +90,7 @@ func TestBooleanBadMatches(t *testing.T) {
 	for i, test := range tests {
 		b := NewBoolean(test.Needle)
 		if b.Match([]byte(test.Haystack)) {
-			t.Errorf("[%d] '%s' should not br found in '%s'", i, test.Needle, test.Haystack)
+			t.Errorf("[%d] '%s' should not be found in '%s'", i, test.Needle, test.Haystack)
 		}
 	}
 }
@@ -144,11 +144,33 @@ func TestBooleanGoodMatches(t *testing.T) {
 			"a b c d",
 			"a b AND c d",
 		},
+		{
+			"a b c",
+			"a AND b OR c AND d",
+		},
 	}
 	for i, test := range tests {
 		b := NewBoolean(test.Needle)
 		if !b.Match([]byte(test.Haystack)) {
 			t.Errorf("[%d] '%s' not found in '%s'", i, test.Needle, test.Haystack)
+		}
+	}
+}
+
+func TestBooleanMinTerms(t *testing.T) {
+	tests := []struct {
+		Query string
+		Terms int
+	}{
+		{"EMC OR Brocade", 1},
+		{"PaaS AND EMC OR Brocade", 1},
+		{"PaaS AND EMC OR PaaS AND Brocade", 2},
+		{"Platform as a Service AND EMC OR Platform as a Service AND Brocade", 3},
+	}
+	for i, test := range tests {
+		b := NewBoolean(test.Query)
+		if n := b.MinTerms(); n != test.Terms {
+			t.Errorf("[%d] %s: %d != %d", i, test.Query, n, test.Terms)
 		}
 	}
 }

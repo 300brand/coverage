@@ -1,18 +1,21 @@
 package search
 
 import (
+	"git.300brand.com/coverage/article/lexer"
 	"log"
 	"strings"
 )
 
 type Boolean struct {
-	Tree [][]*Phrase
+	Query string
+	Tree  [][]*Phrase
 }
 
 func NewBoolean(query string) (b *Boolean) {
 	ors := strings.Split(query, " OR ")
 	b = &Boolean{
-		Tree: make([][]*Phrase, len(ors)),
+		Query: query,
+		Tree:  make([][]*Phrase, len(ors)),
 	}
 	// Build ze tree
 	for i, or := range ors {
@@ -37,6 +40,20 @@ func (s *Boolean) Match(b []byte) (matches bool) {
 		if matches {
 			log.Printf("Matched `%+q` with `%+q`", s.Tree, s.Tree[i])
 			return
+		}
+	}
+	return
+}
+
+func (s *Boolean) MinTerms() (min int) {
+	min = 255
+	for i := range s.Tree {
+		n := 0
+		for _, p := range s.Tree[i] {
+			n += len(lexer.Keywords(p.Lower))
+		}
+		if n < min {
+			min = n
 		}
 	}
 	return
