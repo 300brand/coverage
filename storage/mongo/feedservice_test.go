@@ -56,11 +56,12 @@ func TestOldestOne(t *testing.T) {
 	f := coverage.NewFeed()
 	fs.Update(f)
 
-	out, err := m.GetOldestFeed([]bson.ObjectId{})
+	oldest := &coverage.Feed{}
+	err := m.GetOldestFeed([]bson.ObjectId{}, oldest)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if out.ID != f.ID {
+	if oldest.ID != f.ID {
 		t.Error("Feed not found")
 	}
 }
@@ -91,8 +92,9 @@ func TestOldestMany(t *testing.T) {
 
 	order := []bson.ObjectId{feeds[1].ID, feeds[2].ID, feeds[0].ID}
 	ignore := make([]bson.ObjectId, 0, len(feeds))
+	f := &coverage.Feed{}
 	for i := range feeds {
-		f, err := m.GetOldestFeed(ignore)
+		err := m.GetOldestFeed(ignore, f)
 		if err != nil {
 			t.Fatal(err)
 		}

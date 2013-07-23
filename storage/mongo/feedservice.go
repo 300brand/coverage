@@ -64,18 +64,16 @@ func (m *Mongo) FeedIds(urls []*url.URL) (ids []bson.ObjectId, err error) {
 	return
 }
 
-func (m *Mongo) GetFeed(query interface{}) (f *coverage.Feed, err error) {
+func (m *Mongo) GetFeed(query interface{}, f *coverage.Feed) (err error) {
 	switch v := query.(type) {
 	case bson.ObjectId:
 		query = bson.M{"_id": v}
 	}
-	f = &coverage.Feed{}
 	err = m.db.C(FeedCollection).Find(query).One(f)
 	return
 }
 
-func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId) (f *coverage.Feed, err error) {
-	f = &coverage.Feed{}
+func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId, f *coverage.Feed) (err error) {
 	err = m.db.C(FeedCollection).Find(bson.M{
 		"_id": bson.M{
 			"$not": bson.M{
