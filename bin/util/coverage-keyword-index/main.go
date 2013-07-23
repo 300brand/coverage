@@ -62,11 +62,11 @@ func main() {
 	var err error
 	flag.Parse()
 
-	if from, err = time.Parse(layout, *strFrom); err != nil {
+	if from, err = time.ParseInLocation(layout, *strFrom, time.Local); err != nil {
 		log.Fatal(err)
 	}
 
-	if to, err = time.Parse(layout, *strTo); err != nil {
+	if to, err = time.ParseInLocation(layout, *strTo, time.Local); err != nil {
 		log.Fatal(err)
 	}
 
