@@ -11,6 +11,7 @@ func main() {
 	sConfig, _ := skynet.GetServiceConfig()
 	sConfig.DoozerConfig.BootUri = config.Doozer.Address
 	sConfig.Name = "StorageReader"
+	sConfig.Region = "Storage"
 	sConfig.Version = "1"
 
 	s := &StorageReader{
