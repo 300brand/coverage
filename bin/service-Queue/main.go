@@ -31,7 +31,7 @@ func StartService() {
 	s := &Queue{
 		Log: skynet.NewConsoleSemanticLogger(sConfig.Name, os.Stdout),
 		FeedQ: &idqueue.IdQueue{
-			Name: "feeds",
+			Name: "feeds/" + sConfig.UUID,
 			Addr: config.Doozer.Address,
 			Max:  10,
 		},
