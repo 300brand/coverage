@@ -9,6 +9,7 @@ import (
 
 func main() {
 	sConfig, _ := skynet.GetServiceConfig()
+	sConfig.DoozerConfig.BootUri = config.Doozer.Address
 	sConfig.Name = "StorageReader"
 	sConfig.Version = "1"
 

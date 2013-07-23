@@ -52,11 +52,13 @@ func GetService(name string) (s *client.ServiceClient) {
 
 func StartClient() {
 	cConfig, _ := skynet.GetClientConfig()
+	cConfig.DoozerConfig.BootUri = config.Doozer.Address
 	c = client.NewClient(cConfig)
 }
 
 func StartService() {
 	sConfig, _ := skynet.GetServiceConfig()
+	sConfig.DoozerConfig.BootUri = config.Doozer.Address
 	sConfig.Name = "ServerJSONRPC"
 	sConfig.Version = "1"
 

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"git.300brand.com/coverage/config"
 	"github.com/skynetservices/skynet"
 	"github.com/skynetservices/skynet/client"
 	"github.com/skynetservices/skynet/service"
@@ -15,22 +16,24 @@ func main() {
 }
 
 func StartClient() {
-	config, _ := skynet.GetClientConfig()
-	config.IdleConnectionsToInstance = 4
-	config.MaxConnectionsToInstance = config.MaxConnectionsToInstance * 2
-	c = client.NewClient(config)
+	cConfig, _ := skynet.GetClientConfig()
+	cConfig.DoozerConfig.BootUri = config.Doozer.Address
+	cConfig.IdleConnectionsToInstance = 4
+	cConfig.MaxConnectionsToInstance = cConfig.MaxConnectionsToInstance * 2
+	c = client.NewClient(cConfig)
 }
 
 func StartService() {
-	config, _ := skynet.GetServiceConfig()
-	config.Name = "Manager"
-	config.Version = "1"
+	sConfig, _ := skynet.GetServiceConfig()
+	sConfig.DoozerConfig.BootUri = config.Doozer.Address
+	sConfig.Name = "Manager"
+	sConfig.Version = "1"
 
 	s := &Manager{
-		Log: skynet.NewConsoleSemanticLogger(config.Name, os.Stdout),
+		Log: skynet.NewConsoleSemanticLogger(sConfig.Name, os.Stdout),
 	}
 
-	service := service.CreateService(s, config)
+	service := service.CreateService(s, sConfig)
 	defer service.Shutdown()
 
 	waiter := service.Start(true)

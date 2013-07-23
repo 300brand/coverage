@@ -8,16 +8,16 @@ import (
 )
 
 type Queue struct {
-	Log   skynet.SemanticLogger
-	FeedQ *idqueue.IdQueue
-	Feed  *client.ServiceClient
+	Log           skynet.SemanticLogger
+	FeedQ         *idqueue.IdQueue
+	StorageReader *client.ServiceClient
 }
 
 var _ service.ServiceDelegate = &Queue{}
 
 func (s *Queue) Registered(service *service.Service) {
 	s.Log.Trace("Registered")
-	s.Feed = c.GetService("Feed", "", "", "")
+	s.StorageReader = c.GetService("StorageReader", "", "", "")
 }
 func (s *Queue) Unregistered(service *service.Service) {
 	s.Log.Trace("Unregistered")

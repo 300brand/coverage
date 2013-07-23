@@ -17,11 +17,13 @@ func main() {
 
 func StartClient() {
 	cConfig, _ := skynet.GetClientConfig()
+	cConfig.DoozerConfig.BootUri = config.Doozer.Address
 	c = client.NewClient(cConfig)
 }
 
 func StartService() {
 	sConfig, _ := skynet.GetServiceConfig()
+	sConfig.DoozerConfig.BootUri = config.Doozer.Address
 	sConfig.Name = "StorageWriter"
 	sConfig.Version = "1"
 
