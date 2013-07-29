@@ -3,7 +3,6 @@ package mongo
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
-	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 	"net/url"
 	"time"
@@ -16,25 +15,6 @@ type FeedService struct {
 const FeedCollection = "Feeds"
 
 var _ service.FeedService = &FeedService{}
-
-func init() {
-	indexes[FeedCollection] = []mgo.Index{
-		mgo.Index{
-			Key:        []string{"url"},
-			Background: true,
-			DropDups:   true,
-			Sparse:     false,
-			Unique:     true,
-		},
-		mgo.Index{
-			Key:        []string{"disabled"},
-			Background: true,
-			DropDups:   false,
-			Sparse:     false,
-			Unique:     false,
-		},
-	}
-}
 
 func NewFeedService(m *Mongo) *FeedService {
 	return &FeedService{m: m}
@@ -49,7 +29,7 @@ func (m *Mongo) FeedIds(urls []*url.URL) (ids []bson.ObjectId, err error) {
 	out := make([]struct {
 		Id bson.ObjectId `bson:"_id"`
 	}, 0, len(urls))
-	err = m.db.C(FeedCollection).Find(bson.M{
+	err = m.C.Feeds.Find(bson.M{
 		"url": bson.M{
 			"$in": urls,
 		},
@@ -69,12 +49,12 @@ func (m *Mongo) GetFeed(query interface{}, f *coverage.Feed) (err error) {
 	case bson.ObjectId:
 		query = bson.M{"_id": v}
 	}
-	err = m.db.C(FeedCollection).Find(query).One(f)
+	err = m.C.Feeds.Find(query).One(f)
 	return
 }
 
 func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId, f *coverage.Feed) (err error) {
-	err = m.db.C(FeedCollection).Find(bson.M{
+	err = m.C.Feeds.Find(bson.M{
 		"_id": bson.M{
 			"$not": bson.M{
 				"$in": ignore,
@@ -90,6 +70,6 @@ func (m *Mongo) UpdateFeed(f *coverage.Feed) (err error) {
 	defer func() { f.Articles = f.Articles[:l] }()
 
 	f.Updated = time.Now()
-	_, err = m.db.C(FeedCollection).UpsertId(f.ID, f)
+	_, err = m.C.Feeds.UpsertId(f.ID, f)
 	return
 }

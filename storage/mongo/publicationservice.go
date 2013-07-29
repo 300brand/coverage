@@ -3,7 +3,6 @@ package mongo
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
-	"labix.org/v2/mgo"
 	"time"
 )
 
@@ -14,10 +13,6 @@ type PublicationService struct {
 const PublicationCollection = "Publications"
 
 var _ service.PublicationService = &PublicationService{}
-
-func init() {
-	indexes[PublicationCollection] = []mgo.Index{}
-}
 
 func NewPublicationService(m *Mongo) *PublicationService {
 	return &PublicationService{m: m}
@@ -30,12 +25,12 @@ func (s *PublicationService) Update(p *coverage.Publication) error {
 
 func (m *Mongo) GetPublication(query interface{}) (p *coverage.Publication, err error) {
 	p = &coverage.Publication{}
-	err = m.db.C(PublicationCollection).Find(query).One(p)
+	err = m.C.Publications.Find(query).One(p)
 	return
 }
 
 func (m *Mongo) UpdatePublication(p *coverage.Publication) (err error) {
 	p.Updated = time.Now()
-	_, err = m.db.C(PublicationCollection).UpsertId(p.ID, p)
+	_, err = m.C.Publications.UpsertId(p.ID, p)
 	return
 }

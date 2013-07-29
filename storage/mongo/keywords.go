@@ -18,7 +18,7 @@ func (m *Mongo) AddKeywords(a *coverage.Article) (err error) {
 	}
 	change := bson.M{"$addToSet": bson.M{"articles": a.ID}}
 	for _, word = range a.Text.Words.Keywords {
-		if _, err = m.db.C(KeywordCollection).Upsert(selector, change); err != nil {
+		if _, err = m.C.Keywords.Upsert(selector, change); err != nil {
 			return
 		}
 	}

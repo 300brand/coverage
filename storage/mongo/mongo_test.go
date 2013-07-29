@@ -9,13 +9,10 @@ import (
 	"testing"
 )
 
-var (
-	dbURL  = "localhost"
-	dbName = "CoverageTest"
-)
+var host = "localhost"
 
 func TestConnect(t *testing.T) {
-	if err := New(dbURL, dbName).Connect(); err != nil {
+	if err := New(host).Connect(); err != nil {
 		t.Error(err)
 	}
 }
@@ -45,62 +42,12 @@ func TestArticleSave(t *testing.T) {
 	}
 }
 
-func TestGridFSSave(t *testing.T) {
-	m := connect(t)
-	defer cleanup(m)
-	a := coverage.NewArticle()
-	a.Text = coverage.Text{
-		HTML: []byte("<!DOCTYPE html><html><body><p>Test</p></body></html>"),
-		Body: coverage.Body{
-			HTML: []byte("<p>Test</p>"),
-			Text: []byte("Test"),
-		},
-	}
-	if err := m.UpdateArticle(a); err != nil {
-		t.Error(err)
-	}
-}
-
-func TestGridFSUpdate(t *testing.T) {
-	m := connect(t)
-	defer cleanup(m)
-	a := coverage.NewArticle()
-
-	a.Text.HTML = []byte("This is the first document")
-	m.UpdateArticle(a)
-
-	a.Text.HTML = []byte("This is the second document")
-	m.UpdateArticle(a)
-}
-
-func TestNoDupes(t *testing.T) {
-	m := connect(t)
-	defer cleanup(m)
-
-	a := coverage.NewArticle()
-	a.URL, _ = url.Parse("http://google.com")
-	a.Title = "Google Homepage"
-	if err := m.UpdateArticle(a); err != nil {
-		t.Error(err)
-	}
-
-	b := coverage.NewArticle()
-	b.URL, _ = url.Parse(a.URL.String())
-	b.Title = "Random Redirect"
-	if err := m.UpdateArticle(b); err == nil {
-		t.Error("No error encountered for duplicate URL")
-	}
-
-	c := coverage.NewArticle()
-	c.URL, _ = url.Parse("http://redirect.me/to/google.com")
-	c.Title = b.Title
-	if err := m.UpdateArticle(c); err != nil {
-		t.Error(err)
-	}
-}
-
 func cleanup(m *Mongo) {
-	m.db.DropDatabase()
+	m.C.Articles.Database.DropDatabase()
+	m.C.Feeds.Database.DropDatabase()
+	m.C.Keywords.Database.DropDatabase()
+	m.C.Publications.Database.DropDatabase()
+	m.C.URLs.Database.DropDatabase()
 	m.Close()
 }
 
@@ -108,12 +55,9 @@ func connect(t *testing.T) (m *Mongo) {
 	if testing.Short() {
 		t.Skip("Short tests running")
 	}
-	m = New(dbURL, dbName)
+	m = New(host)
+	m.Prefix = "Test"
 	if err := m.Connect(); err != nil {
-		t.Error(err)
-		return
-	}
-	if err := m.EnsureIndexes(); err != nil {
 		t.Error(err)
 		return
 	}

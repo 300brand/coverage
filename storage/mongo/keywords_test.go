@@ -22,7 +22,7 @@ func TestKeywords(t *testing.T) {
 	}
 
 	query := bson.M{"_id.keyword": bson.M{"$in": words}}
-	n, err := m.db.C(KeywordCollection).Find(query).Count()
+	n, err := m.C.Keywords.Find(query).Count()
 	if err != nil {
 		t.Fatal(err)
 	}
