@@ -47,6 +47,8 @@ func cleanup(m *Mongo) {
 	m.C.Feeds.Database.DropDatabase()
 	m.C.Keywords.Database.DropDatabase()
 	m.C.Publications.Database.DropDatabase()
+	m.C.Search.Database.DropDatabase()
+	m.C.SearchResults.Database.DropDatabase()
 	m.C.URLs.Database.DropDatabase()
 	m.Close()
 }

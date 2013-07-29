@@ -24,3 +24,7 @@ func (m *Mongo) AddKeywords(a *coverage.Article) (err error) {
 	}
 	return
 }
+
+func (m *Mongo) GetKeyword(kw *coverage.Keyword) (err error) {
+	return m.C.Keywords.Find(bson.M{"_id": kw.Id}).One(kw)
+}

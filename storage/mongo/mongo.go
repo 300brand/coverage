@@ -12,11 +12,13 @@ type Mongo struct {
 }
 
 type collections struct {
-	Articles     *mgo.Collection
-	Feeds        *mgo.Collection
-	Keywords     *mgo.Collection
-	Publications *mgo.Collection
-	URLs         *mgo.Collection
+	Articles      *mgo.Collection
+	Feeds         *mgo.Collection
+	Keywords      *mgo.Collection
+	Publications  *mgo.Collection
+	Search        *mgo.Collection
+	SearchResults *mgo.Collection
+	URLs          *mgo.Collection
 }
 
 func New(host string) *Mongo {
@@ -33,11 +35,13 @@ func (m *Mongo) Connect() (err error) {
 		return
 	}
 	m.C = collections{
-		Articles:     m.Session.DB(m.Prefix + ArticleCollection).C(ArticleCollection),
-		Feeds:        m.Session.DB(m.Prefix + FeedCollection).C(FeedCollection),
-		Keywords:     m.Session.DB(m.Prefix + KeywordCollection).C(KeywordCollection),
-		Publications: m.Session.DB(m.Prefix + PublicationCollection).C(PublicationCollection),
-		URLs:         m.Session.DB(m.Prefix + URLsCollection).C(URLsCollection),
+		Articles:      m.Session.DB(m.Prefix + ArticleCollection).C(ArticleCollection),
+		Feeds:         m.Session.DB(m.Prefix + FeedCollection).C(FeedCollection),
+		Keywords:      m.Session.DB(m.Prefix + KeywordCollection).C(KeywordCollection),
+		Publications:  m.Session.DB(m.Prefix + PublicationCollection).C(PublicationCollection),
+		Search:        m.Session.DB(m.Prefix + SearchCollection).C(SearchCollection),
+		SearchResults: m.Session.DB(m.Prefix + SearchResultsCollection).C(SearchResultsCollection),
+		URLs:          m.Session.DB(m.Prefix + URLsCollection).C(URLsCollection),
 	}
 	return
 }
