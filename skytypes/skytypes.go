@@ -16,6 +16,12 @@ type ClockResult struct {
 	Message string
 }
 
+type DateSearch struct {
+	Id    bson.ObjectId
+	Date  time.Time
+	Query string
+}
+
 type NullType struct{}
 
 type ObjectIds struct {
@@ -48,12 +54,6 @@ type SearchResults struct {
 	Ready     bool
 	Completed time.Time
 	Articles  []coverage.Article
-}
-
-type SearchResultSubset struct {
-	Id         bson.ObjectId
-	Date       time.Time
-	ArticleIds []bson.ObjectId
 }
 
 var Null = &NullType{}
