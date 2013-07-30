@@ -50,4 +50,10 @@ type SearchResults struct {
 	Articles  []coverage.Article
 }
 
+type SearchResultSubset struct {
+	Id         bson.ObjectId
+	Date       time.Time
+	ArticleIds []bson.ObjectId
+}
+
 var Null = &NullType{}
