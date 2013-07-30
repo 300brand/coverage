@@ -10,7 +10,7 @@ type Search struct {
 	Q        string
 	DaysLeft int
 	Results  int
-	Complete bool
+	Complete *time.Time
 	Dates    struct {
 		Start, End time.Time
 	}
