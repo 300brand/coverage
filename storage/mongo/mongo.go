@@ -40,7 +40,7 @@ func (m *Mongo) Connect() (err error) {
 		Keywords:      m.Session.DB(m.Prefix + KeywordCollection).C(KeywordCollection),
 		Publications:  m.Session.DB(m.Prefix + PublicationCollection).C(PublicationCollection),
 		Search:        m.Session.DB(m.Prefix + SearchCollection).C(SearchCollection),
-		SearchResults: m.Session.DB(m.Prefix + SearchResultsCollection).C(SearchResultsCollection),
+		SearchResults: m.Session.DB(m.Prefix + SearchCollection).C(SearchResultsCollection),
 		URLs:          m.Session.DB(m.Prefix + URLsCollection).C(URLsCollection),
 	}
 	return
