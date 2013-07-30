@@ -12,9 +12,7 @@ import (
 	"time"
 )
 
-const (
-	SearchCollection        = "Search"
-)
+const SearchCollection = "Search"
 
 // Add a batch of search results from a date
 func (m *Mongo) AddSearchResults(id bson.ObjectId, articles []bson.ObjectId) (err error) {
@@ -30,6 +28,7 @@ func (m *Mongo) AddSearchResults(id bson.ObjectId, articles []bson.ObjectId) (er
 		},
 	}
 	if err = m.C.Search.UpdateId(id, change); err != nil {
+		log.Printf("AddSearchResults: UpdateId - %s", err)
 		return
 	}
 
@@ -38,7 +37,8 @@ func (m *Mongo) AddSearchResults(id bson.ObjectId, articles []bson.ObjectId) (er
 			"complete": time.Now(),
 		},
 	}
-	return m.C.Search.Update(bson.M{"_id": id, "daysleft": 0}, complete)
+	m.C.Search.Update(bson.M{"_id": id, "daysleft": 0}, complete)
+	return
 }
 
 func (m *Mongo) GetSearch(id bson.ObjectId, s *coverage.Search) (err error) {
