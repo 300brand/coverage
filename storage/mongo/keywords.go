@@ -13,7 +13,7 @@ func (m *Mongo) AddKeywords(a *coverage.Article) (err error) {
 	selector := bson.M{
 		"_id": bson.M{
 			"date":    a.Published.Truncate(24 * time.Hour),
-			"keyword": &word,
+			"keyword": &word, // Using bson.M's instead of KeywordId because of this
 		},
 	}
 	change := bson.M{"$addToSet": bson.M{"articles": a.ID}}
@@ -25,6 +25,12 @@ func (m *Mongo) AddKeywords(a *coverage.Article) (err error) {
 	return
 }
 
-func (m *Mongo) GetKeyword(kw *coverage.Keyword) (err error) {
-	return m.C.Keywords.Find(bson.M{"_id": kw.Id}).One(kw)
+func (m *Mongo) GetKeyword(id *coverage.KeywordId, kw *coverage.Keyword) (err error) {
+	selector := bson.M{
+		"_id": coverage.KeywordId{
+			Date:    id.Date.Truncate(24 * time.Hour),
+			Keyword: id.Keyword,
+		},
+	}
+	return m.C.Keywords.Find(selector).One(kw)
 }
