@@ -14,7 +14,6 @@ import (
 
 const (
 	SearchCollection        = "Search"
-	SearchResultsCollection = "SearchResults"
 )
 
 // Add a batch of search results from a date

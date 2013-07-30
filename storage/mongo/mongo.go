@@ -35,13 +35,12 @@ func (m *Mongo) Connect() (err error) {
 		return
 	}
 	m.C = collections{
-		Articles:      m.Session.DB(m.Prefix + ArticleCollection).C(ArticleCollection),
-		Feeds:         m.Session.DB(m.Prefix + FeedCollection).C(FeedCollection),
-		Keywords:      m.Session.DB(m.Prefix + KeywordCollection).C(KeywordCollection),
-		Publications:  m.Session.DB(m.Prefix + PublicationCollection).C(PublicationCollection),
-		Search:        m.Session.DB(m.Prefix + SearchCollection).C(SearchCollection),
-		SearchResults: m.Session.DB(m.Prefix + SearchCollection).C(SearchResultsCollection),
-		URLs:          m.Session.DB(m.Prefix + URLsCollection).C(URLsCollection),
+		Articles:     m.Session.DB(m.Prefix + ArticleCollection).C(ArticleCollection),
+		Feeds:        m.Session.DB(m.Prefix + FeedCollection).C(FeedCollection),
+		Keywords:     m.Session.DB(m.Prefix + KeywordCollection).C(KeywordCollection),
+		Publications: m.Session.DB(m.Prefix + PublicationCollection).C(PublicationCollection),
+		Search:       m.Session.DB(m.Prefix + SearchCollection).C(SearchCollection),
+		URLs:         m.Session.DB(m.Prefix + URLsCollection).C(URLsCollection),
 	}
 	return
 }
