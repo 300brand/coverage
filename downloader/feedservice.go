@@ -19,11 +19,12 @@ func (s FeedService) Update(f *coverage.Feed) error {
 }
 
 func Feed(f *coverage.Feed) error {
+	defer f.Downloaded()
+
 	r, err := Fetch(f.URL.String())
 	if err != nil {
 		return f.Log.Error(err)
 	}
 	f.Content = r.Body
-	f.Downloaded()
 	return nil
 }
