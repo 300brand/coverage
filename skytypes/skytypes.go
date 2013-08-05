@@ -3,7 +3,6 @@ package skytypes
 import (
 	"git.300brand.com/coverage"
 	"labix.org/v2/mgo/bson"
-	"net/url"
 	"time"
 )
 
@@ -34,7 +33,7 @@ type ObjectId struct {
 
 type SearchQuery struct {
 	Q      string
-	Notify *url.URL
+	Notify string
 	Dates  struct {
 		Start, End time.Time
 	}
