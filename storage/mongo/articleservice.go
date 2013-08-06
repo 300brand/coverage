@@ -23,8 +23,7 @@ func (s *ArticleService) Update(a *coverage.Article) error {
 	return s.m.UpdateArticle(a)
 }
 
-func (m *Mongo) GetArticle(query interface{}) (a *coverage.Article, err error) {
-	a = &coverage.Article{}
+func (m *Mongo) GetArticle(query interface{}, a *coverage.Article) (err error) {
 	err = m.C.Articles.Find(query).One(a)
 	return
 }

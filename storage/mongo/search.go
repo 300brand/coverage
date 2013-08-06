@@ -95,8 +95,8 @@ func (m *Mongo) DateSearch(searchId bson.ObjectId, query string, t time.Time) (e
 				defer log.Println("Finished article processing")
 
 				// Fetch Article
-				a, err := m.GetArticle(bson.M{"_id": id})
-				if err != nil {
+				a := &coverage.Article{}
+				if err := m.GetArticle(bson.M{"_id": id}, a); err != nil {
 					// TODO Flag err != Not found
 					return
 				}
