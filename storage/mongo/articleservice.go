@@ -3,6 +3,7 @@ package mongo
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
+	"labix.org/v2/mgo/bson"
 	"time"
 )
 
@@ -24,6 +25,10 @@ func (s *ArticleService) Update(a *coverage.Article) error {
 }
 
 func (m *Mongo) GetArticle(query interface{}, a *coverage.Article) (err error) {
+	switch v := query.(type) {
+	case bson.ObjectId:
+		query = bson.M{"_id": v}
+	}
 	err = m.C.Articles.Find(query).One(a)
 	return
 }
