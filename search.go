@@ -7,6 +7,7 @@ import (
 
 type Search struct {
 	Id       bson.ObjectId `bson:"_id"`
+	Notify   string
 	Q        string
 	DaysLeft int
 	Results  int
