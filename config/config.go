@@ -22,6 +22,10 @@ type rpcserver struct {
 	Address string
 }
 
+type statsdserver struct {
+	Address string
+}
+
 type timeouts struct {
 	Download time.Duration
 }
@@ -43,6 +47,9 @@ var (
 	RPCServer = rpcserver{
 		Address: ":8080",
 	}
+	StatsdServer = statsdserver{
+		Address: "statsd.coverage.net:8125",
+	}
 	Timeouts = timeouts{
 		Download: time.Minute,
 	}
@@ -50,15 +57,17 @@ var (
 		Address: "",
 	}
 	config = &struct {
-		Doozer    *doozer
-		Mongo     *mongo
-		RPCServer *rpcserver
-		Timeouts  *timeouts
-		Zookeeper *zookeeper
+		Doozer       *doozer
+		Mongo        *mongo
+		RPCServer    *rpcserver
+		StatsdServer *statsdserver
+		Timeouts     *timeouts
+		Zookeeper    *zookeeper
 	}{
 		&Doozer,
 		&Mongo,
 		&RPCServer,
+		&StatsdServer,
 		&Timeouts,
 		&Zookeeper,
 	}
