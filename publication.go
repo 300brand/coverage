@@ -16,7 +16,6 @@ type Publication struct {
 	Log         logger.Entries
 	Added       time.Time
 	Updated     time.Time
-	LastCheck   time.Time
 }
 
 func NewPublication() (p *Publication) {
