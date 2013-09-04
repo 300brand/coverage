@@ -10,9 +10,6 @@ import (
 type Feed struct {
 	ID            bson.ObjectId `bson:"_id"`
 	PublicationId bson.ObjectId
-	ObjectId      uint64 // Comes from the bridge package when inserting from the frontend
-	QueueId       uint64 // Comes from the bridge package when inserting from the frontend
-	FeedId        uint64 // From MySQL Feed table
 	URL           *url.URL
 	Disabled      bool
 	Content       []byte
