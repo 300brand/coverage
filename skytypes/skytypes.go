@@ -23,6 +23,11 @@ type DateSearch struct {
 	Query string
 }
 
+type Inc struct {
+	Id    bson.ObjectId
+	Delta int
+}
+
 type NullType struct{}
 
 type ObjectIds struct {
