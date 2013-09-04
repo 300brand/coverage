@@ -9,17 +9,18 @@ import (
 )
 
 type Article struct {
-	ID        bson.ObjectId `bson:"_id"`
-	FeedId    bson.ObjectId `bson:",omitempty"`
-	Title     string
-	URL       *url.URL
-	Text      Text
-	Added     time.Time
-	Updated   time.Time
-	LastCheck time.Time
-	Published time.Time
-	Log       logger.Entries
-	Changelog merger.Changelog
+	ID            bson.ObjectId `bson:"_id"`
+	FeedId        bson.ObjectId
+	PublicationId bson.ObjectId
+	Title         string
+	URL           *url.URL
+	Text          Text
+	Added         time.Time
+	Updated       time.Time
+	LastCheck     time.Time
+	Published     time.Time
+	Log           logger.Entries
+	Changelog     merger.Changelog
 }
 
 func NewArticle() (a *Article) {
