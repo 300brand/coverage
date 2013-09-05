@@ -11,6 +11,7 @@ type Publication struct {
 	ID          bson.ObjectId `bson:"_id"`
 	Title       string
 	URL         *url.URL
+	Readership  int64
 	NumFeeds    int64
 	NumArticles int64
 	Log         logger.Entries
@@ -23,6 +24,5 @@ func NewPublication() (p *Publication) {
 		ID:    bson.NewObjectId(),
 		Added: time.Now(),
 	}
-	p.Log.Debug("Created: %s", p.ID.Hex())
 	return
 }
