@@ -44,7 +44,9 @@ func (m *Mongo) PublicationIncFeeds(id bson.ObjectId, delta int) (err error) {
 		"$inc": bson.M{
 			"numfeeds": delta,
 		},
-		"updated": time.Now(),
+		"$set": bson.M{
+			"updated": time.Now(),
+		},
 	})
 }
 
@@ -53,6 +55,8 @@ func (m *Mongo) PublicationIncArticles(id bson.ObjectId, delta int) (err error) 
 		"$inc": bson.M{
 			"numarticles": delta,
 		},
-		"updated": time.Now(),
+		"$set": bson.M{
+			"updated": time.Now(),
+		},
 	})
 }
