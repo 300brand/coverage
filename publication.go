@@ -14,6 +14,7 @@ type Publication struct {
 	Readership  int64
 	NumFeeds    int64
 	NumArticles int64
+	Deleted     bool
 	Log         logger.Entries
 	Added       time.Time
 	Updated     time.Time

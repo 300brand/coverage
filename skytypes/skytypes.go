@@ -47,6 +47,7 @@ type MultiQuery struct {
 
 type MultiPubs struct {
 	Query        MultiQuery
+	Total        int
 	Publications []*coverage.Publication
 }
 
