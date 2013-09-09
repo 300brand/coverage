@@ -38,6 +38,18 @@ type ObjectId struct {
 	Id bson.ObjectId
 }
 
+type MultiQuery struct {
+	Query interface{}
+	Sort  string
+	Skip  int
+	Limit int
+}
+
+type MultiPubs struct {
+	Query        MultiQuery
+	Publications []*coverage.Publication
+}
+
 type SearchQuery struct {
 	Q      string
 	Notify string
