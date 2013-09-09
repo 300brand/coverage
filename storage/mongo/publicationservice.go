@@ -4,7 +4,6 @@ import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
 	"labix.org/v2/mgo/bson"
-	"log"
 	"time"
 )
 
@@ -35,9 +34,6 @@ func (m *Mongo) GetPublication(query interface{}, p *coverage.Publication) (err 
 }
 
 func (m *Mongo) GetPublications(query interface{}, sort string, skip, limit int, p *[]*coverage.Publication) (err error) {
-	defer func() {
-		log.Printf("%+v", len(*p))
-	}()
 	q := m.C.Publications.Find(query)
 	if sort != "" {
 		q.Sort(sort)
