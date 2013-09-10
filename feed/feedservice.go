@@ -46,6 +46,7 @@ func Process(f *coverage.Feed) error {
 
 		a := coverage.NewArticle()
 		a.FeedId = f.ID
+		a.PublicationId = f.PublicationId
 		a.Title = article.Title
 		a.URL = article.URL
 		a.Published = article.Published
