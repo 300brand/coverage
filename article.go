@@ -3,6 +3,7 @@ package coverage
 import (
 	"git.300brand.com/coverage/logger"
 	"git.300brand.com/coverage/merger"
+	"git.300brand.com/coverage/social"
 	"labix.org/v2/mgo/bson"
 	"net/url"
 	"time"
@@ -14,6 +15,7 @@ type Article struct {
 	PublicationId bson.ObjectId
 	Title         string
 	URL           *url.URL
+	Social        social.Stats
 	Text          Text
 	Added         time.Time
 	Updated       time.Time
