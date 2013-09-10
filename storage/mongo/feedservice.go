@@ -60,6 +60,7 @@ func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId, f *coverage.Feed) (err err
 				"$in": ignore,
 			},
 		},
+		"deleted": false,
 	}).Sort("lastdownload").Limit(1).One(f)
 	return
 }

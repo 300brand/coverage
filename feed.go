@@ -11,7 +11,7 @@ type Feed struct {
 	ID            bson.ObjectId `bson:"_id"`
 	PublicationId bson.ObjectId
 	URL           *url.URL
-	Disabled      bool
+	Deleted       bool
 	Content       []byte
 	Articles      []*Article // Temporary Article storage; cleared before each save
 	URLs          []*url.URL
