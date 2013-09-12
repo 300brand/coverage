@@ -18,11 +18,11 @@ type Stats struct {
 
 const apiURL = "http://api.sharedcount.com/"
 
-func Fetch(u *url.URL) (s Stats, err error) {
-	return FetchString(u.String())
+func Fetch(u *url.URL, s *Stats) (err error) {
+	return FetchString(u.String(), s)
 }
 
-func FetchString(u string) (s Stats, err error) {
+func FetchString(u string, s *Stats) (err error) {
 	api, err := url.Parse(apiURL)
 	if err != nil {
 		return
@@ -38,6 +38,5 @@ func FetchString(u string) (s Stats, err error) {
 	defer resp.Body.Close()
 
 	dec := json.NewDecoder(resp.Body)
-	err = dec.Decode(&s)
-	return
+	return dec.Decode(s)
 }
