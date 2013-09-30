@@ -2,6 +2,7 @@ package mongo
 
 import (
 	"git.300brand.com/coverage"
+	"github.com/jbaikge/logger"
 	"labix.org/v2/mgo/bson"
 	"log"
 	"time"
@@ -10,6 +11,7 @@ import (
 const KeywordCollection = "Keywords"
 
 func (m *Mongo) AddKeywords(a *coverage.Article) (err error) {
+	logger.Trace.Printf("AddKeywords: called %s", a.ID.Hex())
 	var word string
 	selector := bson.M{
 		"_id": bson.M{
@@ -27,6 +29,7 @@ func (m *Mongo) AddKeywords(a *coverage.Article) (err error) {
 }
 
 func (m *Mongo) GetKeyword(id *coverage.KeywordId, kw *coverage.Keyword) (err error) {
+	logger.Trace.Printf("GetKeyword: called %+v", id)
 	log.Printf("Mongo.GetKeyword id: %+v", id)
 	selector := bson.M{
 		"_id": bson.M{

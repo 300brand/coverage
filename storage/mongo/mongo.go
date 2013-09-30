@@ -1,6 +1,7 @@
 package mongo
 
 import (
+	"github.com/jbaikge/logger"
 	"labix.org/v2/mgo"
 )
 
@@ -26,10 +27,12 @@ func New(host string) *Mongo {
 }
 
 func (m *Mongo) Close() {
+	logger.Trace.Printf("Close: called")
 	m.Session.Close()
 }
 
 func (m *Mongo) Connect() (err error) {
+	logger.Trace.Printf("Connect: called")
 	m.Session, err = mgo.Dial(m.Host)
 	if err != nil {
 		return

@@ -3,6 +3,7 @@ package body
 import (
 	"bytes"
 	"git.300brand.com/coverage"
+	"github.com/jbaikge/logger"
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xml"
 	"github.com/moovweb/gokogiri/xpath"
@@ -22,6 +23,7 @@ var (
 )
 
 func GetBody(in []byte) (b coverage.Body, err error) {
+	logger.Trace.Printf("GetBody: called")
 	doc, err := gokogiri.ParseHtml(in)
 	defer doc.Free()
 	if err != nil {
@@ -36,6 +38,7 @@ func GetBody(in []byte) (b coverage.Body, err error) {
 		}
 		blocks = append(blocks, nodes...)
 	}
+	logger.Trace.Printf("GetBody: Found %d blocks", len(blocks))
 	for _, block := range blocks {
 		content := block.Content()
 		// Keep blocks where the text is longest
@@ -45,14 +48,17 @@ func GetBody(in []byte) (b coverage.Body, err error) {
 		}
 	}
 	b.Text = reSingleNL.ReplaceAll(bytes.Trim(b.Text, "\n"), []byte{'\n'})
+	logger.Trace.Printf("GetBody: Text len %d", len(b.Text))
 	return
 }
 
 func PBlocks(n xml.Node) ([]xml.Node, error) {
+	logger.Trace.Printf("PBlocks: called")
 	return n.Search(xpathP)
 }
 
 func BrBrBlocks(n xml.Node) (nodeset []xml.Node, err error) {
+	logger.Trace.Printf("BrBrBlocks: called")
 	nodeset, err = n.Search(xpathBrBr)
 	if err != nil {
 		return

@@ -1,13 +1,11 @@
 package mongo
 
 import (
-	"fmt"
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/article/lexer"
 	"git.300brand.com/coverage/search"
+	"github.com/jbaikge/logger"
 	"labix.org/v2/mgo/bson"
-	"log"
-	"os"
 	"sync"
 	"time"
 )
@@ -16,6 +14,7 @@ const SearchCollection = "Search"
 
 // Add a batch of search results from a date
 func (m *Mongo) AddSearchResults(id bson.ObjectId, articles []bson.ObjectId) (err error) {
+	logger.Trace.Printf("AddSearchResults called")
 	change := bson.M{
 		"$inc": bson.M{
 			"daysleft": -1,
@@ -28,7 +27,7 @@ func (m *Mongo) AddSearchResults(id bson.ObjectId, articles []bson.ObjectId) (er
 		},
 	}
 	if err = m.C.Search.UpdateId(id, change); err != nil {
-		log.Printf("AddSearchResults: UpdateId - %s", err)
+		logger.Error.Printf("AddSearchResults: UpdateId - %s", err)
 		return
 	}
 
@@ -42,15 +41,18 @@ func (m *Mongo) AddSearchResults(id bson.ObjectId, articles []bson.ObjectId) (er
 }
 
 func (m *Mongo) GetSearch(id bson.ObjectId, s *coverage.Search) (err error) {
+	logger.Trace.Printf("GetSearch called")
 	return m.C.Search.FindId(id).One(s)
 }
 
 func (m *Mongo) UpdateSearch(s *coverage.Search) (err error) {
+	logger.Trace.Printf("UpdateSearch called")
 	_, err = m.C.Search.UpsertId(s.Id, s)
 	return
 }
 
 func (m *Mongo) CompileResults(id bson.ObjectId) (err error) {
+	logger.Trace.Printf("CompileResults called")
 	s := &coverage.Search{}
 	if err = m.GetSearch(id, s); err != nil {
 		return
@@ -62,7 +64,7 @@ func (m *Mongo) CompileResults(id bson.ObjectId) (err error) {
 }
 
 func (m *Mongo) DateSearch(searchId bson.ObjectId, query string, t time.Time) (err error) {
-	log := log.New(os.Stdout, fmt.Sprintf("%d ", dtoi(t)), log.Lmicroseconds|log.Lshortfile)
+	logger.Trace.Printf("DateSearch called")
 	var (
 		wg         sync.WaitGroup
 		terms      = lexer.Keywords([]byte(query))
@@ -77,10 +79,10 @@ func (m *Mongo) DateSearch(searchId bson.ObjectId, query string, t time.Time) (e
 	// Collect Article IDs from Keyword objects
 	go func() {
 		for id := range idChan {
-			log.Printf("Got %s from idChan", id)
+			logger.Debug.Printf("Got %s from idChan", id)
 			idFilter.Add(id)
 		}
-		log.Println("Closing idFilter.Chan")
+		logger.Debug.Println("Closing idFilter.Chan")
 		close(idFilter.Chan)
 	}()
 
@@ -88,11 +90,11 @@ func (m *Mongo) DateSearch(searchId bson.ObjectId, query string, t time.Time) (e
 	go func() {
 		var wg sync.WaitGroup
 		for id := range idFilter.Chan {
-			log.Printf("Got %s from idFilter.Chan", id)
+			logger.Debug.Printf("Got %s from idFilter.Chan", id)
 			wg.Add(1)
 			go func(id bson.ObjectId) {
 				defer wg.Done()
-				defer log.Println("Finished article processing")
+				defer logger.Debug.Println("Finished article processing")
 
 				// Fetch Article
 				a := &coverage.Article{}
@@ -107,7 +109,7 @@ func (m *Mongo) DateSearch(searchId bson.ObjectId, query string, t time.Time) (e
 				}
 
 				// Send to save result
-				log.Printf("Sending %s along saveChan", id)
+				logger.Debug.Printf("Sending %s along saveChan", id)
 				saveChan <- id
 			}(id)
 		}
@@ -120,36 +122,36 @@ func (m *Mongo) DateSearch(searchId bson.ObjectId, query string, t time.Time) (e
 		wg.Add(1)
 		go func(term string) {
 			defer wg.Done()
-			defer log.Printf("Finished keyword query for %s", term)
+			defer logger.Debug.Printf("Finished keyword query for %s", term)
 
 			id := &coverage.KeywordId{
 				Date:    t,
 				Keyword: term,
 			}
 			kw := &coverage.Keyword{}
-			log.Printf("Querying: %v", id)
+			logger.Debug.Printf("Querying: %v", id)
 			if err := m.GetKeyword(id, kw); err != nil {
-				log.Printf("Query error in Mongo.Keyword: %s", err)
+				logger.Debug.Printf("Query error in Mongo.Keyword: %s", err)
 				return
 			}
 			for _, id := range kw.Articles {
-				log.Printf("Sending %s", id)
+				logger.Debug.Printf("Sending %s", id)
 				idChan <- id
 			}
 		}(term)
 	}
-	log.Println("Waiting for keyword queries to finish")
+	logger.Debug.Println("Waiting for keyword queries to finish")
 	wg.Wait()
 	close(idChan)
-	log.Println("Closed idChan")
+	logger.Debug.Println("Closed idChan")
 
 	for id := range saveChan {
 		results = append(results, id)
 	}
-	log.Printf("Finished GetKeywords")
+	logger.Debug.Printf("Finished GetKeywords")
 
 	if err = m.AddSearchResults(searchId, results); err != nil {
-		log.Printf("Error Adding Search Results: %s", err)
+		logger.Debug.Printf("Error Adding Search Results: %s", err)
 		return
 	}
 

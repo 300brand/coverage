@@ -1,12 +1,18 @@
 package cleanurl
 
 import (
+	"github.com/jbaikge/logger"
 	"net/url"
 	"strings"
 )
 
 func Clean(u *url.URL) (out *url.URL) {
-	out = u
+	out = new(url.URL)
+
+	defer logger.Trace.Printf("Clean: result: %s", out)
+	logger.Trace.Printf("Clean: called %s", u)
+
+	*out = *u
 	values := u.Query()
 
 	// bounce if there's nothing to do

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"code.google.com/p/go.net/html"
 	"git.300brand.com/coverage/article/filter"
+	"github.com/jbaikge/logger"
 )
 
 var cleanFilters = filter.Filters{
@@ -22,9 +23,11 @@ var cleanFilters = filter.Filters{
 }
 
 func CleanHTML(b []byte) (cleaned []byte, err error) {
+	logger.Trace.Print("CleanHTML: called")
 	r := bytes.NewReader(b)
 	doc, err := html.Parse(r)
 	if err != nil {
+		logger.Error.Printf("CleanHTML: %s", err)
 		return
 	}
 	cleanDOM(doc)

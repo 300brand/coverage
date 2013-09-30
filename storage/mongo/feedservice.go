@@ -3,6 +3,7 @@ package mongo
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
+	"github.com/jbaikge/logger"
 	"labix.org/v2/mgo/bson"
 	"net/url"
 	"time"
@@ -26,6 +27,7 @@ func (s *FeedService) Update(f *coverage.Feed) error {
 }
 
 func (m *Mongo) FeedIds(urls []*url.URL) (ids []bson.ObjectId, err error) {
+	logger.Trace.Printf("FeedIds: called")
 	out := make([]struct {
 		Id bson.ObjectId `bson:"_id"`
 	}, 0, len(urls))
@@ -45,6 +47,7 @@ func (m *Mongo) FeedIds(urls []*url.URL) (ids []bson.ObjectId, err error) {
 }
 
 func (m *Mongo) GetFeed(query interface{}, f *coverage.Feed) (err error) {
+	logger.Trace.Printf("GetFeed: called %+v", query)
 	switch v := query.(type) {
 	case bson.ObjectId:
 		query = bson.M{"_id": v}
@@ -54,6 +57,7 @@ func (m *Mongo) GetFeed(query interface{}, f *coverage.Feed) (err error) {
 }
 
 func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId, f *coverage.Feed) (err error) {
+	logger.Trace.Printf("GetOldestFeed: called")
 	err = m.C.Feeds.Find(bson.M{
 		"_id": bson.M{
 			"$not": bson.M{
@@ -62,10 +66,14 @@ func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId, f *coverage.Feed) (err err
 		},
 		"deleted": false,
 	}).Sort("lastdownload").Limit(1).One(f)
+	if err != nil {
+		logger.Error.Printf("GetOldestFeed: %s", err)
+	}
 	return
 }
 
 func (m *Mongo) UpdateFeed(f *coverage.Feed) (err error) {
+	logger.Trace.Printf("UpdateFeed: called")
 	l := len(f.Articles)
 	f.Articles = f.Articles[:0]
 	defer func() { f.Articles = f.Articles[:l] }()

@@ -3,6 +3,7 @@ package mongo
 import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
+	"github.com/jbaikge/logger"
 	"labix.org/v2/mgo/bson"
 	"time"
 )
@@ -25,6 +26,7 @@ func (s *ArticleService) Update(a *coverage.Article) error {
 }
 
 func (m *Mongo) GetArticle(query interface{}, a *coverage.Article) (err error) {
+	logger.Trace.Printf("GetArticle: called %+v", query)
 	switch v := query.(type) {
 	case bson.ObjectId:
 		query = bson.M{"_id": v}
@@ -34,9 +36,11 @@ func (m *Mongo) GetArticle(query interface{}, a *coverage.Article) (err error) {
 }
 
 func (m *Mongo) UpdateArticle(a *coverage.Article) (err error) {
+	logger.Trace.Printf("UpdateArticle: called %s", a.ID.Hex())
 	a.Updated = time.Now()
 	_, err = m.C.Articles.UpsertId(a.ID, a)
 	if err != nil {
+		logger.Error.Printf("UpdateArticle: %s", err)
 		return
 	}
 	return

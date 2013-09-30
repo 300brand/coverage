@@ -2,6 +2,7 @@ package social
 
 import (
 	"encoding/json"
+	"github.com/jbaikge/logger"
 	"net/http"
 	"net/url"
 )
@@ -19,12 +20,15 @@ type Stats struct {
 const apiURL = "http://api.sharedcount.com/"
 
 func Fetch(u *url.URL, s *Stats) (err error) {
+	logger.Trace.Printf("Fetch: called")
 	return FetchString(u.String(), s)
 }
 
 func FetchString(u string, s *Stats) (err error) {
+	logger.Trace.Printf("FetchString: called %s", u)
 	api, err := url.Parse(apiURL)
 	if err != nil {
+		logger.Error.Printf("FetchString: %s", err)
 		return
 	}
 	q := api.Query()
@@ -33,6 +37,7 @@ func FetchString(u string, s *Stats) (err error) {
 
 	resp, err := http.Get(api.String())
 	if err != nil {
+		logger.Error.Printf("FetchString: %s", err)
 		return
 	}
 	defer resp.Body.Close()

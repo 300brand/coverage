@@ -1,7 +1,12 @@
 package lexer
 
+import (
+	"github.com/jbaikge/logger"
+)
+
 // Pre-processes text to swap out certain characters for spaces or nothing
 func Normalize(in []byte) (out []byte) {
+	logger.Trace.Print("Normalize: called")
 	out = make([]byte, 0, len(in))
 	for _, b := range in {
 		switch {

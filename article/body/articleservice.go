@@ -4,6 +4,7 @@ import (
 	"errors"
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
+	"github.com/jbaikge/logger"
 )
 
 type ArticleService struct{}
@@ -20,16 +21,21 @@ func (s ArticleService) Update(a *coverage.Article) (err error) {
 }
 
 func SetBody(a *coverage.Article) (err error) {
+	logger.Trace.Printf("SetBody: called %s", a.ID.Hex())
 	if a.Text.HTML == nil {
-		return a.Log.Error(errors.New("HTML not set, did you run the downloader service?"))
+		err = errors.New("HTML not set, did you run the downloader service?")
+		logger.Error.Printf("SetBody: A %s %s", a.ID.Hex(), err)
+		return
 	}
 	cleaned, err := CleanHTML(a.Text.HTML)
 	if err != nil {
-		return a.Log.Error(err)
+		logger.Error.Printf("SetBody: A %s %s", a.ID.Hex(), err)
+		return
 	}
 	if a.Text.Body, err = GetBody(cleaned); err != nil {
-		return a.Log.Error(err)
+		logger.Error.Printf("SetBody: A %s %s", a.ID.Hex(), err)
+		return
 	}
-	a.Modified("Body")
+	logger.Debug.Printf("SetBody: A %s Updated body", a.ID.Hex())
 	return
 }
