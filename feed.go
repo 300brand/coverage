@@ -18,7 +18,7 @@ type Feed struct {
 	Log           logger.Entries
 	Added         time.Time
 	Updated       time.Time
-	LastDownload  time.Time
+	LastDownload  time.Time `bson:",omitempty"`
 }
 
 func NewFeed() (f *Feed) {

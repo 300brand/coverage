@@ -4,6 +4,7 @@ import (
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
 	"github.com/jbaikge/logger"
+	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 	"net/url"
 	"time"
@@ -69,6 +70,37 @@ func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId, f *coverage.Feed) (err err
 	if err != nil {
 		logger.Error.Printf("GetOldestFeed: %s", err)
 	}
+	return
+}
+
+func (m *Mongo) NextDownloadFeedId(thresh time.Time, id *bson.ObjectId) (err error) {
+	logger.Trace.Printf("NextFeedForDownload: called")
+	change := mgo.Change{
+		Remove:    false,
+		ReturnNew: true,
+		Update:    bson.M{"$set": bson.M{"lastdownload": time.Now()}},
+		Upsert:    false,
+	}
+	query := bson.M{
+		"$or": []bson.M{
+			bson.M{"lastdownload": bson.M{"$lt": thresh}},
+			bson.M{"lastdownload": nil},
+		},
+	}
+	sel := bson.M{"_id": 1}
+	result := new(struct {
+		Id bson.ObjectId `bson:"_id"`
+	})
+	logger.Trace.Printf("NextDownloadFeedId: query  %+v", query)
+	logger.Trace.Printf("NextDownloadFeedId: change %+v", change)
+	logger.Trace.Printf("NextDownloadFeedId: sel    %+v", sel)
+	info, err := m.C.Feeds.Find(query).Sort("lastdownload").Limit(1).Select(sel).Apply(change, result)
+	if err != nil {
+		logger.Error.Printf("NextDownloadFeedId: %s", err)
+		return
+	}
+	logger.Trace.Printf("NextDownloadFeedId: Updated %v", info.Updated)
+	*id = result.Id
 	return
 }
 
