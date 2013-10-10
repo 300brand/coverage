@@ -1,6 +1,7 @@
 package mongo
 
 import (
+	"fmt"
 	"git.300brand.com/coverage"
 	"git.300brand.com/coverage/service"
 	"github.com/jbaikge/logger"
@@ -14,7 +15,10 @@ type FeedService struct {
 	m *Mongo
 }
 
-const FeedCollection = "Feeds"
+const (
+	FeedCollection      = "Feeds"
+	FeedQueueCollection = "FeedQ"
+)
 
 var _ service.FeedService = &FeedService{}
 
@@ -75,26 +79,63 @@ func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId, f *coverage.Feed) (err err
 
 func (m *Mongo) NextDownloadFeedId(thresh time.Time, id *bson.ObjectId) (err error) {
 	logger.Trace.Printf("NextFeedForDownload: called")
+	n, err := m.C.FeedQ.Count()
+	if err != nil {
+		logger.Error.Printf("NextDownloadFeedId: %s", err)
+		return
+	}
+	if n == 0 {
+		logger.Debug.Print("NextDownloadFeedId: Queue too small, refilling")
+		query := bson.M{
+			"$or": []bson.M{
+				bson.M{"lastdownload": bson.M{"$lt": thresh}},
+				bson.M{"lastdownload": nil},
+			},
+		}
+		result := make([]struct {
+			Id    bson.ObjectId `bson:"_id"`
+			Queue int
+		}, 0, 6)
+		sel := bson.M{"_id": 1}
+
+		err = m.C.Feeds.
+			Find(query).
+			Sort("lastdownload").
+			Limit(cap(result)).
+			Select(sel).
+			All(&result)
+		if err != nil {
+			logger.Error.Printf("NextDownloadFeedId: %s", err)
+			return
+		}
+		if len(result) == 0 {
+			err = fmt.Errorf("NextDownloadFeedId: Nothing to enqueue before %s", thresh)
+			logger.Error.Print(err)
+			return err
+		}
+
+		// Snag the first Id for the return, put the rest in the queue
+		*id = result[0].Id
+
+		for _, doc := range result {
+			if err = m.C.FeedQ.Insert(doc); err != nil {
+				logger.Error.Printf("NextDownloadFeedId: Insertion error: %s", err)
+				return
+			}
+		}
+		return
+	}
+
 	change := mgo.Change{
-		Remove:    false,
-		ReturnNew: true,
-		Update:    bson.M{"$set": bson.M{"lastdownload": time.Now()}},
+		Remove:    true,
+		ReturnNew: false,
+		Update:    nil,
 		Upsert:    false,
 	}
-	query := bson.M{
-		"$or": []bson.M{
-			bson.M{"lastdownload": bson.M{"$lt": thresh}},
-			bson.M{"lastdownload": nil},
-		},
-	}
-	sel := bson.M{"_id": 1}
 	result := new(struct {
 		Id bson.ObjectId `bson:"_id"`
 	})
-	logger.Trace.Printf("NextDownloadFeedId: query  %+v", query)
-	logger.Trace.Printf("NextDownloadFeedId: change %+v", change)
-	logger.Trace.Printf("NextDownloadFeedId: sel    %+v", sel)
-	info, err := m.C.Feeds.Find(query).Sort("lastdownload").Limit(1).Select(sel).Apply(change, result)
+	info, err := m.C.FeedQ.Find(bson.M{"queue": 0}).Limit(1).Apply(change, result)
 	if err != nil {
 		logger.Error.Printf("NextDownloadFeedId: %s", err)
 		return
