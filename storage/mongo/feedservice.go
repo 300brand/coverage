@@ -90,7 +90,6 @@ func (m *Mongo) NextDownloadFeedId(thresh time.Time, id *bson.ObjectId) (err err
 		sel := bson.M{"_id": 1}
 		iter := m.C.Feeds.
 			Find(query).
-			Sort("lastdownload").
 			Select(sel).
 			Iter()
 
