@@ -77,7 +77,11 @@ func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId, f *coverage.Feed) (err err
 }
 
 func (m *Mongo) NextDownloadFeedId(thresh time.Time, id *bson.ObjectId) (err error) {
-	n, err := m.C.FeedQ.Count()
+	c := m.Copy()
+	defer c.Close()
+
+	n, err := c.FeedQ.Count()
+	logger.Trace.Printf("NextDownloadFeedId: FeedQ.Count: %d", n)
 	if err != nil {
 		logger.Error.Printf("NextDownloadFeedId: %s", err)
 		return
@@ -88,7 +92,7 @@ func (m *Mongo) NextDownloadFeedId(thresh time.Time, id *bson.ObjectId) (err err
 			"deleted": false,
 		}
 		sel := bson.M{"_id": 1}
-		iter := m.C.Feeds.
+		iter := c.Feeds.
 			Find(query).
 			Select(sel).
 			Iter()
@@ -104,7 +108,7 @@ func (m *Mongo) NextDownloadFeedId(thresh time.Time, id *bson.ObjectId) (err err
 			if result.LastDownload.IsZero() {
 				result.LastDownload = thresh
 			}
-			if err = m.C.FeedQ.Insert(result); err != nil {
+			if err = c.FeedQ.Insert(result); err != nil {
 				logger.Error.Printf("NextDownloadFeedId: Insertion error: %s", err)
 				return
 			}
@@ -130,7 +134,7 @@ func (m *Mongo) NextDownloadFeedId(thresh time.Time, id *bson.ObjectId) (err err
 	result := new(struct {
 		Id bson.ObjectId `bson:"_id"`
 	})
-	info, err := m.C.FeedQ.Find(query).Limit(1).Apply(change, result)
+	info, err := c.FeedQ.Find(query).Limit(1).Apply(change, result)
 	if err != nil {
 		logger.Error.Printf("NextDownloadFeedId: %s", err)
 		return
