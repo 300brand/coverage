@@ -1,7 +1,7 @@
 package search
 
 import (
-	"git.300brand.com/coverage/article/lexer"
+	"github.com/300brand/coverage/article/lexer"
 	"log"
 	"strings"
 )

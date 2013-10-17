@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"git.300brand.com/coverage"
+	"github.com/300brand/coverage"
 	"hash/fnv"
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"

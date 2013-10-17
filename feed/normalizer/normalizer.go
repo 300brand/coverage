@@ -1,7 +1,7 @@
 package normalizer
 
 import (
-	"git.300brand.com/coverage/feed/parser/decoder"
+	"github.com/300brand/coverage/feed/parser/decoder"
 )
 
 type Normalizer interface {

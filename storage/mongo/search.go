@@ -1,9 +1,9 @@
 package mongo
 
 import (
-	"git.300brand.com/coverage"
-	"git.300brand.com/coverage/article/lexer"
-	"git.300brand.com/coverage/search"
+	"github.com/300brand/coverage"
+	"github.com/300brand/coverage/article/lexer"
+	"github.com/300brand/coverage/search"
 	"github.com/jbaikge/logger"
 	"labix.org/v2/mgo/bson"
 	"sync"

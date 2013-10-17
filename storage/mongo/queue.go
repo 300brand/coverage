@@ -1,7 +1,7 @@
 package mongo
 
 import (
-	//"git.300brand.com/coverage/bridge"
+	//"github.com/300brand/coverage/bridge"
 	//"labix.org/v2/mgo"
 	//"labix.org/v2/mgo/bson"
 	"time"

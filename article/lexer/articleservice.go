@@ -2,8 +2,8 @@ package lexer
 
 import (
 	"errors"
-	"git.300brand.com/coverage"
-	"git.300brand.com/coverage/service"
+	"github.com/300brand/coverage"
+	"github.com/300brand/coverage/service"
 )
 
 type ArticleService struct{}

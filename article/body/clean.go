@@ -3,7 +3,7 @@ package body
 import (
 	"bytes"
 	"code.google.com/p/go.net/html"
-	"git.300brand.com/coverage/article/filter"
+	"github.com/300brand/coverage/article/filter"
 	"github.com/jbaikge/logger"
 )
 

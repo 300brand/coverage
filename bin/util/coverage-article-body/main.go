@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"git.300brand.com/coverage/article/body"
+	"github.com/300brand/coverage/article/body"
 	"io/ioutil"
 	"os"
 )

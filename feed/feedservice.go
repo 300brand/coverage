@@ -1,15 +1,15 @@
 package feed
 
 import (
-	"git.300brand.com/coverage"
-	"git.300brand.com/coverage/feed/normalizer"
-	"git.300brand.com/coverage/feed/parser"
-	"git.300brand.com/coverage/service"
+	"github.com/300brand/coverage"
+	"github.com/300brand/coverage/feed/normalizer"
+	"github.com/300brand/coverage/feed/parser"
+	"github.com/300brand/coverage/service"
 
 	"fmt"
-	_ "git.300brand.com/coverage/feed/parser/atom"
-	_ "git.300brand.com/coverage/feed/parser/rdf"
-	_ "git.300brand.com/coverage/feed/parser/rss"
+	_ "github.com/300brand/coverage/feed/parser/atom"
+	_ "github.com/300brand/coverage/feed/parser/rdf"
+	_ "github.com/300brand/coverage/feed/parser/rss"
 )
 
 type FeedService struct{}

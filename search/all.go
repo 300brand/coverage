@@ -2,7 +2,7 @@ package search
 
 import (
 	"fmt"
-	"git.300brand.com/coverage"
+	"github.com/300brand/coverage"
 	"sort"
 )
 

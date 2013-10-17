@@ -1,7 +1,7 @@
 package coverage
 
 import (
-	"git.300brand.com/coverage/merger"
+	"github.com/300brand/coverage/merger"
 	"testing"
 )
 

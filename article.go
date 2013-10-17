@@ -1,9 +1,9 @@
 package coverage
 
 import (
-	"git.300brand.com/coverage/logger"
-	"git.300brand.com/coverage/merger"
-	"git.300brand.com/coverage/social"
+	"github.com/300brand/coverage/logger"
+	"github.com/300brand/coverage/merger"
+	"github.com/300brand/coverage/social"
 	"labix.org/v2/mgo/bson"
 	"net/url"
 	"time"

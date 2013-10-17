@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"git.300brand.com/coverage/downloader"
+	"github.com/300brand/coverage/downloader"
 	"os"
 )
 

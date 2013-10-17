@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"git.300brand.com/coverage"
-	"git.300brand.com/coverage/storage/mongo"
+	"github.com/300brand/coverage"
+	"github.com/300brand/coverage/storage/mongo"
 	"net/url"
 	"os"
 )

@@ -3,7 +3,7 @@
 package mongo
 
 import (
-	"git.300brand.com/coverage"
+	"github.com/300brand/coverage"
 	"labix.org/v2/mgo/bson"
 	"net/url"
 	"testing"

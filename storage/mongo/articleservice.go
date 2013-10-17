@@ -1,8 +1,8 @@
 package mongo
 
 import (
-	"git.300brand.com/coverage"
-	"git.300brand.com/coverage/service"
+	"github.com/300brand/coverage"
+	"github.com/300brand/coverage/service"
 	"github.com/jbaikge/logger"
 	"labix.org/v2/mgo/bson"
 	"time"

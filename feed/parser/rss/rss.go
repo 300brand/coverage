@@ -2,8 +2,8 @@ package rss
 
 import (
 	"encoding/xml"
-	"git.300brand.com/coverage/feed/parser/decoder"
-	"git.300brand.com/coverage/feed/parser/time"
+	"github.com/300brand/coverage/feed/parser/decoder"
+	"github.com/300brand/coverage/feed/parser/time"
 )
 
 type Doc struct {

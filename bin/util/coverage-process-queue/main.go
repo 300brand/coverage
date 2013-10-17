@@ -4,8 +4,8 @@ package main
  * Redacted for later refinement
 import (
 	"flag"
-	"git.300brand.com/coverage/bridge"
-	"git.300brand.com/coverage/storage/mongo"
+	"github.com/300brand/coverage/bridge"
+	"github.com/300brand/coverage/storage/mongo"
 	"log"
 )
 

@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"git.300brand.com/coverage/cleanurl"
+	"github.com/300brand/coverage/cleanurl"
 	"net/url"
 	"os"
 )

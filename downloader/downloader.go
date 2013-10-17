@@ -1,7 +1,7 @@
 package downloader
 
 import (
-	"git.300brand.com/coverage/cleanurl"
+	"github.com/300brand/coverage/cleanurl"
 	"io/ioutil"
 	"net/http"
 	"net/url"

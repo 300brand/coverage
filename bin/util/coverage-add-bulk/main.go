@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"git.300brand.com/coverage"
-	"git.300brand.com/coverage/storage/mongo"
+	"github.com/300brand/coverage"
+	"github.com/300brand/coverage/storage/mongo"
 	"io"
 	"labix.org/v2/mgo/bson"
 	"log"

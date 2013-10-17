@@ -2,7 +2,7 @@ package parser
 
 import (
 	"fmt"
-	"git.300brand.com/coverage/feed/parser/decoder"
+	"github.com/300brand/coverage/feed/parser/decoder"
 	"strings"
 )
 

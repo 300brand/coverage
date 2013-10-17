@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"git.300brand.com/coverage/article/lexer"
+	"github.com/300brand/coverage/article/lexer"
 	"io"
 	"io/ioutil"
 	"log"

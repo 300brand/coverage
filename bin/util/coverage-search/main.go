@@ -2,10 +2,10 @@ package main
 
 import (
 	"flag"
-	"git.300brand.com/coverage"
-	"git.300brand.com/coverage/article/lexer"
-	"git.300brand.com/coverage/search"
-	"git.300brand.com/coverage/storage/mongo"
+	"github.com/300brand/coverage"
+	"github.com/300brand/coverage/article/lexer"
+	"github.com/300brand/coverage/search"
+	"github.com/300brand/coverage/storage/mongo"
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 	"log"

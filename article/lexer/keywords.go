@@ -2,7 +2,7 @@ package lexer
 
 import (
 	"bytes"
-	"git.300brand.com/coverage/article/trie"
+	"github.com/300brand/coverage/article/trie"
 	"sort"
 	"strings"
 )

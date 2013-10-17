@@ -1,7 +1,7 @@
 package downloader
 
 import (
-	"git.300brand.com/coverage"
+	"github.com/300brand/coverage"
 	"net/url"
 	"os"
 	"testing"
