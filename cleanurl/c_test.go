@@ -109,7 +109,7 @@ func Test_communitypress_cincinnati_com(t *testing.T) {
 }
 func Test_www_computeruser_com(t *testing.T) {
 	urls := map[string]string{
-		"http://www.computeruser.com/index.php?-copy-them-to-a-cd_html%3Futm_source=feedburner%3F-copy-them-to-a-cd_html%3Futm_source%3Dfeedburner": "http://www.computeruser.com/index.php",
+		"http://www.computeruser.com/index.php?-copy-them-to-a-cd_html%3Futm_source=feedburner%3F-copy-them-to-a-cd_html%3Futm_source%3Dfeedburner": "http://www.computeruser.com/index.php?-copy-them-to-a-cd_html",
 	}
 	testURLs(t, urls)
 }

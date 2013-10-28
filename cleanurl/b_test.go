@@ -3752,7 +3752,7 @@ func Test_books_usatoday_com(t *testing.T) {
 		"http://books.usatoday.com/book/around-the-world-in-80-days---alone/r850654?csp=34life":                         "http://books.usatoday.com/book/around-the-world-in-80-days---alone/r850654?csp=34life",
 		"http://books.usatoday.com/book/john-thavis-throws-open-the-doors-in-?vatican-diaries%2Fr850468%3Fcsp=34life":   "http://books.usatoday.com/book/john-thavis-throws-open-the-doors-in-?vatican-diaries%2Fr850468%3Fcsp=34life",
 		"http://books.usatoday.com/book/sue-halperns-dog-tale-is-delightfully-human/r851484?csp=34life":                 "http://books.usatoday.com/book/sue-halperns-dog-tale-is-delightfully-human/r851484?csp=34life",
-		"http://books.usatoday.com/book/?watching-downton-finds-joy-in-shared-experiences=r850967&csp=34life":           "http://books.usatoday.com/book/?csp=34life",
+		"http://books.usatoday.com/book/?watching-downton-finds-joy-in-shared-experiences=r850967&csp=34life":           "http://books.usatoday.com/book/?watching-downton-finds-joy-in-shared-experiences=r850967&csp=34life",
 	}
 	testURLs(t, urls)
 }
