@@ -1,10 +1,17 @@
 package cleanurl
 
 import (
+	"github.com/300brand/logger"
+	"io/ioutil"
+	"log"
 	"net/url"
 	"strings"
 	"testing"
 )
+
+func init() {
+	logger.Trace = log.New(ioutil.Discard, "", log.LstdFlags)
+}
 
 func TestNoModify(t *testing.T) {
 	base := []string{
