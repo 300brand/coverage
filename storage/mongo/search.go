@@ -14,6 +14,9 @@ const SearchCollection = "Search"
 
 // Add a batch of search results from a date
 func (m *Mongo) AddSearchResults(id bson.ObjectId, articles []bson.ObjectId) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
 	logger.Trace.Printf("AddSearchResults called")
 	change := bson.M{
 		"$inc": bson.M{
@@ -26,7 +29,7 @@ func (m *Mongo) AddSearchResults(id bson.ObjectId, articles []bson.ObjectId) (er
 			},
 		},
 	}
-	if err = m.C.Search.UpdateId(id, change); err != nil {
+	if err = c.Search.UpdateId(id, change); err != nil {
 		logger.Error.Printf("AddSearchResults: UpdateId - %s", err)
 		return
 	}
@@ -36,34 +39,46 @@ func (m *Mongo) AddSearchResults(id bson.ObjectId, articles []bson.ObjectId) (er
 			"complete": time.Now(),
 		},
 	}
-	m.C.Search.Update(bson.M{"_id": id, "daysleft": 0}, complete)
+	c.Search.Update(bson.M{"_id": id, "daysleft": 0}, complete)
 	return
 }
 
 func (m *Mongo) GetSearch(id bson.ObjectId, s *coverage.Search) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
 	logger.Trace.Printf("GetSearch called")
-	return m.C.Search.FindId(id).One(s)
+	return c.Search.FindId(id).One(s)
 }
 
 func (m *Mongo) UpdateSearch(s *coverage.Search) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
 	logger.Trace.Printf("UpdateSearch called")
-	_, err = m.C.Search.UpsertId(s.Id, s)
+	_, err = c.Search.UpsertId(s.Id, s)
 	return
 }
 
 func (m *Mongo) CompileResults(id bson.ObjectId) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
 	logger.Trace.Printf("CompileResults called")
 	s := &coverage.Search{}
 	if err = m.GetSearch(id, s); err != nil {
 		return
 	}
-	if err = m.C.SearchResults.Find(bson.M{"searchid": id}).All(&s.Articles); err != nil {
+	if err = c.SearchResults.Find(bson.M{"searchid": id}).All(&s.Articles); err != nil {
 		return
 	}
 	return m.UpdateSearch(s)
 }
 
 func (m *Mongo) DateSearch(searchId bson.ObjectId, query string, t time.Time) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
 	logger.Trace.Printf("DateSearch called")
 	var (
 		wg         sync.WaitGroup

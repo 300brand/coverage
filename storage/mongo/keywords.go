@@ -11,6 +11,9 @@ import (
 const KeywordCollection = "Keywords"
 
 func (m *Mongo) AddKeywords(a *coverage.Article) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
 	logger.Trace.Printf("AddKeywords: called %s", a.ID.Hex())
 	var word string
 	selector := bson.M{
@@ -21,7 +24,7 @@ func (m *Mongo) AddKeywords(a *coverage.Article) (err error) {
 	}
 	change := bson.M{"$addToSet": bson.M{"articles": a.ID}}
 	for _, word = range a.Text.Words.Keywords {
-		if _, err = m.C.Keywords.Upsert(selector, change); err != nil {
+		if _, err = c.Keywords.Upsert(selector, change); err != nil {
 			return
 		}
 	}
@@ -29,6 +32,9 @@ func (m *Mongo) AddKeywords(a *coverage.Article) (err error) {
 }
 
 func (m *Mongo) GetKeyword(id *coverage.KeywordId, kw *coverage.Keyword) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
 	logger.Trace.Printf("GetKeyword: called %+v", id)
 	log.Printf("Mongo.GetKeyword id: %+v", id)
 	selector := bson.M{
@@ -38,7 +44,7 @@ func (m *Mongo) GetKeyword(id *coverage.KeywordId, kw *coverage.Keyword) (err er
 		},
 	}
 	log.Printf("Mongo.GetKeyword: %+v", selector)
-	return m.C.Keywords.Find(selector).One(kw)
+	return c.Keywords.Find(selector).One(kw)
 }
 
 func dtoi(t time.Time) int {

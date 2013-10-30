@@ -61,8 +61,11 @@ func (m *Mongo) GetFeed(query interface{}, f *coverage.Feed) (err error) {
 }
 
 func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId, f *coverage.Feed) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
 	logger.Trace.Printf("GetOldestFeed: called")
-	err = m.C.Feeds.Find(bson.M{
+	err = c.Feeds.Find(bson.M{
 		"_id": bson.M{
 			"$not": bson.M{
 				"$in": ignore,
@@ -145,12 +148,15 @@ func (m *Mongo) NextDownloadFeedId(thresh time.Time, id *bson.ObjectId) (err err
 }
 
 func (m *Mongo) UpdateFeed(f *coverage.Feed) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
 	logger.Trace.Printf("UpdateFeed: called")
 	l := len(f.Articles)
 	f.Articles = f.Articles[:0]
 	defer func() { f.Articles = f.Articles[:l] }()
 
 	f.Updated = time.Now()
-	_, err = m.C.Feeds.UpsertId(f.ID, f)
+	_, err = c.Feeds.UpsertId(f.ID, f)
 	return
 }

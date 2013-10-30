@@ -26,19 +26,25 @@ func (s *ArticleService) Update(a *coverage.Article) error {
 }
 
 func (m *Mongo) GetArticle(query interface{}, a *coverage.Article) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
 	logger.Trace.Printf("GetArticle: called %+v", query)
 	switch v := query.(type) {
 	case bson.ObjectId:
 		query = bson.M{"_id": v}
 	}
-	err = m.C.Articles.Find(query).One(a)
+	err = c.Articles.Find(query).One(a)
 	return
 }
 
 func (m *Mongo) UpdateArticle(a *coverage.Article) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
 	logger.Trace.Printf("UpdateArticle: called %s", a.ID.Hex())
 	a.Updated = time.Now()
-	_, err = m.C.Articles.UpsertId(a.ID, a)
+	_, err = c.Articles.UpsertId(a.ID, a)
 	if err != nil {
 		logger.Error.Printf("UpdateArticle: %s", err)
 		return

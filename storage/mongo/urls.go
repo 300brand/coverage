@@ -8,5 +8,8 @@ import (
 const URLsCollection = "URLs"
 
 func (m *Mongo) AddURL(u *url.URL, id bson.ObjectId) (err error) {
-	return m.C.URLs.Insert(bson.M{"_id": u, "article": id})
+	c := m.Copy()
+	defer c.Close()
+
+	return c.URLs.Insert(bson.M{"_id": u, "article": id})
 }
