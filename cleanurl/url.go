@@ -1,7 +1,7 @@
 package cleanurl
 
 import (
-	"github.com/jbaikge/logger"
+	"github.com/300brand/logger"
 	"net/url"
 	"strings"
 )

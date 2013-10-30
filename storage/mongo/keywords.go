@@ -2,7 +2,7 @@ package mongo
 
 import (
 	"github.com/300brand/coverage"
-	"github.com/jbaikge/logger"
+	"github.com/300brand/logger"
 	"labix.org/v2/mgo/bson"
 	"log"
 	"time"

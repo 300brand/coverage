@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"code.google.com/p/go.net/html"
 	"github.com/300brand/coverage/article/filter"
-	"github.com/jbaikge/logger"
+	"github.com/300brand/logger"
 )
 
 var cleanFilters = filter.Filters{

@@ -2,7 +2,7 @@ package social
 
 import (
 	"encoding/json"
-	"github.com/jbaikge/logger"
+	"github.com/300brand/logger"
 	"net/http"
 	"net/url"
 )

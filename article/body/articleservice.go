@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/300brand/coverage"
 	"github.com/300brand/coverage/service"
-	"github.com/jbaikge/logger"
+	"github.com/300brand/logger"
 )
 
 type ArticleService struct{}

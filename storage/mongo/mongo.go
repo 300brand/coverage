@@ -1,7 +1,7 @@
 package mongo
 
 import (
-	"github.com/jbaikge/logger"
+	"github.com/300brand/logger"
 	"labix.org/v2/mgo"
 )
 

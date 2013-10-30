@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	"github.com/jbaikge/logger"
+	"github.com/300brand/logger"
 )
 
 // Pre-processes text to swap out certain characters for spaces or nothing

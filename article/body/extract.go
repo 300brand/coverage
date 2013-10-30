@@ -3,7 +3,7 @@ package body
 import (
 	"bytes"
 	"github.com/300brand/coverage"
-	"github.com/jbaikge/logger"
+	"github.com/300brand/logger"
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xml"
 	"github.com/moovweb/gokogiri/xpath"
