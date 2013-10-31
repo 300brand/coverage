@@ -24,19 +24,21 @@ type feedTest struct {
 }
 
 func TestParse(t *testing.T) {
-	t.Skip("TODO")
-}
-
-func TestParseErr(t *testing.T) {
-	t.Skip("TODO")
+	for name, test := range getFiles(t) {
+		_, err := Parse(test.Data)
+		if err != nil {
+			t.Errorf("%s: %s", name, err)
+		}
+	}
 }
 
 func TestParseType(t *testing.T) {
-	t.Skip("TODO")
-}
-
-func TestParseTypeErr(t *testing.T) {
-	t.Skip("TODO")
+	for name, test := range getFiles(t) {
+		_, err := ParseType(test.Data, test.Type)
+		if err != nil {
+			t.Errorf("%s: %s", name, err)
+		}
+	}
 }
 
 func TestType(t *testing.T) {
