@@ -2,6 +2,7 @@ package downloader
 
 import (
 	"github.com/300brand/coverage/cleanurl"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -13,6 +14,8 @@ type Response struct {
 	OriginalURL string
 	RealURL     string
 }
+
+var MaxFileSize int64 = 2 * 1024 * 1024
 
 func Fetch(URL string) (r Response, err error) {
 	r.OriginalURL = URL
@@ -37,6 +40,8 @@ func Fetch(URL string) (r Response, err error) {
 	defer resp.Body.Close()
 
 	r.Code = resp.StatusCode
-	r.Body, err = ioutil.ReadAll(resp.Body)
+
+	lr := io.LimitReader(resp.Body, MaxFileSize)
+	r.Body, err = ioutil.ReadAll(lr)
 	return
 }
