@@ -1,10 +1,8 @@
 package rss
 
 import (
-	"bytes"
-	"code.google.com/p/go-charset/charset"
-	_ "code.google.com/p/go-charset/data"
 	"encoding/xml"
+	"github.com/300brand/coverage/feed/parser/charset"
 	"github.com/300brand/coverage/feed/parser/decoder"
 	"github.com/300brand/coverage/feed/parser/time"
 )
@@ -59,7 +57,5 @@ func (doc Doc) New() decoder.Decoder {
 }
 
 func (doc *Doc) Decode(data []byte) error {
-	d := xml.NewDecoder(bytes.NewReader(data))
-	d.CharsetReader = charset.NewReader
-	return d.Decode(doc)
+	return charset.TryAll(doc, data)
 }
