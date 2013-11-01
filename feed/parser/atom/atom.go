@@ -1,6 +1,9 @@
 package atom
 
 import (
+	"bytes"
+	"code.google.com/p/go-charset/charset"
+	_ "code.google.com/p/go-charset/data"
 	"encoding/xml"
 	"github.com/300brand/coverage/feed/parser/decoder"
 	"time"
@@ -52,5 +55,7 @@ func (doc Doc) New() decoder.Decoder {
 }
 
 func (doc *Doc) Decode(data []byte) error {
-	return xml.Unmarshal(data, doc)
+	d := xml.NewDecoder(bytes.NewReader(data))
+	d.CharsetReader = charset.NewReader
+	return d.Decode(doc)
 }
