@@ -39,22 +39,21 @@ func (m *Mongo) Connect() (err error) {
 	if err != nil {
 		return
 	}
-	m.C = m.Copy()
+	m.C = collections{
+		Articles:     m.Session.DB(m.Prefix + ArticleCollection).C(ArticleCollection),
+		FeedQ:        m.Session.DB(m.Prefix + FeedCollection).C(FeedQueueCollection),
+		Feeds:        m.Session.DB(m.Prefix + FeedCollection).C(FeedCollection),
+		Keywords:     m.Session.DB(m.Prefix + KeywordCollection).C(KeywordCollection),
+		Publications: m.Session.DB(m.Prefix + PublicationCollection).C(PublicationCollection),
+		Search:       m.Session.DB(m.Prefix + SearchCollection).C(SearchCollection),
+		URLs:         m.Session.DB(m.Prefix + URLsCollection).C(URLsCollection),
+		session:      m.Session,
+	}
 	return
 }
 
 func (m *Mongo) Copy() collections {
-	s := m.Session.Copy()
-	return collections{
-		Articles:     s.DB(m.Prefix + ArticleCollection).C(ArticleCollection),
-		FeedQ:        s.DB(m.Prefix + FeedCollection).C(FeedQueueCollection),
-		Feeds:        s.DB(m.Prefix + FeedCollection).C(FeedCollection),
-		Keywords:     s.DB(m.Prefix + KeywordCollection).C(KeywordCollection),
-		Publications: s.DB(m.Prefix + PublicationCollection).C(PublicationCollection),
-		Search:       s.DB(m.Prefix + SearchCollection).C(SearchCollection),
-		URLs:         s.DB(m.Prefix + URLsCollection).C(URLsCollection),
-		session:      s,
-	}
+	return m.C
 }
 
 func (c collections) Close() {
