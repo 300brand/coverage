@@ -4866,7 +4866,7 @@ func Test_video_cnbc_com(t *testing.T) {
 }
 func Test_www_vanityfair_com(t *testing.T) {
 	urls := map[string]string{
-		"http://www.vanityfair.com/business/2013/09/michael-lewis-goldman-sachs-programmer?mbid=social_retweet": "http://www.vanityfair.com/business/2013/09/michael-lewis-goldman-sachs-programmer",
+		"http://www.vanityfair.com/business/2013/09/michael-lewis-goldman-sachs-programmer?mbid=social_retweet":            "http://www.vanityfair.com/business/2013/09/michael-lewis-goldman-sachs-programmer",
 		"http://www.vanityfair.com/online/daily/2012/06/Ben-bradlee-zingers-correspondence-barbs-post?mbid=social_retweet": "http://www.vanityfair.com/online/daily/2012/06/Ben-bradlee-zingers-correspondence-barbs-post",
 	}
 	testURLs(t, urls)
