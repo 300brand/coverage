@@ -1,0 +1,127 @@
+package cleanurl
+
+import "testing"
+
+func Test_www_grantland_com(t *testing.T) {
+	urls := map[string]string{
+		"http://www.grantland.com/story/_/id/9588609/crossfit-tough-mudders-color-runs-rise-social-physical-challenges?ex_cid=grantland33": "http://www.grantland.com/story/_/id/9588609/crossfit-tough-mudders-color-runs-rise-social-physical-challenges",
+	}
+	testURLs(t, urls)
+}
+func Test_globalgoodgroup_com(t *testing.T) {
+	urls := map[string]string{
+		"http://globalgoodgroup.com/blog/2013/07/30/soho-jewelry-carves-out-niche-in-gold-and-silver-fashion-accessories/?doing_wp_cron=1375306307.2272570133209228515625": "http://globalgoodgroup.com/blog/2013/07/30/soho-jewelry-carves-out-niche-in-gold-and-silver-fashion-accessories/?doing_wp_cron=1375306307.2272570133209228515625",
+	}
+	testURLs(t, urls)
+}
+func Test_www_gartner_com(t *testing.T) {
+	urls := map[string]string{
+		"http://www.gartner.com/technology/reprints.do?ct=120612&id=1-1AVRXJL&st=sb": "http://www.gartner.com/technology/reprints.do?ct=120612&id=1-1AVRXJL&st=sb",
+	}
+	testURLs(t, urls)
+}
+func Test_www_governmentvideo_com(t *testing.T) {
+	urls := map[string]string{
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114654": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114654",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114658": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114658",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114683": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114683",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114685": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114685",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114708": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114708",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114709": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114709",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114724": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114724",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114730": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114730",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114611": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114611",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114618": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114618",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114635": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114635",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114644": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114644",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114664": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114664",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114692": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114692",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114697": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114697",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114707": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114707",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114615": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114615",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114630": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114630",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114665": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114665",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114675": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114675",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114694": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114694",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114706": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114706",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114725": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114725",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114731": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114731",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114613": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114613",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114636": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114636",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114646": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114646",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114653": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114653",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114661": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114661",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114670": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114670",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114698": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114698",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114700": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114700",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114703": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114703",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114727": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114727",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114620": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114620",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114621": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114621",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114623": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114623",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114660": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114660",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114684": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114684",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114691": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114691",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114696": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114696",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114699": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114699",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114624": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114624",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114645": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114645",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114614": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114614",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114638": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114638",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114648": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114648",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114673": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114673",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114728": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114728",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114612": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114612",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114642": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114642",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114647": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114647",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114650": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114650",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114652": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114652",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114659": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114659",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114666": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114666",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114682": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114682",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114705": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114705",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114634": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114634",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114702": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114702",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114732": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114732",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114616": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114616",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114628": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114628",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114655": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114655",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114663": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114663",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114679": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114679",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114695": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114695",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114617": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114617",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114619": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114619",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114629": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114629",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114643": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114643",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114656": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114656",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114672": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114672",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114676": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114676",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114693": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114693",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114701": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114701",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114729": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114729",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114662": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114662",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114667": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114667",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114680": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114680",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114711": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114711",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114723": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114723",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114641": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114641",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114704": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114704",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114710": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114710",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114726": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114726",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114625": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114625",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114626": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114626",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114632": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114632",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114657": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114657",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114681": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114681",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114627": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114627",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114633": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114633",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114637": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114637",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114649": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114649",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114651": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114651",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114669": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114669",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114686": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114686",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114622": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114622",
+		"http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114687": "http://www.governmentvideo.com/TabId/67/Default.aspx?ArticleId=114687",
+	}
+	testURLs(t, urls)
+}
