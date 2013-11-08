@@ -114,6 +114,7 @@ func Clean(u *url.URL) (out *url.URL) {
 		}
 	}
 	out.RawQuery = values.Encode()
+	out.Fragment = ""
 
 	return
 }
