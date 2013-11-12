@@ -60,6 +60,26 @@ func (m *Mongo) GetFeed(query interface{}, f *coverage.Feed) (err error) {
 	return
 }
 
+func (m *Mongo) GetFeeds(query interface{}, sort string, skip, limit int, p *[]*coverage.Feed) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
+	logger.Trace.Printf("GetFeeds: called")
+	logger.Trace.Printf("query: %+v", query)
+	logger.Trace.Printf("sort: %s skip: %d limit: %d", sort, skip, limit)
+	q := c.Feeds.Find(query)
+	if sort != "" {
+		q.Sort(sort)
+	}
+	if skip > 0 {
+		q.Skip(skip)
+	}
+	if limit > 0 {
+		q.Limit(limit)
+	}
+	return q.All(p)
+}
+
 func (m *Mongo) GetOldestFeed(ignore []bson.ObjectId, f *coverage.Feed) (err error) {
 	c := m.Copy()
 	defer c.Close()
