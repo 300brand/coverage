@@ -13,6 +13,12 @@ func Clean(u *url.URL) (out *url.URL) {
 	logger.Trace.Printf("Clean: called %s", u)
 
 	*out = *u
+
+	// For The VAR Guy - Drop down to http and normalize host
+	if u.Host == "thevarguy.com" || u.Host == "www.thevarguy.com" {
+		out.Scheme, out.Host = "http", "thevarguy.com"
+	}
+
 	if u.Host == "www.computeruser.com" {
 		out.RawQuery = strings.Split(u.RawQuery, "%3F")[0]
 		return
