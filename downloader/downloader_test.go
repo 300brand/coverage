@@ -110,6 +110,29 @@ func TestRedirect(t *testing.T) {
 	}
 }
 
+func TestNYTimesRedirect(t *testing.T) {
+	urls := [3]string{
+		"http://www.nytimes.com/2013/11/05/science/herbal-supplements-are-often-not-what-they-seem.html?partner=rss&emc=rss",
+		"http://www.nytimes.com/2013/11/05/world/asia/pakistani-party-votes-to-block-nato-supply-lines-if-drone-strikes-persist.html?partner=rss&emc=rss",
+		"http://www.nytimes.com/2013/11/06/business/after-public-outcry-cargill-says-it-will-label-products-made-with-a-beef-binder.html?partner=rss&emc=rss",
+	}
+	expects := [3]string{
+		"http://www.nytimes.com/2013/11/05/science/herbal-supplements-are-often-not-what-they-seem.html",
+		"http://www.nytimes.com/2013/11/05/world/asia/pakistani-party-votes-to-block-nato-supply-lines-if-drone-strikes-persist.html",
+		"http://www.nytimes.com/2013/11/06/business/after-public-outcry-cargill-says-it-will-label-products-made-with-a-beef-binder.html",
+	}
+	for i, url := range urls {
+		r, err := Fetch(url)
+		if err != nil {
+			t.Error(err)
+		}
+		if r.RealURL != expects[i] {
+			t.Errorf("Expect: %s", expects[i])
+			t.Errorf("Got:    %s", r.RealURL)
+		}
+	}
+}
+
 func TestResponseCode(t *testing.T) {
 	s := server()
 	defer s.Close()

@@ -23,6 +23,9 @@ func Clean(u *url.URL) (out *url.URL) {
 		out.RawQuery = strings.Split(u.RawQuery, "%3F")[0]
 		return
 	}
+	if u.Host == "www-nc.nytimes.com" {
+		out.Host = "www.nytimes.com"
+	}
 	values := u.Query()
 
 	// bounce if there's nothing to do
@@ -115,7 +118,11 @@ func Clean(u *url.URL) (out *url.URL) {
 			// Remove rpc= parameters
 			k == "rpc",
 			// Remove amp= parameters
-			k == "amp":
+			k == "amp",
+			// Remove = parameters
+			k == "",
+			// Remove _r= parameters
+			k == "_r":
 			values.Del(k)
 		}
 	}

@@ -1,6 +1,7 @@
 package downloader
 
 import (
+	"errors"
 	"github.com/300brand/coverage/cleanurl"
 	"io"
 	"io/ioutil"
@@ -29,8 +30,16 @@ func Fetch(URL string) (r Response, err error) {
 	}
 	transport.RegisterProtocol("file", http.NewFileTransport(http.Dir("/")))
 
+	redirectPolicyFunc := func(req *http.Request, via []*http.Request) error {
+		if len(via) > 13 {
+			return errors.New("Fetch URL Error: Exceeded limit of 14 redirects")
+		}
+		return nil
+	}
+
 	client := &http.Client{
-		Transport: transport,
+		Transport:     transport,
+		CheckRedirect: redirectPolicyFunc,
 	}
 
 	resp, err := client.Get(URL)
