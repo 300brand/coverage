@@ -1,0 +1,30 @@
+[
+	{
+		"File"  : "AOLGov.html",
+		"XPaths": [
+			"//meta[@name='sailthru.author']/@content"
+		],
+		"Expect": "Judi Hasson"
+	},
+	{
+		"File"  : "BizJournals.html",
+		"XPaths": [
+			"//a[@rel='author']"
+		],
+		"Expect": "Bill Flook"
+	},
+	{
+		"File"  : "CIOBlogs.html",
+		"XPaths": [
+			"//div[@id='blogger_info']/div[contains(@class, 'byline')]/strong"
+		],
+		"Expect": "Constantine von Hoffman"
+	},
+	{
+		"File"  : "WallStreetJournal-Recent.html",
+		"XPaths": [
+			"//meta[@name='article.author']/@content"
+		],
+		"Expect": "Louise Radnofsky"
+	}
+]
