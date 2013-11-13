@@ -33,6 +33,11 @@ func Search(html []byte, xpaths []string) (author string, err error) {
 }
 
 func searchXpath(node xml.Node, path string) (author string, err error) {
+	// Ensure normalize-space is used
+	if !strings.Contains(path, "normalize-space") {
+		path = fmt.Sprintf("normalize-space(%s)", path)
+	}
+
 	// Compile expression
 	expression := xpath.Compile(path)
 	if expression == nil {
@@ -40,17 +45,14 @@ func searchXpath(node xml.Node, path string) (author string, err error) {
 		return
 	}
 	defer expression.Free()
-	// Search with expression on HTML root
-	nodes, err := node.Search(expression)
-	if err != nil {
+
+	x := xpath.NewXPath(node.NodePtr())
+	defer x.Free()
+
+	if err = x.Evaluate(node.NodePtr(), expression); err != nil {
 		return
 	}
-	if len(nodes) == 0 {
-		err = fmt.Errorf("No matches found")
-	}
-	if len(nodes) > 1 {
-		// Trace more than one match, only using the first
-	}
-	author = nodes[0].Content()
+
+	author, err = x.ResultAsString()
 	return
 }
