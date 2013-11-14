@@ -3,6 +3,7 @@ package coverage
 import (
 	"github.com/300brand/coverage/logger"
 	"github.com/300brand/coverage/validurl"
+	log "github.com/300brand/logger"
 	"labix.org/v2/mgo/bson"
 	"net/url"
 	"time"
@@ -32,6 +33,7 @@ func NewFeed() (f *Feed) {
 
 func (f *Feed) AddURL(u *url.URL) bool {
 	if !validurl.IsValid(u) {
+		log.Debug.Printf("[P:%s] [F:%s] [U:%s] Invalid URL. Skipping.", f.PublicationId, f.ID, u)
 		return false
 	}
 
