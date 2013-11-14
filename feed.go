@@ -2,6 +2,7 @@ package coverage
 
 import (
 	"github.com/300brand/coverage/logger"
+	"github.com/300brand/coverage/validurl"
 	"labix.org/v2/mgo/bson"
 	"net/url"
 	"time"
@@ -30,6 +31,10 @@ func NewFeed() (f *Feed) {
 }
 
 func (f *Feed) AddURL(u *url.URL) bool {
+	if !validurl.IsValid(u) {
+		return false
+	}
+
 	urlCopy := *u
 
 	s := urlCopy.String()
