@@ -38,6 +38,25 @@ func (m *Mongo) GetArticle(query interface{}, a *coverage.Article) (err error) {
 	return
 }
 
+func (m *Mongo) GetArticles(query interface{}, sort string, skip, limit int, selector map[string]int, a *[]*coverage.Article) (err error) {
+	c := m.Copy()
+	defer c.Close()
+
+	logger.Trace.Printf("mongo.GetArticles: query: %+v sort: %s skip: %d limit: %d selector: %+v", query, sort, skip, limit, selector)
+	q := c.Feeds.Find(query)
+	if sort != "" {
+		q.Sort(sort)
+	}
+	if skip > 0 {
+		q.Skip(skip)
+	}
+	if limit > 0 {
+		q.Limit(limit)
+	}
+	q.Select(selector)
+	return q.All(a)
+}
+
 func (m *Mongo) UpdateArticle(a *coverage.Article) (err error) {
 	c := m.Copy()
 	defer c.Close()
