@@ -18,13 +18,22 @@ func Clean(u *url.URL) (out *url.URL) {
 	if u.Host == "thevarguy.com" || u.Host == "www.thevarguy.com" {
 		out.Scheme, out.Host = "http", "thevarguy.com"
 	}
-
+	// Fix computeruser query string
 	if u.Host == "www.computeruser.com" {
 		out.RawQuery = strings.Split(u.RawQuery, "%3F")[0]
 		return
 	}
+	// Solve nytimes redirect to login
 	if u.Host == "www-nc.nytimes.com" {
 		out.Host = "www.nytimes.com"
+	}
+	// Fix reuters host
+	if strings.HasSuffix(u.Host, "reuters.com") {
+		out.Host = "reuters.com"
+	}
+	// Fix infoworld host
+	if strings.HasSuffix(u.Host, "infoworld.com") {
+		out.Host = "infoworld.com"
 	}
 	values := u.Query()
 
@@ -122,7 +131,9 @@ func Clean(u *url.URL) (out *url.URL) {
 			// Remove = parameters
 			k == "",
 			// Remove _r= parameters
-			k == "_r":
+			k == "_r",
+			// Get rid of type=companyNews
+			k == "type" && filter(v, "companyNews"):
 			values.Del(k)
 		}
 	}
