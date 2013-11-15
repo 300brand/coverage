@@ -18,11 +18,11 @@ func NewPhrase(s string) *Phrase {
 }
 
 func (p *Phrase) Insensitive(b []byte) bool {
-	return bytes.Equal(bytes.ToLower(b), p.Lower)
+	return bytes.Contains(bytes.ToLower(b), p.Lower)
 }
 
 func (p *Phrase) Match(b []byte) bool {
-	return bytes.Equal(b, p.Phrase)
+	return bytes.Contains(b, p.Phrase)
 }
 
 func (p *Phrase) String() string {
