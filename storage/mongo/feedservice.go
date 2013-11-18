@@ -60,7 +60,7 @@ func (m *Mongo) GetFeed(query interface{}, f *coverage.Feed) (err error) {
 	return
 }
 
-func (m *Mongo) GetFeeds(query interface{}, sort string, skip, limit int, selector map[string]int, f *[]*coverage.Feed) (err error) {
+func (m *Mongo) GetFeeds(query interface{}, sort string, skip, limit int, selector interface{}, f *[]*coverage.Feed) (err error) {
 	c := m.Copy()
 	defer c.Close()
 

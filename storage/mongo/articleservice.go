@@ -38,7 +38,7 @@ func (m *Mongo) GetArticle(query interface{}, a *coverage.Article) (err error) {
 	return
 }
 
-func (m *Mongo) GetArticles(query interface{}, sort string, skip, limit int, selector map[string]int, a *[]*coverage.Article) (err error) {
+func (m *Mongo) GetArticles(query interface{}, sort string, skip, limit int, selector interface{}, a *[]*coverage.Article) (err error) {
 	c := m.Copy()
 	defer c.Close()
 
