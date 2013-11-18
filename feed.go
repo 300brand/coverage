@@ -11,7 +11,7 @@ import (
 
 type Feed struct {
 	ID            bson.ObjectId `bson:"_id"`
-	PublicationId bson.ObjectId
+	PublicationId bson.ObjectId `json:",omitempty"`
 	URL           *url.URL
 	Deleted       bool
 	Content       []byte
