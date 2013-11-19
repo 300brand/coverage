@@ -43,7 +43,7 @@ func (m *Mongo) GetArticles(query interface{}, sort string, skip, limit int, sel
 	defer c.Close()
 
 	logger.Trace.Printf("mongo.GetArticles: query: %+v sort: %s skip: %d limit: %d selector: %+v", query, sort, skip, limit, selector)
-	q := c.Feeds.Find(query)
+	q := c.Articles.Find(query)
 	if sort != "" {
 		q.Sort(sort)
 	}
