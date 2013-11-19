@@ -16,6 +16,7 @@ type Publication struct {
 	NumArticles int64
 	Deleted     bool
 	AuthorPaths []string
+	BodyPaths   []string
 	Log         logger.Entries
 	Added       time.Time
 	Updated     time.Time
