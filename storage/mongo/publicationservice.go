@@ -42,9 +42,7 @@ func (m *Mongo) GetPublications(query interface{}, sort string, skip, limit int,
 	c := m.Copy()
 	defer c.Close()
 
-	logger.Trace.Printf("GetPublications: called")
-	logger.Trace.Printf("query: %+v", query)
-	logger.Trace.Printf("sort: %s skip: %d limit: %d", sort, skip, limit)
+	logger.Trace.Printf("mongo.GetPublications: query: %+v sort: %s skip: %d limit: %d", query, sort, skip, limit)
 	q := c.Publications.Find(query)
 	if sort != "" {
 		q.Sort(sort)

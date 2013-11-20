@@ -11,8 +11,8 @@ import (
 
 type Article struct {
 	ID            bson.ObjectId `bson:"_id"`
-	FeedId        bson.ObjectId
-	PublicationId bson.ObjectId
+	FeedId        bson.ObjectId `json:",omitempty"`
+	PublicationId bson.ObjectId `json:",omitempty"`
 	Title         string
 	URL           *url.URL
 	Social        social.Stats

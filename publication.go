@@ -11,10 +11,12 @@ type Publication struct {
 	ID          bson.ObjectId `bson:"_id"`
 	Title       string
 	URL         *url.URL
-	Readership  int64
 	NumFeeds    int64
 	NumArticles int64
+	NumReaders  int64
 	Deleted     bool
+	AuthorPaths []string
+	BodyPaths   []string
 	Log         logger.Entries
 	Added       time.Time
 	Updated     time.Time

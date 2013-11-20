@@ -56,6 +56,8 @@ func (m *Mongo) Copy() collections {
 	return m.C
 }
 
+// NOOP - Copy -> Close creates too many open connections to mongo during
+// searches.
 func (c collections) Close() {
-	c.session.Close()
+	// c.session.Close()
 }
