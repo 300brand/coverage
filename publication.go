@@ -15,11 +15,10 @@ type Publication struct {
 	NumArticles int64
 	NumReaders  int64
 	Deleted     bool
-	AuthorPaths []string
-	BodyPaths   []string
 	Log         logger.Entries
 	Added       time.Time
 	Updated     time.Time
+	XPaths      struct{ Author, Body, Date []string }
 }
 
 func NewPublication() (p *Publication) {
