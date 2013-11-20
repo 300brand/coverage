@@ -11,8 +11,6 @@ var invalidDomains = []string{
 	"apex.oracle.com",
 	"www.aviationweek.com",
 	"aviationweek.com",
-	"www.businesswire.com",
-	"businesswire.com",
 	"blogs.ft.com",
 	"ftalphaville.ft.com",
 	"ft.com",
