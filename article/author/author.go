@@ -26,10 +26,14 @@ func Search(html []byte, xpaths []string) (author string, err error) {
 		if err != nil {
 			errs = append(errs, fmt.Sprintf("[%d] %s", i, err.Error()))
 		}
+		// Try again
+		if author == "" {
+			continue
+		}
 		// Success!
 		return
 	}
-	return "", fmt.Errorf("%s", strings.Join(errs, "; "))
+	return "", fmt.Errorf("No author found with %+v", xpaths)
 }
 
 func searchXpath(node xml.Node, path string) (author string, err error) {
