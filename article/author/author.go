@@ -58,5 +58,6 @@ func searchXpath(node xml.Node, path string) (author string, err error) {
 	}
 
 	author, err = x.ResultAsString()
+	match = strings.TrimSpace(match)
 	return
 }

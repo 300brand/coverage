@@ -77,5 +77,6 @@ func searchXpath(node xml.Node, path string) (match string, err error) {
 	}
 
 	match, err = x.ResultAsString()
+	match = strings.TrimSpace(match)
 	return
 }

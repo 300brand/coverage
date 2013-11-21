@@ -25,6 +25,8 @@ var basicHTML = []byte(`
 			</header>
 			<div rel="pcmag"> November 20, 2013</div>
 			<div rel="idg">20.11.2013 kl 22:36 | IDG News Service\San Francisco Bureau</div>
+			<div rel="fedtimes">Nov. 17, 2013 - 12:26PM
+					&nbsp;&nbsp;|&nbsp;&nbsp;</div>
 		</article>
 	</body>
 	</html>
@@ -33,9 +35,10 @@ var basicHTML = []byte(`
 func TestPublished(t *testing.T) {
 	Layout := `Jan 02, 2006 15:04`
 	tests := map[string]string{
-		`//*[@rel="date"]~~Mon Jan _2 15:04:05 2006`:                    "Nov 21, 2013 11:47",
-		`//*[@rel="pcmag"]~~January _2, 2006`:                           "Nov 20, 2013 00:00",
-		`substring-before(//*[@rel="idg"], ' | ')~~02.01.2006 kl 15:04`: "Nov 20, 2013 22:36",
+		`//*[@rel="date"]~~Mon Jan _2 15:04:05 2006`:                          "Nov 21, 2013 11:47",
+		`//*[@rel="pcmag"]~~January _2, 2006`:                                 "Nov 20, 2013 00:00",
+		`substring-before(//*[@rel="idg"], ' | ')~~02.01.2006 kl 15:04`:       "Nov 20, 2013 22:36",
+		"substring-before(//*[@rel='fedtimes'], '|')~~Jan. 2, 2006 - 03:04PM": "Nov 17, 2013 12:26",
 	}
 	for test, expect := range tests {
 		date, err := Search(basicHTML, []string{test})
