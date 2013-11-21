@@ -15,7 +15,7 @@ func Clean(u *url.URL) (out *url.URL) {
 	*out = *u
 
 	// For The VAR Guy - Drop down to http and normalize host
-	if u.Host == "thevarguy.com" || u.Host == "www.thevarguy.com" {
+	if strings.HasSuffix(u.Host, "thevarguy.com") {
 		out.Scheme, out.Host = "http", "thevarguy.com"
 	}
 	// Fix computeruser query string
@@ -53,6 +53,9 @@ func Clean(u *url.URL) (out *url.URL) {
 			filter(v, "rss"),
 			// Remove fb= parameters
 			strings.HasPrefix(k, "fb"),
+			// news.cnet.com adds some weird stuff
+			k == "tag",
+			k == "subj",
 			// Remove gplus= parameters
 			k == "gplus",
 			// Remove CMP= and cmp= parameters
