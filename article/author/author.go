@@ -36,7 +36,7 @@ func Search(html []byte, xpaths []string) (author string, err error) {
 	return "", fmt.Errorf("No author found with %+v", xpaths)
 }
 
-func searchXpath(node xml.Node, path string) (author string, err error) {
+func searchXpath(node xml.Node, path string) (match string, err error) {
 	// Ensure normalize-space is used
 	if !strings.Contains(path, "normalize-space") {
 		path = fmt.Sprintf("normalize-space(%s)", path)
@@ -57,7 +57,7 @@ func searchXpath(node xml.Node, path string) (author string, err error) {
 		return
 	}
 
-	author, err = x.ResultAsString()
+	match, err = x.ResultAsString()
 	match = strings.TrimSpace(match)
 	return
 }
