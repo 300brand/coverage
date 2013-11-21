@@ -35,7 +35,7 @@ func Search(html []byte, xpaths []string) (date time.Time, err error) {
 			errs = append(errs, fmt.Sprintf("[%d] %s", i, err))
 			continue
 		}
-		date, err = time.Parse(layout, match)
+		date, err = time.ParseInLocation(layout, match, time.Local)
 		if err != nil {
 			errs = append(errs, fmt.Sprintf("[%d] %s", i, err))
 			continue
