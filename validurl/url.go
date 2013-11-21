@@ -5,6 +5,8 @@ import (
 )
 
 var invalidDomains = []string{
+	"careerbuilder.com",
+	"www.careerbuilder.com",
 	"accounts.google.com",
 	"www.google.com",
 	"login.oracle.com",
