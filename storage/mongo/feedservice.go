@@ -113,7 +113,7 @@ func (m *Mongo) NextDownloadFeedId(thresh time.Time, id *bson.ObjectId) (err err
 		query := bson.M{
 			"deleted": false,
 		}
-		sel := bson.M{"_id": 1}
+		sel := bson.M{"lastdownload": 1}
 		iter := c.Feeds.
 			Find(query).
 			Select(sel).
@@ -121,7 +121,7 @@ func (m *Mongo) NextDownloadFeedId(thresh time.Time, id *bson.ObjectId) (err err
 
 		var result struct {
 			Id           bson.ObjectId `bson:"_id"`
-			LastDownload time.Time
+			LastDownload time.Time     `bson:",omitempty"`
 			Queue        int
 		}
 
