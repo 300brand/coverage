@@ -80,6 +80,12 @@ func (m *Mongo) DateSearch(searchId bson.ObjectId, query string, t time.Time) (e
 	defer c.Close()
 
 	logger.Trace.Printf("DateSearch called")
+
+	s := new(coverage.Search)
+	if err = m.GetSearch(searchId, s); err != nil {
+		return
+	}
+
 	var (
 		wg         sync.WaitGroup
 		terms      = lexer.Keywords([]byte(query))
@@ -113,7 +119,12 @@ func (m *Mongo) DateSearch(searchId bson.ObjectId, query string, t time.Time) (e
 
 				// Fetch Article
 				a := &coverage.Article{}
-				if err := m.GetArticle(bson.M{"_id": id}, a); err != nil {
+				query := bson.M{"_id": id}
+				if len(s.PublicationIds) > 0 {
+					logger.Debug.Printf("[S:%s] Filtering by publicationIds: %v", id.Hex(), s.PublicationIds)
+					query["publicationid"] = bson.M{"$in": s.PublicationIds}
+				}
+				if err := m.GetArticle(query, a); err != nil {
 					// TODO Flag err != Not found
 					return
 				}

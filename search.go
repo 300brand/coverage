@@ -19,7 +19,8 @@ type Search struct {
 	Dates    struct {
 		Start, End time.Time
 	}
-	Articles []bson.ObjectId
+	Articles       []bson.ObjectId
+	PublicationIds []bson.ObjectId
 }
 
 type SearchResult struct {
