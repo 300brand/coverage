@@ -1,0 +1,79 @@
+[
+	{
+		"File"  : "AOLGov.html",
+		"Expect": "AOLGov.body",
+		"XPaths": [
+
+		]
+	},
+	{
+		"File"  : "AOLGovSurveyResults.html",
+		"Expect": "AOLGovSurveyResults.body",
+		"XPaths": [
+
+		]
+	},
+	{
+		"File"  : "BioscienceTechnology.html",
+		"Expect": "BioscienceTechnology.body",
+		"XPaths": [
+
+		]
+	},
+	{
+		"File"  : "BizJournals.html",
+		"Expect": "BizJournals.body",
+		"XPaths": [
+
+		]
+	},
+	{
+		"File"  : "CIOBlogs.html",
+		"Expect": "CIOBlogs.body",
+		"XPaths": [
+
+		]
+	},
+	{
+		"File"  : "CPPIOnline.html",
+		"Expect": "CPPIOnline.body",
+		"XPaths": [
+
+		]
+	},
+	{
+		"File"  : "Forbes.html",
+		"Expect": "Forbes.body",
+		"XPaths": [
+
+		]
+	},
+	{
+		"File"  : "PCMag.html",
+		"Expect": "PCMag.body",
+		"XPaths": [
+
+		]
+	},
+	{
+		"File"  : "USAToday.html",
+		"Expect": "USAToday.body",
+		"XPaths": [
+
+		]
+	},
+	{
+		"File"  : "WallStreetJournal.html",
+		"Expect": "WallStreetJournal.body",
+		"XPaths": [
+
+		]
+	},
+	{
+		"File"  : "WallStreetJournal-Recent.html",
+		"Expect": "WallStreetJournal-Recent.body",
+		"XPaths": [
+
+		]
+	}
+]
