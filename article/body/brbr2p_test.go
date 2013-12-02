@@ -56,6 +56,28 @@ func TestBrBr2P_Complex(t *testing.T) {
 	}
 	expect := "<div><p>Whitespace-prefixed text</p>\n<p>Text with <a href=\"\">a link</a></p>\n<p>Single dumb break</p>\n<p>Text with <strong>Bold stuff</strong></p>\n</div>"
 	if got := doc.Root().ToUnformattedXml(); got != expect {
-		t.Error("Got: %s", got)
+		t.Errorf("Got: %s", got)
+	}
+}
+
+func TestBrBr2P_Silly(t *testing.T) {
+	data := []byte(`<div>
+		one<br/>
+		<br/>
+		two<br/>
+		<br/>
+	</div>`)
+	doc, err := gokogiri.ParseXml(data)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer doc.Free()
+
+	if err = BrBr2P(doc.Root()); err != nil {
+		t.Fatal(err)
+	}
+	expect := "<div><p>one</p>\n<p>two</p>\n</div>"
+	if got := doc.Root().ToUnformattedXml(); got != expect {
+		t.Errorf("Got: %s", got)
 	}
 }
