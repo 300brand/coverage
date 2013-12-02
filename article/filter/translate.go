@@ -29,12 +29,12 @@ var table = map[rune][]rune{
 
 func TranslateUnicode(n *html.Node) bool {
 	if n.Type == html.TextNode {
-		n.Data = translateString(n.Data)
+		n.Data = TranslateString(n.Data)
 	}
 	return false
 }
 
-func translateString(s string) string {
+func TranslateString(s string) string {
 	r := make([]rune, 0, len(s))
 	for _, c := range s {
 		switch {

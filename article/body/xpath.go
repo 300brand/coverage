@@ -3,14 +3,16 @@ package body
 import (
 	"fmt"
 	"github.com/300brand/coverage"
+	"github.com/300brand/coverage/article/filter"
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xml"
+	"html"
 	"strings"
 )
 
-func XPath(html []byte, xpaths []string, body *coverage.Body) (err error) {
+func XPath(in []byte, xpaths []string, body *coverage.Body) (err error) {
 	// Stand up document tree
-	doc, err := gokogiri.ParseHtml(html)
+	doc, err := gokogiri.ParseHtml(in)
 	if err != nil {
 		return
 	}
@@ -47,7 +49,7 @@ func XPath(html []byte, xpaths []string, body *coverage.Body) (err error) {
 	// Clean out attributes
 	xpathRemoveAttrs(bodyNode)
 	body.HTML = []byte(bodyNode.InnerHtml())
-	body.Text = []byte(bodyNode.Content())
+	body.Text = []byte(filter.TranslateString(html.UnescapeString(bodyNode.Content())))
 	return
 }
 

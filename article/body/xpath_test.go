@@ -1,9 +1,13 @@
 package body
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"github.com/300brand/coverage"
+	"io/ioutil"
 	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -12,6 +16,8 @@ type Set struct {
 	Expect string
 	XPaths []string
 }
+
+var SamplesDir = "../samples"
 
 func TestXPath(t *testing.T) {
 	b := []byte(`
@@ -41,7 +47,7 @@ func TestXPath(t *testing.T) {
 }
 
 func TestXPathSamples(t *testing.T) {
-	f, err := os.Open("../samples/body-xpaths.json")
+	f, err := os.Open(filepath.Join(SamplesDir, "body-xpaths.json"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -53,11 +59,28 @@ func TestXPathSamples(t *testing.T) {
 	}
 	for i, s := range v {
 		if err := s.Test(t); err != nil {
-			t.Errorf("[%d] %s", i, err)
+			t.Errorf("[%d] [%s] %s", i, s.File, err)
 		}
 	}
 }
 
 func (s Set) Test(t *testing.T) (err error) {
+	in, err := ioutil.ReadFile(filepath.Join(SamplesDir, s.File))
+	if err != nil {
+		return
+	}
+	expect, err := ioutil.ReadFile(filepath.Join(SamplesDir, s.Expect))
+	if err != nil {
+		return
+	}
+	body := new(coverage.Body)
+	if err = XPath(in, s.XPaths, body); err != nil {
+		return
+	}
+	if !bytes.Equal(body.Text, expect) {
+		t.Errorf("Expect\n%s", expect)
+		t.Errorf("Got\n%s", body.Text)
+		return fmt.Errorf("Did not get expected result")
+	}
 	return
 }
