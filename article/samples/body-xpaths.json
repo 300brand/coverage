@@ -3,7 +3,7 @@
 		"File"  : "AOLGov.html",
 		"Expect": "AOLGov.body",
 		"XPaths": [
-			"-//*[@class='newsletter-block']",
+			"-//*[@class='newsletter-block' or @class='breakPage']",
 			"//div[@id='articleStr']"
 		]
 	},

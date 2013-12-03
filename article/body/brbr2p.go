@@ -3,6 +3,7 @@ package body
 import (
 	"github.com/moovweb/gokogiri/xml"
 	"strings"
+	"unicode"
 )
 
 func BrBr2P(root xml.Node) (err error) {
@@ -29,8 +30,7 @@ func BrBr2P(root xml.Node) (err error) {
 
 		switch node.NodeType() {
 		case xml.XML_TEXT_NODE:
-			node.SetContent(" " + strings.TrimSpace(node.Content()) + " ")
-			if node.Content() == "  " {
+			if strings.TrimSpace(node.Content()) == "" {
 				node.Remove()
 			} else {
 				p.AddChild(node)
@@ -40,6 +40,7 @@ func BrBr2P(root xml.Node) (err error) {
 		case xml.XML_ELEMENT_NODE:
 			switch node.Name() {
 			case "p":
+				node.InsertAfter("\n")
 				continue
 			case "br":
 				node.SetName("p")
@@ -60,13 +61,16 @@ func cleanP(p xml.Node) {
 		p.Remove()
 		return
 	}
+	doc := p.MyDocument()
 	// Trim first text node's leading space
 	if c := p.FirstChild(); c.NodeType() == xml.XML_TEXT_NODE {
-		c.SetContent(strings.TrimLeft(c.Content(), " "))
+		content, _ := c.Content(), c.SetContent("")
+		c.InsertBefore(doc.CreateTextNode(strings.TrimLeftFunc(content, unicode.IsSpace)))
 	}
 	// Trim last text node's trailing space
-	if c := p.LastChild(); c.NodeType() == xml.XML_TEXT_NODE {
-		c.SetContent(strings.TrimRight(c.Content(), " "))
+	if c := p.LastChild(); c != nil && c.NodeType() == xml.XML_TEXT_NODE {
+		content, _ := c.Content(), c.SetContent("")
+		c.InsertBefore(doc.CreateTextNode(strings.TrimRightFunc(content, unicode.IsSpace)))
 	}
 	p.InsertAfter("\n")
 }

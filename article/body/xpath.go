@@ -7,7 +7,6 @@ import (
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xml"
 	"html"
-	"strings"
 )
 
 func XPath(in []byte, xpaths []string, body *coverage.Body) (err error) {
@@ -38,6 +37,7 @@ func XPath(in []byte, xpaths []string, body *coverage.Body) (err error) {
 	var bodyNode xml.Node
 	for _, path := range search {
 		if err = xpathSearch(root, path, &bodyNode); err != nil {
+			return
 		}
 		if bodyNode != nil {
 			break
@@ -48,8 +48,11 @@ func XPath(in []byte, xpaths []string, body *coverage.Body) (err error) {
 	}
 	// Clean out attributes
 	xpathRemoveAttrs(bodyNode)
-	body.HTML = []byte(bodyNode.InnerHtml())
-	body.Text = []byte(filter.TranslateString(html.UnescapeString(bodyNode.Content())))
+	body.HTML = []byte(bodyNode.String())
+	if false {
+		body.Text = []byte(filter.TranslateString(html.UnescapeString(bodyNode.Content())))
+	}
+	body.Text = []byte(bodyNode.Content())
 	return
 }
 
@@ -96,36 +99,11 @@ func xpathSearch(root xml.Node, path string, body *xml.Node) (err error) {
 	node := nodes[0]
 	// Set the outer block to just a div tag
 	node.SetName("div")
-	// Wrap direct child text nodes in p-tags
-	for c := node.FirstChild(); c != nil; c = c.NextSibling() {
-		if c.NodeType() != xml.XML_TEXT_NODE {
-			continue
-		}
-		c.SetContent(strings.TrimSpace(c.String()))
-		c.AddPreviousSibling("<p/>")
-		c.PreviousSibling().AddChild(c)
-		c = c.Parent()
-	}
-	// Change block level tags to p-tags
-	bodyNodes, err := node.Search(".//*")
-	if err != nil {
+
+	if err = BrBr2P(node); err != nil {
 		return
 	}
-	for _, node := range bodyNodes {
-		switch node.Name() {
-		case "div", "br", "blockquote":
-			node.SetName("p")
-		}
-		// Remove empty nodes
-		if node.Content() == "" {
-			node.Remove()
-			continue
-		}
-		// Add single line break to break up final paragraphs
-		if node.Name() == "p" {
-			node.InsertAfter("\n")
-		}
-	}
+
 	*body = node
 	return
 }

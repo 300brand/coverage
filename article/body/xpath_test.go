@@ -19,7 +19,7 @@ type Set struct {
 
 var SamplesDir = "../samples"
 
-func TestXPath(t *testing.T) {
+func TestXPathP(t *testing.T) {
 	b := []byte(`
 <!DOCTYPE html>
 <html>
@@ -30,6 +30,33 @@ func TestXPath(t *testing.T) {
 				<h1>Article Title</h1>
 			</header>
 			<p class="headline">Article <a href="#">body</a>.</p>
+			More article body.<br><br>Third line.
+		</article>
+	</body>
+</html>`)
+	search := []string{
+		"-//header",
+		"//article",
+	}
+	body := new(coverage.Body)
+	if err := XPath(b, search, body); err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("Body Text: %s", body.Text)
+	t.Logf("Body HTML: %s", body.HTML)
+}
+
+func TestXPathBrBr(t *testing.T) {
+	b := []byte(`
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<article>
+			<header>
+				<h1>Article Title</h1>
+			</header>
+			Article <a href="#">body</a>.<br><br
 			More article body.<br><br>Third line.
 		</article>
 	</body>
@@ -78,8 +105,9 @@ func (s Set) Test(t *testing.T) (err error) {
 		return
 	}
 	if !bytes.Equal(body.Text, expect) {
-		t.Errorf("Expect\n%s", expect)
-		t.Errorf("Got\n%s", body.Text)
+		t.Errorf("Expect\n\n%s", expect)
+		t.Errorf("Got\n\n%s", body.Text)
+		t.Errorf("HTML\n\n%s", body.HTML)
 		return fmt.Errorf("Did not get expected result")
 	}
 	return
