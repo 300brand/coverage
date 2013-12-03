@@ -43,6 +43,14 @@
 		]
 	},
 	{
+		"File"  : "eWEEK.html",
+		"Expect": "eWEEK.body",
+		"XPaths": [
+			"-//div[@class='article_body']/div",
+			"//div[@class='article_body']"
+		]
+	},
+	{
 		"File"  : "Forbes.html",
 		"Expect": "Forbes.body",
 		"XPaths": [
