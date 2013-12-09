@@ -17,6 +17,42 @@ func TestPhrase(t *testing.T) {
 			true,
 			true,
 		},
+		{
+			[]byte("throughput"),
+			"HP",
+			false,
+			false,
+		},
+		{
+			[]byte("fast network with high HP throughput"),
+			"HP",
+			true,
+			true,
+		},
+		{
+			[]byte("throughput in the HP offering"),
+			"HP",
+			true,
+			true,
+		},
+		{
+			[]byte("said HP to a journalist"),
+			"HP",
+			true,
+			true,
+		},
+		{
+			[]byte("HP's greatest invention"),
+			"HP",
+			true,
+			true,
+		},
+		{
+			[]byte("said HP's representative"),
+			"HP",
+			true,
+			true,
+		},
 	}
 	for i, test := range tests {
 		p := NewPhrase(test.Needle)
@@ -26,5 +62,14 @@ func TestPhrase(t *testing.T) {
 		if p.Insensitive(test.Haystack) != test.Insensitive {
 			t.Errorf("[%d] Insensitive failed", i)
 		}
+	}
+}
+
+func BenchmarkPhraseInsensitive(b *testing.B) {
+	p := NewPhrase("HP")
+	haystack := []byte(`throughput in the HP offering`)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		p.Insensitive(haystack)
 	}
 }
