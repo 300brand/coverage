@@ -27,7 +27,8 @@ func TestArticleSave(t *testing.T) {
 	in.Modified()
 	m.UpdateArticle(in)
 
-	out, err := m.GetArticle(bson.M{"_id": in.ID})
+	out := new(coverage.Article)
+	err := m.GetArticle(bson.M{"_id": in.ID}, out)
 	if err != nil {
 		t.Error(err)
 		return
