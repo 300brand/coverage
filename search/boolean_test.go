@@ -99,6 +99,15 @@ func TestBooleanBadMatches(t *testing.T) {
 			"a b c",
 			"a NOT c OR d OR e",
 		},
+		// NOT tests from Jamie
+		{
+			"emcee",
+			"EMC NOT emcee OR emceeing",
+		},
+		{
+			"collision damage waiver",
+			"CDW NOT collision damage waiver",
+		},
 	}
 	for i, test := range tests {
 		b := NewBoolean(test.Needle)
