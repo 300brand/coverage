@@ -2,21 +2,30 @@ package search
 
 import (
 	"github.com/300brand/coverage/article/lexer"
-	"log"
+	"github.com/300brand/logger"
 	"strings"
 )
 
 type Boolean struct {
-	Query string
-	Tree  [][]*Phrase
+	Query   string
+	Tree    [][]*Phrase
+	Exclude []*Phrase
 }
 
 func NewBoolean(query string) (b *Boolean) {
-	ors := strings.Split(query, " OR ")
 	b = &Boolean{
 		Query: query,
-		Tree:  make([][]*Phrase, len(ors)),
 	}
+	if qNot := strings.SplitN(query, " NOT ", 2); len(qNot) == 2 {
+		query = qNot[0]
+		nots := strings.Split(qNot[1], " OR ")
+		b.Exclude = make([]*Phrase, len(nots))
+		for i := range nots {
+			b.Exclude[i] = NewPhrase(nots[i])
+		}
+	}
+	ors := strings.Split(query, " OR ")
+	b.Tree = make([][]*Phrase, len(ors))
 	// Build ze tree
 	for i, or := range ors {
 		ands := strings.Split(or, " AND ")
@@ -29,6 +38,12 @@ func NewBoolean(query string) (b *Boolean) {
 }
 
 func (s *Boolean) Match(b []byte) (matches bool) {
+	for i := range s.Exclude {
+		if s.Exclude[i].Insensitive(b) {
+			logger.Trace.Printf("Matched: `%+q` `NOT %s`", s.Exclude, s.Exclude[i])
+			return false
+		}
+	}
 	for i := range s.Tree {
 		matches = true
 		for j := range s.Tree[i] {
@@ -38,8 +53,8 @@ func (s *Boolean) Match(b []byte) (matches bool) {
 			}
 		}
 		if matches {
-			log.Printf("Matched `%+q` with `%+q`", s.Tree, s.Tree[i])
-			return
+			logger.Trace.Printf("Matched `%+q` with `%+q`", s.Tree, s.Tree[i])
+			break
 		}
 	}
 	return

@@ -86,6 +86,19 @@ func TestBooleanBadMatches(t *testing.T) {
 			"a b c d",
 			"d c AND b a",
 		},
+		// Addition of NOT
+		{
+			"a b c",
+			"a NOT b",
+		},
+		{
+			"a b c",
+			"a OR b NOT c",
+		},
+		{
+			"a b c",
+			"a NOT c OR d OR e",
+		},
 	}
 	for i, test := range tests {
 		b := NewBoolean(test.Needle)
@@ -147,6 +160,11 @@ func TestBooleanGoodMatches(t *testing.T) {
 		{
 			"a b c",
 			"a AND b OR c AND d",
+		},
+		// Addition of NOT
+		{
+			"a b c",
+			"a NOT d",
 		},
 	}
 	for i, test := range tests {
