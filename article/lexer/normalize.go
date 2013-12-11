@@ -1,12 +1,7 @@
 package lexer
 
-import (
-	"github.com/300brand/logger"
-)
-
 // Pre-processes text to swap out certain characters for spaces or nothing
 func Normalize(in []byte) (out []byte) {
-	logger.Trace.Print("Normalize: called")
 	out = make([]byte, 0, len(in))
 	for _, b := range in {
 		switch {
