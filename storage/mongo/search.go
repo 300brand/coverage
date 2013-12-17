@@ -2,7 +2,6 @@ package mongo
 
 import (
 	"github.com/300brand/coverage"
-	"github.com/300brand/coverage/article/lexer"
 	"github.com/300brand/coverage/search"
 	"github.com/300brand/logger"
 	"labix.org/v2/mgo/bson"
@@ -88,8 +87,8 @@ func (m *Mongo) DateSearch(searchId bson.ObjectId, query string, t time.Time) (e
 
 	var (
 		wg         sync.WaitGroup
-		terms      = lexer.Keywords([]byte(query))
 		boolSearch = search.NewBoolean(query)
+		terms      = boolSearch.Terms()
 		idFilter   = search.NewIdFilter(boolSearch.MinTerms())
 		idChan     = make(chan bson.ObjectId, 1)
 		saveChan   = make(chan bson.ObjectId, 1)
@@ -172,6 +171,7 @@ func (m *Mongo) DateSearch(searchId bson.ObjectId, query string, t time.Time) (e
 	logger.Debug.Println("Closed idChan")
 
 	for id := range saveChan {
+		logger.Trace.Printf("Got %s from saveChan", id)
 		results = append(results, id)
 	}
 	logger.Debug.Printf("Finished GetKeywords")
