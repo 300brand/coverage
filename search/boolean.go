@@ -73,3 +73,14 @@ func (s *Boolean) MinTerms() (min int) {
 	}
 	return
 }
+
+func (s *Boolean) Terms() (terms []string) {
+	b := make([]byte, 0, len(s.Query))
+	for i := range s.Tree {
+		for _, p := range s.Tree[i] {
+			b = append(b, p.Phrase...)
+			b = append(b, ' ')
+		}
+	}
+	return lexer.Keywords(b)
+}

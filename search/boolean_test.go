@@ -201,3 +201,16 @@ func TestBooleanMinTerms(t *testing.T) {
 		}
 	}
 }
+
+func TestBooleanTerms(t *testing.T) {
+	tests := []struct {
+		Query string
+		Terms []string
+	}{
+		{"spacemonkey NOT NASA", []string{"spacemonkey"}},
+	}
+	for i, test := range tests {
+		b := NewBoolean(test.Query)
+		t.Logf("[%d] %v", i, b.Terms())
+	}
+}
