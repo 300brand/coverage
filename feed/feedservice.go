@@ -40,6 +40,9 @@ func Process(f *coverage.Feed) error {
 
 	// Apply and let dry
 	for _, article := range n.Articles {
+		// TODO Using article.URL here causes the URL to change to the final,
+		// cleaned version - need to either use strings or dereference into the
+		// array in AddURL
 		if !f.AddURL(article.URL) {
 			continue
 		}
