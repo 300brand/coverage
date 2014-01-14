@@ -26,6 +26,7 @@ func (m *Mongo) ArticleQueueNext(a *coverage.Article) (err error) {
 	query := bson.M{
 		"queue":   time.Now().Second() / (60 / 4),
 		"dequeue": bson.M{"$lte": time.Now()},
+		"tries":   bson.M{"$lt": 10},
 	}
 	change := mgo.Change{
 		Remove:    false,
@@ -33,6 +34,9 @@ func (m *Mongo) ArticleQueueNext(a *coverage.Article) (err error) {
 		Update: bson.M{
 			"$set": bson.M{
 				"dequeue": time.Now().Add(time.Hour),
+			},
+			"$inc": bson.M{
+				"tries": 1,
 			},
 		},
 		Upsert: false,

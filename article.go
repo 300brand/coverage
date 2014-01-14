@@ -21,6 +21,7 @@ type Article struct {
 	LastCheck     time.Time
 	Published     time.Time
 	Queue         int       // Used for Article-queuing
+	Tries         int       // Used for article-queuing
 	Dequeue       time.Time // Used for article-queuing
 	Log           logger.Entries
 	Changelog     merger.Changelog
