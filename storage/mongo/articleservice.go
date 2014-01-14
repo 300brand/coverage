@@ -12,10 +12,7 @@ type ArticleService struct {
 	m *Mongo
 }
 
-const (
-	ArticleCollection      = "Articles"
-	ArticleQueueCollection = "ArticleQ"
-)
+const ArticleCollection = "Articles"
 
 var _ service.ArticleService = &ArticleService{}
 
@@ -26,15 +23,6 @@ func NewArticleService(m *Mongo) *ArticleService {
 func (s *ArticleService) Update(a *coverage.Article) error {
 	a.Log.Service("mongo.ArticleService")
 	return s.m.UpdateArticle(a)
-}
-
-func (m *Mongo) EnqueueArticle(a *coverage.Article) (err error) {
-	c := m.Copy()
-	defer c.Close()
-
-	logger.Trace.Printf("EnqueueArticle: called %s", a.ID.Hex())
-	err = c.ArticleQ
-	return
 }
 
 func (m *Mongo) GetArticle(query interface{}, a *coverage.Article) (err error) {
