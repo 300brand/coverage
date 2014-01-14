@@ -20,7 +20,8 @@ type Article struct {
 	Updated       time.Time
 	LastCheck     time.Time
 	Published     time.Time
-	Queue         int // Used for Article-queuing
+	Queue         int       // Used for Article-queuing
+	Dequeue       time.Time // Used for article-queuing
 	Log           logger.Entries
 	Changelog     merger.Changelog
 }
