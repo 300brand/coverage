@@ -9,22 +9,22 @@ import (
 
 // Types below from: <Go source>/src/pkg/encoding/xml/read_test.go
 type Doc struct {
-	XMLName xml.Name  `xml:"http://www.w3.org/2005/Atom feed"`
-	Title   string    `xml:"title"`
-	Id      string    `xml:"id"`
-	Link    []Link    `xml:"link"`
-	Updated time.Time `xml:"updated,attr"`
-	Author  Person    `xml:"author"`
-	Entry   []Entry   `xml:"entry"`
+	XMLName xml.Name `xml:"http://www.w3.org/2005/Atom feed"`
+	Title   string   `xml:"title"`
+	// Id      string    `xml:"id"`
+	// Link    []Link    `xml:"link"`
+	// Updated time.Time `xml:"updated,attr"`
+	// Author  Person    `xml:"author"`
+	Entry []Entry `xml:"entry"`
 }
 
 type Entry struct {
 	Title   string    `xml:"title"`
-	Id      string    `xml:"id"`
+	// Id      string    `xml:"id"`
 	Link    []Link    `xml:"link"`
 	Updated time.Time `xml:"updated"`
-	Author  Person    `xml:"author"`
-	Summary Text      `xml:"summary"`
+	// Author  Person    `xml:"author"`
+	// Summary Text      `xml:"summary"`
 }
 
 type Link struct {
