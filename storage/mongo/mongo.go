@@ -14,6 +14,7 @@ type Mongo struct {
 
 type collections struct {
 	Articles      *mgo.Collection
+	ArticleQ      *mgo.Collection
 	FeedQ         *mgo.Collection
 	Feeds         *mgo.Collection
 	Keywords      *mgo.Collection
@@ -41,6 +42,7 @@ func (m *Mongo) Connect() (err error) {
 	}
 	m.C = collections{
 		Articles:     m.Session.DB(m.Prefix + ArticleCollection).C(ArticleCollection),
+		ArticleQ:     m.Session.DB(m.Prefix + ArticleCollection).C(ArticleQueueCollection),
 		FeedQ:        m.Session.DB(m.Prefix + FeedCollection).C(FeedQueueCollection),
 		Feeds:        m.Session.DB(m.Prefix + FeedCollection).C(FeedCollection),
 		Keywords:     m.Session.DB(m.Prefix + KeywordCollection).C(KeywordCollection),

@@ -45,6 +45,7 @@ func TestArticleSave(t *testing.T) {
 
 func cleanup(m *Mongo) {
 	m.C.Articles.Database.DropDatabase()
+	m.C.ArticleQ.Database.DropDatabase()
 	m.C.Feeds.Database.DropDatabase()
 	m.C.Keywords.Database.DropDatabase()
 	m.C.Publications.Database.DropDatabase()

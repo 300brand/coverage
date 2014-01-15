@@ -20,6 +20,9 @@ type Article struct {
 	Updated       time.Time
 	LastCheck     time.Time
 	Published     time.Time
+	Queue         int       // Used for Article-queuing
+	Tries         int       // Used for article-queuing
+	Dequeue       time.Time // Used for article-queuing
 	Log           logger.Entries
 	Changelog     merger.Changelog
 }
@@ -29,6 +32,9 @@ func NewArticle() (a *Article) {
 		ID:    bson.NewObjectId(),
 		Added: time.Now(),
 	}
+	// Queue: Seconds divided by 60-seconds divided by number of Mongo shards
+	// (hard-coded because why not)
+	a.Queue = a.Added.Second() / (60 / 4)
 	a.Log.Debug("Created: %s", a.ID.Hex())
 	return
 }
