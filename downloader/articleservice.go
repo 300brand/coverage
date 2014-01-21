@@ -3,7 +3,9 @@ package downloader
 import (
 	"github.com/300brand/coverage"
 	"github.com/300brand/coverage/service"
+	"log"
 	"net/url"
+	"regexp"
 	"time"
 )
 
@@ -11,6 +13,8 @@ type ArticleService struct {
 }
 
 var _ service.ArticleService = ArticleService{}
+
+var reMetaRefresh = regexp.MustCompile(`(?i)<meta[^>]+http-equiv=["\']?refresh["\']?[^>]+>`)
 
 func NewArticleService() ArticleService {
 	return ArticleService{}
@@ -27,6 +31,11 @@ func Article(a *coverage.Article) error {
 		return a.Log.Error(err)
 	}
 	a.LastCheck = time.Now()
+
+	if tag := reMetaRefresh.Find(r.Body); tag != nil {
+		log.Printf("Found meta tag: %s", tag)
+	}
+
 	a.Text.HTML = r.Body
 	if a.URL.String() != r.RealURL {
 		a.Log.Debug("Updating URL from [%s] to [%s]", a.URL.String(), r.RealURL)
