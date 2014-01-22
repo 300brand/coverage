@@ -5,6 +5,17 @@ import (
 	"time"
 )
 
+type GroupSearch struct {
+	Id     bson.ObjectId `bson:"_id"`
+	Notify struct {
+		Done   string
+		Social string
+	}
+	Start     time.Time
+	Complete  *time.Time
+	SearchIds []bson.ObjectId
+}
+
 type Search struct {
 	Id     bson.ObjectId `bson:"_id"`
 	Notify struct {

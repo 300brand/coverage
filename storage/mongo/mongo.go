@@ -17,6 +17,7 @@ type collections struct {
 	ArticleQ      *mgo.Collection
 	FeedQ         *mgo.Collection
 	Feeds         *mgo.Collection
+	GroupSearch   *mgo.Collection
 	Keywords      *mgo.Collection
 	Publications  *mgo.Collection
 	Search        *mgo.Collection
@@ -45,6 +46,7 @@ func (m *Mongo) Connect() (err error) {
 		ArticleQ:     m.Session.DB(m.Prefix + ArticleCollection).C(ArticleQueueCollection),
 		FeedQ:        m.Session.DB(m.Prefix + FeedCollection).C(FeedQueueCollection),
 		Feeds:        m.Session.DB(m.Prefix + FeedCollection).C(FeedCollection),
+		GroupSearch:  m.Session.DB(m.Prefix + GroupSearchCollection).C(GroupSearchCollection),
 		Keywords:     m.Session.DB(m.Prefix + KeywordCollection).C(KeywordCollection),
 		Publications: m.Session.DB(m.Prefix + PublicationCollection).C(PublicationCollection),
 		Search:       m.Session.DB(m.Prefix + SearchCollection).C(SearchCollection),
