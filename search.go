@@ -23,6 +23,7 @@ type Search struct {
 		Social string
 	}
 	Q        string
+	Label    string
 	DaysLeft int
 	Results  int
 	Start    time.Time
