@@ -3,7 +3,6 @@ package multipage
 import (
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xpath"
-	"log"
 	"net/url"
 	"strconv"
 )
@@ -36,7 +35,7 @@ func FindLinks(html []byte) (links []Link, err error) {
 	if err != nil {
 		return
 	}
-	log.Printf("Found %d <a> tags", len(nodes))
+
 	links = make([]Link, 0, len(nodes))
 	for i := range nodes {
 		link := Link{}
