@@ -15,9 +15,13 @@ type Stats struct {
 		Likes  int `json:"like_count"`
 		Shares int `json:"share_count"`
 	}
+	tries int
 }
 
-const apiURL = "http://api.sharedcount.com/"
+const (
+	MaxRetries = 3
+	apiURL     = "http://api.sharedcount.com/"
+)
 
 func Fetch(u *url.URL, s *Stats) (err error) {
 	logger.Trace.Printf("Fetch: called")
@@ -43,5 +47,9 @@ func FetchString(u string, s *Stats) (err error) {
 	defer resp.Body.Close()
 
 	dec := json.NewDecoder(resp.Body)
-	return dec.Decode(s)
+	if err = dec.Decode(s); err != nil && s.tries < MaxRetries {
+		s.tries++
+		return FetchString(u, s)
+	}
+	return
 }
