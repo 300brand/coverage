@@ -466,12 +466,12 @@ document.write('<script type="text/javascript" src="http://ad.doubleclick.net/N5
         
         <!-- pager start -->
         <div class="pagination"><ul>
-<li><a href="http://gcn.com/Articles/2013/12/03/big-data-tools-1.aspx?Page=1" class="prev">&laquo; previous</a></li>
-<li><a href="http://gcn.com/Articles/2013/12/03/big-data-tools-1.aspx?Page=1">1</a></li>
+<li><a href="?Page=1" class="prev">&laquo; previous</a></li>
+<li><a href="?Page=1">1</a></li>
 <li><a href="#" class="currentpage">2</a></li>
-<li><a href="http://gcn.com/Articles/2013/12/03/big-data-tools-1.aspx?Page=3">3</a></li>
+<li><a href="?Page=3">3</a></li>
 
-<li><a href="http://gcn.com/Articles/2013/12/03/big-data-tools-1.aspx?Page=3" class="next">next &raquo;</a></li>
+<li><a href="?Page=3" class="next">next &raquo;</a></li>
 </ul>
 </div>
 

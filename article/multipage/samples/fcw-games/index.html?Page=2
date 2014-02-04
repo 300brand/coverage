@@ -424,8 +424,8 @@ document.write('<script type="text/javascript" src="http://ad.doubleclick.net/N5
         
         <!-- pager start -->
         <div class="pagination"><ul>
-<li><a href="http://fcw.com/Articles/2014/01/31/acquisition-games.aspx?Page=1" class="prev">&laquo; previous</a></li>
-<li><a href="http://fcw.com/Articles/2014/01/31/acquisition-games.aspx?Page=1">1</a></li>
+<li><a href="?Page=1" class="prev">&laquo; previous</a></li>
+<li><a href="?Page=1">1</a></li>
 <li><a href="#" class="currentpage">2</a></li>
 
 <li><a href="#" class="next disablelink">next &raquo;</a></li>
