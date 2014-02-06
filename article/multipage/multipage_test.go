@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
-	"os"
 	"testing"
 )
 
@@ -35,32 +34,22 @@ func TestFind(t *testing.T) {
 	}
 }
 
-// http://www.theregister.co.uk/2014/01/22/review_ouya_android_games_console/
-// http://gcn.com/Articles/2013/12/03/big-data-tools-1.aspx?Page=1
-// http://fcw.com/articles/2014/01/31/acquisition-games.aspx
-
 func TestSamples(t *testing.T) {
+	tests := []struct {
+		Url    *url.URL
+		Expect []int
+	}{
+		{&url.URL{Path: "fcw-games/index.html"}, []int{2}},
+		{&url.URL{Path: "gcn-big-data/index.html"}, []int{2, 3}},
+		{&url.URL{Path: "theregister-ouya/index.html"}, []int{2}},
+	}
+
 	ts := httptest.NewServer(http.FileServer(http.Dir("samples")))
 	defer ts.Close()
 
-	d, err := os.Open("samples")
-	if err != nil {
-		t.Fatalf("Error opening samples dir: %s", err)
-	}
-	defer d.Close()
-
-	fis, err := d.Readdir(0)
-	if err != nil {
-		t.Fatalf("Error reading samples dir: %s", err)
-	}
-
 	base, _ := url.Parse(ts.URL)
-	for _, fi := range fis {
-		if !fi.IsDir() {
-			continue
-		}
-		subdir, _ := url.Parse(fi.Name())
-		index := base.ResolveReference(subdir)
+	for _, test := range tests {
+		index := base.ResolveReference(test.Url)
 		resp, err := http.Get(index.String())
 		if err != nil {
 			t.Errorf("Error fetching %s: %s", index, err)
@@ -69,9 +58,18 @@ func TestSamples(t *testing.T) {
 		if err != nil {
 			t.Errorf("Problem reading %s: %s", index, err)
 		}
-		links, err := FindLinks(html)
-		for _, link := range links {
-			t.Logf("[%s] Link found: [%d] %s", index, link.Num, link.Url)
+		pages, err := Pages(index, html)
+		if err != nil {
+			t.Errorf("Error finding pages: %s", err)
+		}
+		if lP, lE := len(pages), len(test.Expect); lP != lE {
+			t.Errorf("Invalid number of pages found: %d != %d", lP, lE)
+			continue
+		}
+		for i := range pages {
+			if got, exp := pages[i].Num, test.Expect[i]; got != exp {
+				t.Errorf("Got page %d; Expected %d", got, exp)
+			}
 		}
 	}
 }
