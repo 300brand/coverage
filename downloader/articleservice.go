@@ -44,8 +44,8 @@ func Article(a *coverage.Article) error {
 	case errMetaNotFound:
 	// Continue
 	case nil:
-		a.Log.Debug("Meta-redirected URL from [%s] to [%s]", a.URL.String(), redirURL)
-		*a.URL = *redirURL
+		a.Log.Debug("Meta-redirected URL from [%s] to [%s]", a.URL, redirURL)
+		a.URL = redirURL
 		return Article(a)
 	default:
 		logger.Warn.Printf("[P:%s] [F:%s] [A:%s] %s", a.PublicationId.Hex(), a.FeedId.Hex(), a.ID.Hex(), err)
@@ -63,7 +63,11 @@ func Article(a *coverage.Article) error {
 	return nil
 }
 
-func metaRedirect(body []byte, pageUrl *url.URL) (redirect *url.URL, err error) {
+func metaRedirect(body []byte, pageUrl string) (redirect string, err error) {
+	u, err := url.Parse(pageUrl)
+	if err != nil {
+		return
+	}
 	tag := reMetaRefresh.Find(body)
 	if tag == nil {
 		err = errMetaNotFound
@@ -90,6 +94,6 @@ func metaRedirect(body []byte, pageUrl *url.URL) (redirect *url.URL, err error) 
 		return
 	}
 
-	redirect = pageUrl.ResolveReference(refUrl)
+	redirect = u.ResolveReference(refUrl).String()
 	return
 }
