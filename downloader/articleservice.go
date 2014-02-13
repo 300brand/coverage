@@ -34,7 +34,7 @@ func (s ArticleService) Update(a *coverage.Article) error {
 
 func Article(a *coverage.Article) error {
 	a.Log.Service("downloader.ArticleService")
-	r, err := Fetch(a.URL.String())
+	r, err := Fetch(a.URL)
 	if err != nil {
 		return a.Log.Error(err)
 	}
@@ -52,11 +52,12 @@ func Article(a *coverage.Article) error {
 	}
 
 	a.Text.HTML = r.Body
-	if a.URL.String() != r.RealURL {
-		a.Log.Debug("Updating URL from [%s] to [%s]", a.URL.String(), r.RealURL)
-		if a.URL, err = url.Parse(r.RealURL); err != nil {
+	if a.URL != r.RealURL {
+		a.Log.Debug("Updating URL from [%s] to [%s]", a.URL, r.RealURL)
+		if _, err = url.Parse(r.RealURL); err != nil {
 			return a.Log.Error(err)
 		}
+		a.URL = r.RealURL
 	}
 	a.Modified("HTML")
 	return nil

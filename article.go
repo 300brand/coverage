@@ -4,7 +4,6 @@ import (
 	"github.com/300brand/coverage/logger"
 	"github.com/300brand/coverage/merger"
 	"labix.org/v2/mgo/bson"
-	"net/url"
 	"time"
 )
 
@@ -14,7 +13,7 @@ type Article struct {
 	PublicationId bson.ObjectId `json:",omitempty"`
 	Title         string
 	Author        string
-	URL           *url.URL
+	URL           string
 	Text          Text
 	Added         time.Time
 	Updated       time.Time

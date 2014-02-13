@@ -3,14 +3,13 @@ package coverage
 import (
 	"github.com/300brand/coverage/logger"
 	"labix.org/v2/mgo/bson"
-	"net/url"
 	"time"
 )
 
 type Publication struct {
 	ID          bson.ObjectId `bson:"_id"`
 	Title       string
-	URL         *url.URL
+	URL         string
 	NumFeeds    int64
 	NumArticles int64
 	NumReaders  int64

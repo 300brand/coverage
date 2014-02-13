@@ -43,7 +43,7 @@ func Process(f *coverage.Feed) error {
 		// TODO Using article.URL here causes the URL to change to the final,
 		// cleaned version - need to either use strings or dereference into the
 		// array in AddURL
-		if !f.AddURL(article.URL) {
+		if !f.AddURL(article.URL.String()) {
 			continue
 		}
 
@@ -51,7 +51,7 @@ func Process(f *coverage.Feed) error {
 		a.FeedId = f.ID
 		a.PublicationId = f.PublicationId
 		a.Title = article.Title
-		a.URL = article.URL
+		a.URL = article.URL.String()
 		a.Published = article.Published
 		f.Articles = append(f.Articles, a)
 		f.Log.Debug("New article: %s", a.ID.Hex())

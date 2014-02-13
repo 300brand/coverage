@@ -12,11 +12,11 @@ import (
 type Feed struct {
 	ID            bson.ObjectId `bson:"_id"`
 	PublicationId bson.ObjectId `json:",omitempty"`
-	URL           *url.URL
+	URL           string
 	Deleted       bool
 	Content       []byte
 	Articles      []*Article // Temporary Article storage; cleared before each save
-	URLs          []*url.URL
+	URLs          []string
 	Log           logger.Entries
 	Added         time.Time
 	Updated       time.Time
@@ -31,21 +31,23 @@ func NewFeed() (f *Feed) {
 	return
 }
 
-func (f *Feed) AddURL(u *url.URL) bool {
-	if !validurl.IsValid(u) {
+func (f *Feed) AddURL(u string) bool {
+	U, err := url.Parse(u)
+	if err != nil {
+		log.Warn.Printf("[P:%s] [F:%s] [U:%s] Invalid URL. %s", f.PublicationId, f.ID, u, err)
+		return false
+	}
+	if !validurl.IsValid(U) {
 		log.Debug.Printf("[P:%s] [F:%s] [U:%s] Invalid URL. Skipping.", f.PublicationId, f.ID, u)
 		return false
 	}
 
-	urlCopy := *u
-
-	s := urlCopy.String()
 	for _, v := range f.URLs {
-		if v.String() == s {
+		if v == u {
 			return false
 		}
 	}
-	f.URLs = append(f.URLs, &urlCopy)
+	f.URLs = append(f.URLs, u)
 	return true
 }
 

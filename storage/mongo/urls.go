@@ -2,12 +2,11 @@ package mongo
 
 import (
 	"labix.org/v2/mgo/bson"
-	"net/url"
 )
 
 const URLsCollection = "URLs"
 
-func (m *Mongo) AddURL(u *url.URL, id bson.ObjectId) (err error) {
+func (m *Mongo) AddURL(u string, id bson.ObjectId) (err error) {
 	c := m.Copy()
 	defer c.Close()
 
