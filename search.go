@@ -14,6 +14,7 @@ type GroupSearch struct {
 	Start     time.Time
 	Complete  *time.Time
 	SearchIds []bson.ObjectId
+	Searches  []Search `bson:-`
 }
 
 type Search struct {
