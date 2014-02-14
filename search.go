@@ -7,6 +7,7 @@ import (
 
 type GroupSearch struct {
 	Id     bson.ObjectId `bson:"_id"`
+	Type   string        // Reliable way to determine the search type when sent over the line
 	Notify struct {
 		Done   string
 		Social string
@@ -19,6 +20,7 @@ type GroupSearch struct {
 
 type Search struct {
 	Id     bson.ObjectId `bson:"_id"`
+	Type   string        // Reliable way to determine the search type when sent over the line
 	Notify struct {
 		Done   string
 		Social string
@@ -39,4 +41,18 @@ type Search struct {
 type SearchResult struct {
 	SearchId  bson.ObjectId
 	ArticleId bson.ObjectId
+}
+
+func NewSearch() *Search {
+	return &Search{
+		Id:   bson.NewObjectId(),
+		Type: "Search",
+	}
+}
+
+func NewGroupSearch() *GroupSearch {
+	return &GroupSearch{
+		Id:   bson.NewObjectId(),
+		Type: "GroupSearch",
+	}
 }
