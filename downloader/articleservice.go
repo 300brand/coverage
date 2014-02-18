@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/300brand/coverage"
+	"github.com/300brand/coverage/article/multipage"
 	"github.com/300brand/coverage/service"
 	"github.com/300brand/logger"
 	"net/url"
@@ -59,8 +60,34 @@ func Article(a *coverage.Article) error {
 		}
 		a.URL = r.RealURL
 	}
-	a.Modified("HTML")
+
+	err = downloadPages(a)
+
 	return nil
+}
+
+func downloadPages(a *coverage.Article) (err error) {
+	pages, err := multipage.Pages(a.URL, a.Text.HTML)
+	if len(pages) == 0 || err != nil {
+		return
+	}
+
+	logger.Debug.Printf("Found %d pages", len(pages))
+	var r Response
+	a.Text.Pages = make([][]byte, 0, len(pages))
+	for i, p := 0, 2; i < len(pages); i++ {
+		// Only use pages in order; helps prevent dupes and weird conditions
+		if pages[i].Num != p {
+			continue
+		}
+		logger.Debug.Printf("[%d]: %d - %s", i, p, pages[i].Url)
+		if r, err = Fetch(pages[i].Url.String()); err != nil {
+			return
+		}
+		a.Text.Pages = append(a.Text.Pages, r.Body)
+		p++
+	}
+	return
 }
 
 func metaRedirect(body []byte, pageUrl string) (redirect string, err error) {
@@ -68,6 +95,7 @@ func metaRedirect(body []byte, pageUrl string) (redirect string, err error) {
 	if err != nil {
 		return
 	}
+
 	tag := reMetaRefresh.Find(body)
 	if tag == nil {
 		err = errMetaNotFound

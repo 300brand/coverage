@@ -22,7 +22,7 @@ func TestBrBr2P_Simple(t *testing.T) {
 }
 
 func TestBrBr2P_P(t *testing.T) {
-	data := "<div><p>Monkey</p></div>"
+	data := "<div><p>Monkey</p>\n</div>"
 	doc, err := gokogiri.ParseXml([]byte(data))
 	if err != nil {
 		t.Fatal(err)

@@ -1,0 +1,847 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    
+<title>Essential big data tools for government -- GCN</title>
+<meta name="description" content="Public-sector priorities: a strong IT foundation and tools for prepping data. ">
+<meta name="keywords" content="Big data, NASA, NOAA, N-Wave, SEC, MIDAS System, ">
+
+    <!--  FAVICON LINK  -->
+    <link rel="shortcut icon" href="/design/GIG/gcn/2012/img/favicon.ico" type="image/x-icon" />
+    
+    <!-- BEGIN GOOGLE ANALYTICS -->
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-6779162-3']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+<!-- END GOOGLE ANALYTICS -->
+    <link rel="shortcut icon" href="/design/GIG/gcn/2012/img/favicon.ico" type="image/x-icon" />
+
+<link href="/design/gig/gcn/2012/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/design/gig/gcn/2012/css/hacks.css" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+<script src="/design/gig/gcn/2012/js/core.js"></script>
+<script src="/design/gig/gcn/2012/js/jquery.min.js"></script>
+
+
+<script type"text/javascript">
+/*!
+    Colorbox v1.4.31 - 2013-09-25
+    jQuery lightbox and modal window plugin
+    (c) 2013 Jack Moore - http://www.jacklmoore.com/colorbox
+    license: http://www.opensource.org/licenses/mit-license.php
+*/
+(function(e,t,i){function o(i,o,n){var r=t.createElement(i);return o&&(r.id=Z+o),n&&(r.style.cssText=n),e(r)}function n(){return i.innerHeight?i.innerHeight:e(i).height()}function r(e){var t=k.length,i=(z+e)%t;return 0>i?t+i:i}function h(e,t){return Math.round((/%/.test(e)?("x"===t?E.width():n())/100:1)*parseInt(e,10))}function s(e,t){return e.photo||e.photoRegex.test(t)}function l(e,t){return e.retinaUrl&&i.devicePixelRatio>1?t.replace(e.photoRegex,e.retinaSuffix):t}function a(e){"contains"in g[0]&&!g[0].contains(e.target)&&(e.stopPropagation(),g.focus())}function d(){var t,i=e.data(N,Y);null==i?(B=e.extend({},X),console&&console.log&&console.log("Error: cboxElement missing settings object")):B=e.extend({},i);for(t in B)e.isFunction(B[t])&&"on"!==t.slice(0,2)&&(B[t]=B[t].call(N));B.rel=B.rel||N.rel||e(N).data("rel")||"nofollow",B.href=B.href||e(N).attr("href"),B.title=B.title||N.title,"string"==typeof B.href&&(B.href=e.trim(B.href))}function c(i,o){e(t).trigger(i),st.trigger(i),e.isFunction(o)&&o.call(N)}function u(i){q||(N=i,d(),k=e(N),z=0,"nofollow"!==B.rel&&(k=e("."+et).filter(function(){var t,i=e.data(this,Y);return i&&(t=e(this).data("rel")||i.rel||this.rel),t===B.rel}),z=k.index(N),-1===z&&(k=k.add(N),z=k.length-1)),w.css({opacity:parseFloat(B.opacity),cursor:B.overlayClose?"pointer":"auto",visibility:"visible"}).show(),J&&g.add(w).removeClass(J),B.className&&g.add(w).addClass(B.className),J=B.className,B.closeButton?K.html(B.close).appendTo(y):K.appendTo("<div/>"),U||(U=$=!0,g.css({visibility:"hidden",display:"block"}),H=o(lt,"LoadedContent","width:0; height:0; overflow:hidden"),y.css({width:"",height:""}).append(H),O=x.height()+C.height()+y.outerHeight(!0)-y.height(),_=b.width()+T.width()+y.outerWidth(!0)-y.width(),D=H.outerHeight(!0),A=H.outerWidth(!0),B.w=h(B.initialWidth,"x"),B.h=h(B.initialHeight,"y"),H.css({width:"",height:B.h}),Q.position(),c(tt,B.onOpen),P.add(L).hide(),g.focus(),B.trapFocus&&t.addEventListener&&(t.addEventListener("focus",a,!0),st.one(rt,function(){t.removeEventListener("focus",a,!0)})),B.returnFocus&&st.one(rt,function(){e(N).focus()})),m())}function f(){!g&&t.body&&(V=!1,E=e(i),g=o(lt).attr({id:Y,"class":e.support.opacity===!1?Z+"IE":"",role:"dialog",tabindex:"-1"}).hide(),w=o(lt,"Overlay").hide(),F=e([o(lt,"LoadingOverlay")[0],o(lt,"LoadingGraphic")[0]]),v=o(lt,"Wrapper"),y=o(lt,"Content").append(L=o(lt,"Title"),S=o(lt,"Current"),I=e('<button type="button"/>').attr({id:Z+"Previous"}),R=e('<button type="button"/>').attr({id:Z+"Next"}),M=o("button","Slideshow"),F),K=e('<button type="button"/>').attr({id:Z+"Close"}),v.append(o(lt).append(o(lt,"TopLeft"),x=o(lt,"TopCenter"),o(lt,"TopRight")),o(lt,!1,"clear:left").append(b=o(lt,"MiddleLeft"),y,T=o(lt,"MiddleRight")),o(lt,!1,"clear:left").append(o(lt,"BottomLeft"),C=o(lt,"BottomCenter"),o(lt,"BottomRight"))).find("div div").css({"float":"left"}),W=o(lt,!1,"position:absolute; width:9999px; visibility:hidden; display:none"),P=R.add(I).add(S).add(M),e(t.body).append(w,g.append(v,W)))}function p(){function i(e){e.which>1||e.shiftKey||e.altKey||e.metaKey||e.ctrlKey||(e.preventDefault(),u(this))}return g?(V||(V=!0,R.click(function(){Q.next()}),I.click(function(){Q.prev()}),K.click(function(){Q.close()}),w.click(function(){B.overlayClose&&Q.close()}),e(t).bind("keydown."+Z,function(e){var t=e.keyCode;U&&B.escKey&&27===t&&(e.preventDefault(),Q.close()),U&&B.arrowKey&&k[1]&&!e.altKey&&(37===t?(e.preventDefault(),I.click()):39===t&&(e.preventDefault(),R.click()))}),e.isFunction(e.fn.on)?e(t).on("click."+Z,"."+et,i):e("."+et).live("click."+Z,i)),!0):!1}function m(){var n,r,a,u=Q.prep,f=++at;$=!0,j=!1,N=k[z],d(),c(ht),c(it,B.onLoad),B.h=B.height?h(B.height,"y")-D-O:B.innerHeight&&h(B.innerHeight,"y"),B.w=B.width?h(B.width,"x")-A-_:B.innerWidth&&h(B.innerWidth,"x"),B.mw=B.w,B.mh=B.h,B.maxWidth&&(B.mw=h(B.maxWidth,"x")-A-_,B.mw=B.w&&B.w<B.mw?B.w:B.mw),B.maxHeight&&(B.mh=h(B.maxHeight,"y")-D-O,B.mh=B.h&&B.h<B.mh?B.h:B.mh),n=B.href,G=setTimeout(function(){F.show()},100),B.inline?(a=o(lt).hide().insertBefore(e(n)[0]),st.one(ht,function(){a.replaceWith(H.children())}),u(e(n))):B.iframe?u(" "):B.html?u(B.html):s(B,n)?(n=l(B,n),j=t.createElement("img"),e(j).addClass(Z+"Photo").bind("error",function(){B.title=!1,u(o(lt,"Error").html(B.imgError))}).one("load",function(){var t;f===at&&(e.each(["alt","longdesc","aria-describedby"],function(t,i){var o=e(N).attr(i)||e(N).attr("data-"+i);o&&j.setAttribute(i,o)}),B.retinaImage&&i.devicePixelRatio>1&&(j.height=j.height/i.devicePixelRatio,j.width=j.width/i.devicePixelRatio),B.scalePhotos&&(r=function(){j.height-=j.height*t,j.width-=j.width*t},B.mw&&j.width>B.mw&&(t=(j.width-B.mw)/j.width,r()),B.mh&&j.height>B.mh&&(t=(j.height-B.mh)/j.height,r())),B.h&&(j.style.marginTop=Math.max(B.mh-j.height,0)/2+"px"),k[1]&&(B.loop||k[z+1])&&(j.style.cursor="pointer",j.onclick=function(){Q.next()}),j.style.width=j.width+"px",j.style.height=j.height+"px",setTimeout(function(){u(j)},1))}),setTimeout(function(){j.src=n},1)):n&&W.load(n,B.data,function(t,i){f===at&&u("error"===i?o(lt,"Error").html(B.xhrError):e(this).contents())})}var w,g,v,y,x,b,T,C,k,E,H,W,F,L,S,M,R,I,K,P,B,O,_,D,A,N,z,j,U,$,q,G,Q,J,V,X={html:!1,photo:!1,iframe:!1,inline:!1,transition:"elastic",speed:300,fadeOut:300,width:!1,initialWidth:"600",innerWidth:!1,maxWidth:!1,height:!1,initialHeight:"450",innerHeight:!1,maxHeight:!1,scalePhotos:!0,scrolling:!0,href:!1,title:!1,rel:!1,opacity:.9,preloading:!0,className:!1,overlayClose:!0,escKey:!0,arrowKey:!0,top:!1,bottom:!1,left:!1,right:!1,fixed:!1,data:void 0,closeButton:!0,fastIframe:!0,open:!1,reposition:!0,loop:!0,slideshow:!1,slideshowAuto:!0,slideshowSpeed:2500,slideshowStart:"start slideshow",slideshowStop:"stop slideshow",photoRegex:/\.(gif|png|jp(e|g|eg)|bmp|ico|webp)((#|\?).*)?$/i,retinaImage:!1,retinaUrl:!1,retinaSuffix:"@2x.$1",current:"image {current} of {total}",previous:"previous",next:"next",close:"close",xhrError:"This content failed to load.",imgError:"This image failed to load.",returnFocus:!0,trapFocus:!0,onOpen:!1,onLoad:!1,onComplete:!1,onCleanup:!1,onClosed:!1},Y="colorbox",Z="cbox",et=Z+"Element",tt=Z+"_open",it=Z+"_load",ot=Z+"_complete",nt=Z+"_cleanup",rt=Z+"_closed",ht=Z+"_purge",st=e("<a/>"),lt="div",at=0,dt={},ct=function(){function e(){clearTimeout(h)}function t(){(B.loop||k[z+1])&&(e(),h=setTimeout(Q.next,B.slideshowSpeed))}function i(){M.html(B.slideshowStop).unbind(l).one(l,o),st.bind(ot,t).bind(it,e),g.removeClass(s+"off").addClass(s+"on")}function o(){e(),st.unbind(ot,t).unbind(it,e),M.html(B.slideshowStart).unbind(l).one(l,function(){Q.next(),i()}),g.removeClass(s+"on").addClass(s+"off")}function n(){r=!1,M.hide(),e(),st.unbind(ot,t).unbind(it,e),g.removeClass(s+"off "+s+"on")}var r,h,s=Z+"Slideshow_",l="click."+Z;return function(){r?B.slideshow||(st.unbind(nt,n),n()):B.slideshow&&k[1]&&(r=!0,st.one(nt,n),B.slideshowAuto?i():o(),M.show())}}();e.colorbox||(e(f),Q=e.fn[Y]=e[Y]=function(t,i){var o=this;if(t=t||{},f(),p()){if(e.isFunction(o))o=e("<a/>"),t.open=!0;else if(!o[0])return o;i&&(t.onComplete=i),o.each(function(){e.data(this,Y,e.extend({},e.data(this,Y)||X,t))}).addClass(et),(e.isFunction(t.open)&&t.open.call(o)||t.open)&&u(o[0])}return o},Q.position=function(t,i){function o(){x[0].style.width=C[0].style.width=y[0].style.width=parseInt(g[0].style.width,10)-_+"px",y[0].style.height=b[0].style.height=T[0].style.height=parseInt(g[0].style.height,10)-O+"px"}var r,s,l,a=0,d=0,c=g.offset();if(E.unbind("resize."+Z),g.css({top:-9e4,left:-9e4}),s=E.scrollTop(),l=E.scrollLeft(),B.fixed?(c.top-=s,c.left-=l,g.css({position:"fixed"})):(a=s,d=l,g.css({position:"absolute"})),d+=B.right!==!1?Math.max(E.width()-B.w-A-_-h(B.right,"x"),0):B.left!==!1?h(B.left,"x"):Math.round(Math.max(E.width()-B.w-A-_,0)/2),a+=B.bottom!==!1?Math.max(n()-B.h-D-O-h(B.bottom,"y"),0):B.top!==!1?h(B.top,"y"):Math.round(Math.max(n()-B.h-D-O,0)/2),g.css({top:c.top,left:c.left,visibility:"visible"}),v[0].style.width=v[0].style.height="9999px",r={width:B.w+A+_,height:B.h+D+O,top:a,left:d},t){var u=0;e.each(r,function(e){return r[e]!==dt[e]?(u=t,void 0):void 0}),t=u}dt=r,t||g.css(r),g.dequeue().animate(r,{duration:t||0,complete:function(){o(),$=!1,v[0].style.width=B.w+A+_+"px",v[0].style.height=B.h+D+O+"px",B.reposition&&setTimeout(function(){E.bind("resize."+Z,Q.position)},1),i&&i()},step:o})},Q.resize=function(e){var t;U&&(e=e||{},e.width&&(B.w=h(e.width,"x")-A-_),e.innerWidth&&(B.w=h(e.innerWidth,"x")),H.css({width:B.w}),e.height&&(B.h=h(e.height,"y")-D-O),e.innerHeight&&(B.h=h(e.innerHeight,"y")),e.innerHeight||e.height||(t=H.scrollTop(),H.css({height:"auto"}),B.h=H.height()),H.css({height:B.h}),t&&H.scrollTop(t),Q.position("none"===B.transition?0:B.speed))},Q.prep=function(i){function n(){return B.w=B.w||H.width(),B.w=B.mw&&B.mw<B.w?B.mw:B.w,B.w}function h(){return B.h=B.h||H.height(),B.h=B.mh&&B.mh<B.h?B.mh:B.h,B.h}if(U){var a,d="none"===B.transition?0:B.speed;H.empty().remove(),H=o(lt,"LoadedContent").append(i),H.hide().appendTo(W.show()).css({width:n(),overflow:B.scrolling?"auto":"hidden"}).css({height:h()}).prependTo(y),W.hide(),e(j).css({"float":"none"}),a=function(){function i(){e.support.opacity===!1&&g[0].style.removeAttribute("filter")}var n,h,a=k.length,u="frameBorder",f="allowTransparency";U&&(h=function(){clearTimeout(G),F.hide(),c(ot,B.onComplete)},L.html(B.title).add(H).show(),a>1?("string"==typeof B.current&&S.html(B.current.replace("{current}",z+1).replace("{total}",a)).show(),R[B.loop||a-1>z?"show":"hide"]().html(B.next),I[B.loop||z?"show":"hide"]().html(B.previous),ct(),B.preloading&&e.each([r(-1),r(1)],function(){var i,o,n=k[this],r=e.data(n,Y);r&&r.href?(i=r.href,e.isFunction(i)&&(i=i.call(n))):i=e(n).attr("href"),i&&s(r,i)&&(i=l(r,i),o=t.createElement("img"),o.src=i)})):P.hide(),B.iframe?(n=o("iframe")[0],u in n&&(n[u]=0),f in n&&(n[f]="true"),B.scrolling||(n.scrolling="no"),e(n).attr({src:B.href,name:(new Date).getTime(),"class":Z+"Iframe",allowFullScreen:!0,webkitAllowFullScreen:!0,mozallowfullscreen:!0}).one("load",h).appendTo(H),st.one(ht,function(){n.src="//about:blank"}),B.fastIframe&&e(n).trigger("load")):h(),"fade"===B.transition?g.fadeTo(d,1,i):i())},"fade"===B.transition?g.fadeTo(d,0,function(){Q.position(0,a)}):Q.position(d,a)}},Q.next=function(){!$&&k[1]&&(B.loop||k[z+1])&&(z=r(1),u(k[z]))},Q.prev=function(){!$&&k[1]&&(B.loop||z)&&(z=r(-1),u(k[z]))},Q.close=function(){U&&!q&&(q=!0,U=!1,c(nt,B.onCleanup),E.unbind("."+Z),w.fadeTo(B.fadeOut||0,0),g.stop().fadeTo(B.fadeOut||0,0,function(){g.add(w).css({opacity:1,cursor:"auto"}).hide(),c(ht),H.empty().remove(),setTimeout(function(){q=!1,c(rt,B.onClosed)},1)}))},Q.remove=function(){g&&(g.stop(),e.colorbox.close(),g.stop().remove(),w.remove(),q=!1,g=null,e("."+et).removeData(Y).removeClass(et),e(t).unbind("click."+Z))},Q.element=function(){return e(N)},Q.settings=X)})(jQuery,document,window);
+</script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#loginfrm').hide();
+
+            $('a#showTrigger').click(function () {
+                $('#loginfrm').toggle(400);
+            });
+        });
+    </script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#loginfrm').hide();
+
+            $('a#hideTrigger').click(function () {
+                $('#loginfrm').hide();
+            });
+
+        });
+    </script>
+
+<script>
+$(function() {
+
+    var sticky_navigation_offset_top = $('#navWrapper').offset().top;
+    var sticky_navigation = function(){
+        var scroll_top = $(window).scrollTop(); // our current vertical position from the top
+
+        if (scroll_top > sticky_navigation_offset_top) {
+            $('#navWrapper').css({ 'position': 'fixed', 'top':0, 'height': 50});
+                        $('#contentWrapper2col').css({ 'margin-top': 50}); 
+            $('.nav_stretch').css({ 'display': 'block', 'visibility':'visible'});
+            
+        } else {
+            $('#navWrapper').css({ 'position': 'relative',  'background': '#fff', 'height': 50, 'z-index': '10000'});
+                        $('#contentWrapper2col').css({ 'margin-top': 0,'top':0}); 
+            $('.nav_stretch').css({ 'display': 'none', 'visibility':'hidden'});
+        }
+    };
+
+    // run function on load
+    sticky_navigation();
+
+    // run it every time you scroll
+    $(window).scroll(function() {
+         sticky_navigation();
+    });
+
+
+});
+</script>
+
+
+
+
+
+    
+    
+    
+    
+</head>
+<body id="Body1">
+    <form name="form1" method="post" action="big-data-tools-1.aspx?Page=2" id="form1" enableeventvalidation="false" viewstateencryptionmode="Never">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTQzNzQ4MTE5MA9kFgQCAQ9kFgYCAQ8WAh4EVGV4dAUuRXNzZW50aWFsIGJpZyBkYXRhIHRvb2xzIGZvciBnb3Zlcm5tZW50IC0tIEdDTmQCAw8WAh8ABVhjb250ZW50PSJQdWJsaWMtc2VjdG9yIHByaW9yaXRpZXM6IGEgc3Ryb25nIElUIGZvdW5kYXRpb24gYW5kIHRvb2xzIGZvciBwcmVwcGluZyBkYXRhLiAiZAIFDxYCHwAFO2NvbnRlbnQ9IkJpZyBkYXRhLCBOQVNBLCBOT0FBLCBOLVdhdmUsIFNFQywgTUlEQVMgU3lzdGVtLCAiZAIRD2QWAgIBD2QWCgI3D2QWAgIBD2QWAmYPZBYCAgEPZBYGAgEPD2QWBB4Hb25Gb2N1cwUlRm9jdXNTZWFyY2hCb3goJ3BoX25hdjJfMV90eHRTZWFyY2gnKR4Gb25CbHVyBQ9CbHVyU2VhcmNoQm94KClkAgMPEA8WAh4HVmlzaWJsZWdkDxYBZhYBEAUDR0NOBQdHQ05fV2ViZ2RkAgcPFgQeCWlubmVyaHRtbAVHPGEgaHJlZj0iaHR0cDovL2djbi5jb20vRm9ybXMvQWR2YW5jZWQtU2VhcmNoLmFzcHgiPkFkdmFuY2VkIFNlYXJjaDwvYT4fA2dkAn0PZBYGAgEPZBYCZg9kFgICAQ8WAh8DaGQCAw9kFgJmD2QWAgIBD2QWAgIBDw8WAh4LTmF2aWdhdGVVcmwFRi9Gb3Jtcy9FbWFpbEl0ZW0uYXNweD9FbWFpbEl0ZW09ezIxMUM0RkQ1LUVGNzItNDU0My05NkQ3LTEwRTIzMEZCNzBGN31kZAIED2QWAmYPZBYCAgEPZBYCAgEPDxYCHwUFQ2h0dHA6Ly9nY24uY29tL0FydGljbGVzLzIwMTMvMTIvMDMvYmlnLWRhdGEtdG9vbHMtMS5hc3B4P1BhZ2U9MiZwPTFkZAKRAQ9kFgJmD2QWAmYPZBYCZg9kFgICBQ8UKwACZGRkApsBD2QWAmYPZBYCZg9kFgJmD2QWAmYPZBYCAgEPZBYGAgEPFgIfBAUPUmVhZGVyIENvbW1lbnRzZAICDxQrAAIPFgQeC18hRGF0YUJvdW5kZx4LXyFJdGVtQ291bnRmZGRkAgQPDxYCHwNoZGQCywEPZBYCZg9kFgICAQ8WAh8ABb0CIAo8cCBhbGlnbj0iY2VudGVyIj48aW1nIGhlaWdodD0iMjYiIGFsdD0iMTEwNSBHb3Zlcm5tZW50IEluZm9ybWF0aW9uIEdyb3VwIExvZ28iIHNyYz0ifi9tZWRpYS9HSUcvR0lHJTIwTG9nb3MvMTEwNWxvZ29fd2Vic2l0ZS5hc2h4IiB3aWR0aD0iMTM2Ij4gPC9wPgo8cCBhbGlnbj0iY2VudGVyIj44NjA5IFdlc3R3b29kIENlbnRlciBEcml2ZSwgU3VpdGUgNTAwPGJyPgoKVmllbm5hLCBWQSAyMjE4Mi0yMjE1PGJyPjcwMy04NzYtNTEwMCA8YnI+PGJyPjxicj7CqSAxOTk2LTIwMTIgMTEwNSBNZWRpYSwgSW5jLiBBbGwgUmlnaHRzIFJlc2VydmVkLjwvcD5kGAUFIHBoX2NvbnRlbnQyY29sYm94MjJfMCRsdkl0ZW1MaXN0D2dkBSJwaF9jb250ZW50MWNvbGJvdHRvbTJfMCRDb21tZW50c0xWDzwrAAoBCGZkBS9waF9jb250ZW50MmNvbGxlZnQyXzIkQXJ0aWNsZUxvZ0luJGxzdFJlZ0Nob2ljZQ9nZAUgcGhfY29udGVudDJjb2xsZWZ0Ml8yJEF1dGhvckluZm8PZ2QFLXBoX2NvbnRlbnQyY29sbGVmdDJfMiRMaXN0Vmlld0Fzc29jaWF0ZWRGaWxlcw9nZB7D3cFAEpwX8TwnrhSa9NeLpQ8M" />
+
+<script language="javascript" type="text/javascript">
+var id = ''; 
+
+function FocusSearchBox(ctl) {
+id = ctl;}
+
+function BlurSearchBox() {
+id = '';}
+
+document.onkeypress = function disableKey(e) { var evtobj = window.event ? event : e;var unicode = evtobj.charCode ? evtobj.charCode : evtobj.keyCode;if (unicode == 13) {if (id == '') {window.event.keyCode = 0;} else {document.getElementById("hdnSearch").value = id;document.getElementById(id.replace("txt", "btn")).click();} } }
+</script>
+<script src="/ScriptResource.axd?d=lA4YcjqYGqEtyoU9SXv1fQNKpBVAd6uY2C59BfMJQTQ9nr7Lr6gxPie6DPWr94TstFBGwfF2UXhKpdYzXUsQ-WVmHM4v8Czi7POlmms2P0tIAYy0_EKlV3DxrXSWozwLP8RJ1gBcASOW15ht9rI28NaFfdkyWcTVyUMRpmy8LWEqVrXz0&amp;t=ffffffffb868b5f4" type="text/javascript"></script>
+    
+    <div id="wrapper">
+        
+<script type="text/javascript">
+    var gIntersitial = 20000 ;
+</script>
+<div id="intersitialMask"></div>
+<div id="intersitial">
+    <div class="adClose"><a id="adclose" href="javascript:;">Close this Advertisement</a></div>
+    <div class="ad">
+<script type="text/javascript" language="javascript">
+//<![CDATA[
+ord = window.ord || Math.floor(Math.random() * 100000000);
+document.write('<script type="text/javascript" src="http://ad.doubleclick.net/N5978/adj/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=S01;tile=1;sz=640x480;ord=' + ord + '?"><\/script>');
+//]]>
+</script>
+<noscript>
+<a href="http://ad.doubleclick.net/N5978/jump/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=S01;tile=1;sz=640x480;ord=123456789?" target="_blank" >
+<img src="http://ad.doubleclick.net/N5978/ad/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=S01;tile=1;sz=640x480;ord=123456789?" border="0" alt="" />
+</a>
+</noscript>
+</div>
+
+    <script type="text/javascript" language="javascript">showIntersitial();</script>
+</div>
+
+
+<div id="ph_wrapper1_1_divBlockBox" class="blockBox">
+	
+	<div id="ph_wrapper1_1_divBody" class="summary">
+		<div class="nav_stretch">
+		</div>
+</div>
+	
+</div>
+        
+
+
+
+        
+        
+        
+        <div id="headerWrapper">
+            
+            
+            
+            
+            
+            <div id="headerleft">
+                
+                <div id="ph_headerleft2_0_divBlockBox" class="blockBox">
+	
+	<div id="ph_headerleft2_0_divBody" class="summary">		<a href="http://gcn.com/home.aspx">
+				<img src="/design/gig/gcn/2012/img/GCN_logo.png" alt="GCN LOGO">
+		</a>
+</div>
+	
+</div>
+                
+                
+                
+            </div>
+            <div id="headerright">
+                <div class="ad">
+<script type="text/javascript" language="javascript">
+//<![CDATA[
+ord = window.ord || Math.floor(Math.random() * 100000000);
+document.write('<script type="text/javascript" src="http://ad.doubleclick.net/N5978/adj/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=lead_t1;tile=2;sz=728x90, 1x1;ord=' + ord + '?"><\/script>');
+//]]>
+</script>
+<noscript>
+<a href="http://ad.doubleclick.net/N5978/jump/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=lead_t1;tile=2;sz=728x90, 1x1;ord=123456789?" target="_blank" >
+<img src="http://ad.doubleclick.net/N5978/ad/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=lead_t1;tile=2;sz=728x90, 1x1;ord=123456789?" border="0" alt="" />
+</a>
+</noscript>
+</div>
+
+                <div id="ph_headerright2_0_divBlockBox" class="tagline">
+	
+	<div id="ph_headerright2_0_divBody" class="summary">
+		<img src="/design/gig/gcn/2012/img/GCN_tagline.png">
+		
+</div>
+	
+</div>
+
+<NOINDEX>
+
+<!-- component markup start -->
+<div class='uninav'>
+    <ul class="topnavlist"><li class=""><a href="http://gcn.com/pages/about.aspx">About</a></li><li class=""><a href="http://publicsector.1105media.com/pages/2013/gov/gcn.aspx">Advertise</a></li><li class=""><a href="http://gcn.com/pages/contact.aspx">Contact Us</a></li><li class=" last"><a href="http://1105-sub.halldata.com/GWnew&amp;PK=GWEBTS">Subscribe</a></li></ul>
+    <br class="clear" />
+</div>
+<!-- component markup end -->
+
+</NOINDEX>
+
+<div id="ph_headerright2_2_divBlockBox" class="sharePage_top">
+	
+	<div id="ph_headerright2_2_divBody" class="summary">    <a class="shareTrigger" href="#"><p>
+	    <img src="/img/icons/ico_share.png" name="rotator" width="16" height="16" align="absmiddle" id="rotator">Share</p></a>	<p>
+	<ul class="shareBox2">
+<li class="twitter_top"><a href="https://twitter.com/GCNtech" target="_blank">Twitter</a></li>
+
+	<li class="linkedin_top"><a href="http://www.linkedin.com/company/gcn-1105-media" target="_blank">Linkedin</a></li>
+   	<li class="facebook_top"><a href="https://www.facebook.com/GCNtech" target="_blank">Facebook</a></li>
+	
+    <li class="google_top"><a href=" https://plus.google.com/110159984603548743172/posts" target="_blank">Google</a></li>
+
+ <li class="rss_top"><a href="http://gcn.com/rss-feeds/rss-list.aspx">RSS</a></li>
+
+	</ul>
+
+
+</p></div>
+	
+</div>
+
+<NOINDEX>
+
+<!-- component markup start -->
+<div class='trendingbar'>
+    <ul class="topnavlist"><li class=""><h2>TRENDING</h2></li><li class=""><a href="http://gcn.com/pages/trending/health-technology.aspx">Health tech</a></li><li class=""><a href="http://gcn.com/pages/trending/internet-of-things.aspx">Internet of Things</a></li><li class=" last"><a href="http://gcn.com/pages/trending/smart-cities.aspx">Smart cities</a></li></ul>
+    <br class="clear" />
+</div>
+<!-- component markup end -->
+
+</NOINDEX>
+
+
+                
+                
+                
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="navWrapper">
+            
+            
+            
+            
+            
+            <div id="nav">
+                
+                
+
+<NOINDEX>
+
+<!-- component markup start -->
+<div class='topnav'>
+    <ul class="topnavlist"><li class=""><a href="http://gcn.com/portals/big-data.aspx">Big Data</a></li><li class=""><a href="http://gcn.com/portals/cloud.aspx">Cloud</a></li><li class=""><a href="http://gcn.com/portals/cybersecurity.aspx">Cybersecurity</a></li><li class=""><a href="http://gcn.com/portals/data-centers.aspx">Data Centers</a></li><li class=""><a href="http://gcn.com/portals/emerging-tech.aspx">Emerging Tech</a></li><li class=""><a href="http://gcn.com/portals/mobile.aspx">Mobile</a></li><li class=""><a href="http://gcn.com/portals/state-local.aspx">State & Local</a></li><li class=""><a href="http://gcn.com/pages/resources.aspx">Resources</a></li><li class=" last"><a href="http://publicsector.1105media.com/pages/2013/events.aspx">Events</a></li></ul>
+    <br class="clear" />
+</div>
+<!-- component markup end -->
+
+</NOINDEX>
+
+
+
+<NOINDEX>
+
+<div id="ph_nav2_1_pnlSearch" class="search">
+	
+    <fieldset>
+        <input name="ph_nav2_1$txtSearch" type="text" id="ph_nav2_1_txtSearch" onFocus="FocusSearchBox('ph_nav2_1_txtSearch')" onBlur="BlurSearchBox()" />        
+        <select name="ph_nav2_1$ddlCollections" id="ph_nav2_1_ddlCollections">
+		<option selected="selected" value="GCN_Web">GCN</option>
+
+	</select>
+        <input type="submit" name="ph_nav2_1$btnSearch" value="Search" id="ph_nav2_1_btnSearch" class="submit" />
+        <p id="ph_nav2_1_AdvancedFormLink" class="advanced"><a href="http://gcn.com/Forms/Advanced-Search.aspx">Advanced Search</a></p>
+	    <input type="hidden" id="hdnSearch" name="hdnSearch" visible="false" />
+	</fieldset>
+
+</div>
+
+</NOINDEX>
+                
+                
+                
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="contentWrapper3col">
+            
+            
+            
+            
+            
+            <div id="content">
+                
+                
+                
+                
+                
+                <div id="pContent">
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div id="sContent">
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div id="xContent">
+                    
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <div id="contentWrapper2col">
+            <div class="ad">
+<script type="text/javascript" language="javascript">
+//<![CDATA[
+ord = window.ord || Math.floor(Math.random() * 100000000);
+document.write('<script type="text/javascript" src="http://ad.doubleclick.net/N5978/adj/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=TS01;tile=3;sz=974x32,1x1;ord=' + ord + '?"><\/script>');
+//]]>
+</script>
+<noscript>
+<a href="http://ad.doubleclick.net/N5978/jump/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=TS01;tile=3;sz=974x32,1x1;ord=123456789?" target="_blank" >
+<img src="http://ad.doubleclick.net/N5978/ad/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=TS01;tile=3;sz=974x32,1x1;ord=123456789?" border="0" alt="" />
+</a>
+</noscript>
+</div>
+
+            
+            
+            
+            
+            <div id="content2colLeft">
+                
+                <style type="text/css"> 
+.social_share #ss {
+	float: left;
+	margin-right: 18px;
+}
+</style>
+ 
+<div class="social_share">
+
+<div id="ss">
+<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+<script type="IN/Share"></script>
+</div>
+
+
+<div id="ss">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=213804045416377";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div></div>
+
+
+
+
+<div id="ss"><a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-count="none" data-via="GCNtech">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+ 
+
+
+<div id="ss">
+<!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone" data-size="tall" data-annotation="none"></div>
+</div>
+<!-- Place this tag after the last +1 button tag. -->
+
+
+
+
+
+<script type="text/javascript"> 
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="topicbox">
+    
+    <ul id="ph_content2colleft2_1_ulTopicList"><li><a href="http://gcn.com/portals/big-data.aspx">Big Data</a></li><li></li><li></li><li></li></ul>
+</div>
+
+<div id='level0'>
+    <div id="article"> 
+        <img src='~/media/GIG/GCN/Redesign/Articles/2013/December/bigdatatools1.png' alt='big data tools' class='storyimage' />
+        
+        
+        <h3 id="ph_content2colleft2_2_MainHeading" class="title">Essential big data tools for government </h3>
+        
+        
+        <ul id="ph_content2colleft2_2_ByAuthor" class="byline">
+			<li class="date">Dec 03, 2013</li>
+		</ul>
+
+        
+
+<p>Still, there are core technologies that come in both open-source and proprietary solutions to support any agency&rsquo;s big data portfolio. But where to start? </p>
+
+<p><strong>A sound IT foundation</strong></p>
+
+<p>If there is a prerequisite for successful big data analytics, it would be an IT infrastructure with the necessary bandwidth and storage. </p>
+
+<p>A good number of agencies have already laid the groundwork for enterprise uses of big data. The National Oceanic and Atmospheric Administration, for example, built a high-speed gigabit network to give researchers secure access to large volumes of complex, high-resolution climate and weather images. N-Wave, a 10-gigabit Ethernet wide-area network, connects NOAA&rsquo;s high-performance computing sites, data archives and researchers. It lets scientists collaborate and transfer data without network constraints. </p>
+
+<p>Before N-Wave, NOAA scientists often had to ship hard drives to each other to share data. Now NOAA even has the ability to scale to 100-gigabit Ethernet and beyond as research demands increase and next-generation services are added to the network. N-Wave relies on Cisco&rsquo;s Carrier Routing System, a self-healing mesh network with redundant routers, able to reroute traffic if a communications link goes down.</p>
+
+<p>For agencies that don&rsquo;t want to invest in hardware and other systems for large data workloads, the cloud is an option, said Mark Ryland, chief solutions architect for Amazon Web Services. In fact, the cloud is better suited to the dynamic aspects of big data, he said. </p>
+
+<p>The Security and Exchange Commission&rsquo;s Market Information Data Analytics System runs in the AWS cloud. MIDAS, an internal system that gives the SEC information for financial securities, every day scoops up 1 billion records that are time-stamped to the microsecond, including tapes and proprietary feeds of each stock exchange, all posted orders and quotes and trades both on- and off-exchange, according to the SEC. </p>
+        
+        
+        
+        
+        
+        
+        
+        <!-- pager start -->
+        <div class="pagination"><ul>
+<li><a href="?Page=1" class="prev">&laquo; previous</a></li>
+<li><a href="?Page=1">1</a></li>
+<li><a href="#" class="currentpage">2</a></li>
+<li><a href="?Page=3">3</a></li>
+
+<li><a href="?Page=3" class="next">next &raquo;</a></li>
+</ul>
+</div>
+
+        <!-- pager end -->
+        
+        
+            
+        
+
+        
+    </div>
+</div>
+<NOINDEX>
+<div id="ph_content2colleft2_3_EmailThis" class="email">
+	
+    <p><a id="ph_content2colleft2_3_Email" href="/Forms/EmailItem.aspx?EmailItem={211C4FD5-EF72-4543-96D7-10E230FB70F7}">E-Mail this page</a></p>
+
+</div>
+</NOINDEX>
+<NOINDEX>
+<div id="ph_content2colleft2_4_PrintFormat" class="print">
+	
+	<p><a id="ph_content2colleft2_4_Print" href="http://gcn.com/Articles/2013/12/03/big-data-tools-1.aspx?Page=2&amp;p=1" target="_blank">Printable Format</a></p>
+
+</div>
+</NOINDEX>
+                
+                
+                
+                <div id="content2colBox1">
+                    
+                    
+
+<NOINDEX>
+<!-- component markup start -->
+<div id="ph_content2colbox12_0_relatedSpecific" class="relatedSpecific">
+    <div class="items">
+	    <h3 id="ph_content2colbox12_0_RelatedTitle">Related Articles</h3>
+	    <ul>
+            
+                    <li><a id="ph_content2colbox12_0_RelatedItemRepeater_ctl00_ItemHyperLink" href="http://gcn.com/Articles/2014/01/30/Metalogix-Migration-Expert.aspx">Migration tool reduces risk and cost of SharePoint upgrades </a><span>01/30/2014</span></li>
+                
+                    <li><a id="ph_content2colbox12_0_RelatedItemRepeater_ctl01_ItemHyperLink" href="http://gcn.com/Articles/2014/01/24/palo-alto-networks-enterprise-security.aspx">Automation, closed loop tactics boost enterprise security</a><span>01/24/2014</span></li>
+                
+                    <li><a id="ph_content2colbox12_0_RelatedItemRepeater_ctl02_ItemHyperLink" href="http://gcn.com/Articles/2014/01/22/savegov-report.aspx">Industry group advocates linking cloud, cybersecurity planning</a><span>01/22/2014</span></li>
+                
+                    <li><a id="ph_content2colbox12_0_RelatedItemRepeater_ctl03_ItemHyperLink" href="http://gcn.com/Articles/2014/01/17/Infor-Implementation-Accelerators.aspx">Infor accelerates government systems deployment</a><span>01/17/2014</span></li>
+                
+                    <li><a id="ph_content2colbox12_0_RelatedItemRepeater_ctl04_ItemHyperLink" href="http://gcn.com/Articles/2014/01/15/Forensics-Toolkit.aspx">Digital forensic tools dig up hidden evidence faster </a><span>01/15/2014</span></li>
+                
+            
+	    </ul>
+	</div>
+</div>
+<!-- component markup end -->
+</NOINDEX>
+                    
+                    
+                    
+                </div>
+                <div id="content2colBox2">
+                    
+                    <div id="ph_content2colbox22_0_divListBox" class="dlb_right">
+    <h4 id="ph_content2colbox22_0_h4Header" class="L1CommonDLBheader">inside gcn</h4>
+    
+    <ul>
+                    
+                
+                <li id="ph_content2colbox22_0_lvItemList_ctrl0_liListItem">
+                    
+                    <a href="http://gcn.com/articles/2014/02/04/intrusion-protection-system-app.aspx"><img src='~/media/GIG/GCN/Redesign/Articles/2014/February/mobilesecurity.png' alt='mobile security' /></a>
+                    <h3 id="ph_content2colbox22_0_lvItemList_ctrl0_h3Title"><a href="http://gcn.com/articles/2014/02/04/intrusion-protection-system-app.aspx">Intrusion detection app 'trained' to spot malicious behavior </a></h3>
+                    
+                    
+                    
+                    
+                    
+                    <div id="ph_content2colbox22_0_lvItemList_ctrl0_dvComments" class="dlb_comments"></div>
+                    
+                </li>
+            
+                <li id="ph_content2colbox22_0_lvItemList_ctrl1_liListItem">
+                    
+                    <a href="http://gcn.com/articles/2014/02/04/pennsylvania-bridges-app.aspx"><img src='~/media/GIG/GCN/Redesign/Articles/2014/February/bridge.png' alt='bridge' /></a>
+                    <h3 id="ph_content2colbox22_0_lvItemList_ctrl1_h3Title"><a href="http://gcn.com/articles/2014/02/04/pennsylvania-bridges-app.aspx">App helps Pennsylvania get its bridges back</a></h3>
+                    
+                    
+                    
+                    
+                    
+                    <div id="ph_content2colbox22_0_lvItemList_ctrl1_dvComments" class="dlb_comments"></div>
+                    
+                </li>
+            
+            
+    </ul>
+    
+    
+</div>
+                    
+                    
+                    
+                </div>
+                <div id="content1colBottom">
+                    
+                    <div id="ph_content1colbottom2_0_CommentsList">
+	
+        <a name="Comments"></a>
+            <div id="comments">
+                <h3 id="ph_content1colbottom2_0_h3ShowComments">Reader Comments</h3>
+                <p>
+                    </p>
+            </div>
+        
+        <div class="commentform">
+            
+                <h3>
+                    Please post your comments here. Comments are moderated, so they may not appear immediately
+                    after submitting. We will not post comments that we consider abusive or off-topic.</h3>
+                <fieldset id="user-details">
+                    <label for="CommenterName">
+                        Name: (Optional)</label><input name="ph_content1colbottom2_0$CommenterName" type="text" id="ph_content1colbottom2_0_CommenterName" />
+                    <label for="CommenterEmail">
+                        Email: (Optional)</label>
+                    <input name="ph_content1colbottom2_0$CommenterEmail" type="text" id="ph_content1colbottom2_0_CommenterEmail" />
+                    <label for="CommenterLocation">
+                        Location: (Optional)</label>
+                    <input name="ph_content1colbottom2_0$CommenterLocation" type="text" id="ph_content1colbottom2_0_CommenterLocation" />
+                </fieldset>
+                <!--end user-details-->
+                <fieldset id="user-message">
+                    <label for="CommentText">
+                        Your Comment:</label>
+                    <textarea name="ph_content1colbottom2_0$CommentText" rows="6" cols="50" id="ph_content1colbottom2_0_CommentText"></textarea><img id="ph_content1colbottom2_0_CaptchaBox1_CaptchaImage6b05" src="/Captcha.ashx?id=80d0" border="0" />
+<span style="display:block;">Please type the letters/numbers you see above</span>
+<input name="ph_content1colbottom2_0$CaptchaBox1$CaptchaGuess" type="text" id="ph_content1colbottom2_0_CaptchaBox1_CaptchaGuess" /><input type="submit" name="ph_content1colbottom2_0$SubmitBtn" value="SUBMIT MESSAGE" id="ph_content1colbottom2_0_SubmitBtn" class="submit" />
+                </fieldset>
+                <!-- end user-message -->
+            
+            
+        </div>
+    
+</div>
+
+                    
+                    
+                    
+                </div>
+            </div>
+            <div id="content2colRight">
+                
+                <div class="ad">
+<script type="text/javascript" language="javascript">
+//<![CDATA[
+ord = window.ord || Math.floor(Math.random() * 100000000);
+document.write('<script type="text/javascript" src="http://ad.doubleclick.net/N5978/adj/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Box_R1;tile=4;sz=300x250,300x600,300x480,300x850,1x1;ord=' + ord + '?"><\/script>');
+//]]>
+</script>
+<noscript>
+<a href="http://ad.doubleclick.net/N5978/jump/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Box_R1;tile=4;sz=300x250,300x600,300x480,300x850,1x1;ord=123456789?" target="_blank" >
+<img src="http://ad.doubleclick.net/N5978/ad/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Box_R1;tile=4;sz=300x250,300x600,300x480,300x850,1x1;ord=123456789?" border="0" alt="" />
+</a>
+</noscript>
+</div>
+
+                
+
+<NOINDEX>
+<!-- component markup start -->
+<div id="popular">
+    <div class="tabbedFields">
+        <ul class="tabMenu">
+            <li><a href="javascript:;">Most Popular Articles</a></li>
+            <li><a href="javascript:;">Most Emailed Articles</a></li>
+        </ul>
+        <!-- content 1 -->
+        <div class="tabContent">
+            
+                    <h3><a id="ph_content2colright3_0_PopularItemsRepeater_ctl00_StoryHeadlineHyperLink" href="http://gcn.com/articles/2014/01/31/apis.aspx">How APIs will drive agency PaaS adoption</a></h3>
+                
+                    <h3><a id="ph_content2colright3_0_PopularItemsRepeater_ctl01_StoryHeadlineHyperLink" href="http://gcn.com/articles/2013/11/21/data-visualization.aspx">How data virtualization can help government hone services and cut costs</a></h3>
+                
+                    <h3><a id="ph_content2colright3_0_PopularItemsRepeater_ctl02_StoryHeadlineHyperLink" href="http://gcn.com/articles/2014/02/03/apple-public-sector.aspx">BYOD seeds Apple's public-sector growth</a></h3>
+                
+                    <h3><a id="ph_content2colright3_0_PopularItemsRepeater_ctl03_StoryHeadlineHyperLink" href="http://gcn.com/blogs/cybereye/2014/01/ipv6-progress.aspx">Mobile, enterprise users drive US IPv6 growth</a></h3>
+                
+                    <h3><a id="ph_content2colright3_0_PopularItemsRepeater_ctl04_StoryHeadlineHyperLink" href="http://gcn.com/articles/2014/02/03/portfoliostat.aspx">Is PortfolioStat limping toward success?</a></h3>
+                
+        </div>
+        <!-- content 2 -->
+        <div class="tabContent">
+            
+                    <h3><a id="ph_content2colright3_0_PopulareEmailRepeater_ctl00_StoryHeadlineHyperLink" href="http://gcn.com/articles/2014/01/31/maine-unemployment-benefits.aspx">Maine automates tasks on unemployment benefits system</a></h3>
+                
+                    <h3><a id="ph_content2colright3_0_PopulareEmailRepeater_ctl01_StoryHeadlineHyperLink" href="http://gcn.com/blogs/reality-check/2014/01/project-metaphors.aspx">It's time to tailor your programming metaphors</a></h3>
+                
+                    <h3><a id="ph_content2colright3_0_PopulareEmailRepeater_ctl02_StoryHeadlineHyperLink" href="http://gcn.com/articles/2014/01/23/crossdomain-info-sharing.aspx">Civilian agencies can tap cross-domain info sharing tools</a></h3>
+                
+                    <h3><a id="ph_content2colright3_0_PopulareEmailRepeater_ctl03_StoryHeadlineHyperLink" href="http://gcn.com/articles/2014/02/03/apple-public-sector.aspx">BYOD seeds Apple's public-sector growth</a></h3>
+                
+        </div>
+    </div>
+</div>
+<!-- component markup end -->
+</NOINDEX><div class="ad">
+<script type="text/javascript" language="javascript">
+//<![CDATA[
+ord = window.ord || Math.floor(Math.random() * 100000000);
+document.write('<script type="text/javascript" src="http://ad.doubleclick.net/N5978/adj/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Custom1;tile=5;sz=300x90,1x1;ord=' + ord + '?"><\/script>');
+//]]>
+</script>
+<noscript>
+<a href="http://ad.doubleclick.net/N5978/jump/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Custom1;tile=5;sz=300x90,1x1;ord=123456789?" target="_blank" >
+<img src="http://ad.doubleclick.net/N5978/ad/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Custom1;tile=5;sz=300x90,1x1;ord=123456789?" border="0" alt="" />
+</a>
+</noscript>
+</div>
+<div class="ad">
+<script type="text/javascript" language="javascript">
+//<![CDATA[
+ord = window.ord || Math.floor(Math.random() * 100000000);
+document.write('<script type="text/javascript" src="http://ad.doubleclick.net/N5978/adj/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Box_R2;tile=6;sz=300x250,300x480,1x1;ord=' + ord + '?"><\/script>');
+//]]>
+</script>
+<noscript>
+<a href="http://ad.doubleclick.net/N5978/jump/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Box_R2;tile=6;sz=300x250,300x480,1x1;ord=123456789?" target="_blank" >
+<img src="http://ad.doubleclick.net/N5978/ad/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Box_R2;tile=6;sz=300x250,300x480,1x1;ord=123456789?" border="0" alt="" />
+</a>
+</noscript>
+</div>
+<div class="ad">
+<script type="text/javascript" language="javascript">
+//<![CDATA[
+ord = window.ord || Math.floor(Math.random() * 100000000);
+document.write('<script type="text/javascript" src="http://ad.doubleclick.net/N5978/adj/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=textlinks;tile=7;sz=300x700;ord=' + ord + '?"><\/script>');
+//]]>
+</script>
+<noscript>
+<a href="http://ad.doubleclick.net/N5978/jump/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=textlinks;tile=7;sz=300x700;ord=123456789?" target="_blank" >
+<img src="http://ad.doubleclick.net/N5978/ad/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=textlinks;tile=7;sz=300x700;ord=123456789?" border="0" alt="" />
+</a>
+</noscript>
+</div>
+
+                <script type="text/javascript" src="http://jlinks.industrybrains.com/jsct?sid=967&amp;ct=GCN_RUN_OF_SITE&amp;tr=GCN_SITE&amp;num=3&amp;layt=300x270&amp;fmt=simp"></script>
+
+
+
+<div class="ad">
+<script type="text/javascript" language="javascript">
+//<![CDATA[
+ord = window.ord || Math.floor(Math.random() * 100000000);
+document.write('<script type="text/javascript" src="http://ad.doubleclick.net/N5978/adj/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Box_R3;tile=8;sz=300x250,1x1;ord=' + ord + '?"><\/script>');
+//]]>
+</script>
+<noscript>
+<a href="http://ad.doubleclick.net/N5978/jump/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Box_R3;tile=8;sz=300x250,1x1;ord=123456789?" target="_blank" >
+<img src="http://ad.doubleclick.net/N5978/ad/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=Box_R3;tile=8;sz=300x250,1x1;ord=123456789?" border="0" alt="" />
+</a>
+</noscript>
+</div>
+
+                
+            </div>
+        </div>
+        <br class="clear" />
+        <div id="contentWrapper1col">
+            
+            <div class="ad">
+<script type="text/javascript" language="javascript">
+//<![CDATA[
+ord = window.ord || Math.floor(Math.random() * 100000000);
+document.write('<script type="text/javascript" src="http://ad.doubleclick.net/N5978/adj/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=lead_B3;tile=9;sz=728x90,1x1;ord=' + ord + '?"><\/script>');
+//]]>
+</script>
+<noscript>
+<a href="http://ad.doubleclick.net/N5978/jump/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=lead_B3;tile=9;sz=728x90,1x1;ord=123456789?" target="_blank" >
+<img src="http://ad.doubleclick.net/N5978/ad/eof.gcn/;Topic=Big_Data;Topic=Enterprise_Software;Topic=Open_Source;Topic=Federal;Topic=Sectors;item=211c4fd5_ef72_4543_96d7_10e230fb70f7;pos=lead_B3;tile=9;sz=728x90,1x1;ord=123456789?" border="0" alt="" />
+</a>
+</noscript>
+</div>
+
+            
+            
+            
+        </div>
+        <br class="clear" />
+    </div>
+    <div id="footerWrapper">
+        
+        
+        
+        
+        
+        <div id="footer">
+            
+            <div id="ph_footer2_0_divBlockBox" class="blockBox">
+	
+	<div id="ph_footer2_0_divBody" class="summary"><ul class="footerlist">
+    <li>
+    <h2>TOPICS</h2>
+    </li>
+    <li><a href="http://gcn.com/portals/big-data.aspx">BIG DATA</a> </li>
+    <li><a href="http://gcn.com/portals/cloud.aspx">CLOUD</a> </li>
+    <li><a href="http://gcn.com/portals/cybersecurity.aspx">CYBERSECURITY</a> </li>
+    <li><a href="http://gcn.com/portals/data-center.aspx">DATA CENTER</a> </li>
+    <li><a href="http://gcn.com/portals/emerging-tech.aspx">EMERGING TECHNOLOGY</a> </li>
+    <li><a href="http://gcn.com/portals/state-local.aspx">STATE &amp; LOCAL</a> </li>
+    <li><a href="/pages/resources.aspx">RESOURCES</a> </li>
+</ul>
+<ul class="footerlist">
+    <li>
+    <h2>READER SERVICES</h2>
+    </li>
+    <li><a href="http://gcn.com/home.aspx?m=1" target="_blank">MOBILE SITE</a> </li>
+    <li><a href="http://www.gcn.com/tablet" target="_blank">GCN APP</a> </li>
+    <li><a href="http://digital.gcn.com" target="_blank">DIGITAL EDITION</a> </li>
+    <li>
+    <h2>GCN AWARDS</h2>
+    </li>
+    <li><a href="http://gcn.com/articles/2013/08/09/gcn-award-winners-announced.aspx">WINNERS</a> </li>
+    <li><a href="http://gcn.com/gala">GCN GALA</a> </li>
+</ul>
+<ul class="footerlist">
+    <li>
+    <h2>ABOUT GCN</h2>
+    </li>
+    <li><a href="http://gcn.com/pages/about.aspx">ABOUT</a> </li>
+    <li><a href="http://publicsector.1105media.com/pages/2013/gov/gcn.aspx" target="_blank">ADVERTISE</a> </li>
+    <li><a href="http://gcn.com/pages/contact.aspx">CONTACT</a> </li>
+    <li><a href="http://www.1105reprints.com/" target="_blank">REPRINTS</a> </li>
+    <li><a href="http://1105media.com/terms.html" target="_blank">TERMS OF USE</a> </li>
+    <li><a href="http://www.1105media.com/privacy.aspx" target="_blank">PRIVACY POLICY</a> </li>
+</ul></div>
+	
+</div><div id="ph_footer2_1_divBlockBox" class="blockBox">
+	
+	<div id="ph_footer2_1_divBody" class="summary"><div class="copyrights">
+<div class="summary">
+<p>8609 Westwood Center Drive, Suite 500<br>
+Vienna, VA 22182-2215 <br>
+703-876-5100</p>
+<img width="195" height="62" alt="" src="/design/gig/gcn/2012/img/1105logo.jpg" width="195" height="62">
+<p>&copy; 2014 1105 Media, Inc.</p>
+</div>
+</div></div>
+	
+</div>
+            
+            
+            
+            <div id="Copyright_copyright" class="copyright">
+     
+<p align="center"><img height="26" alt="1105 Government Information Group Logo" src="~/media/GIG/GIG%20Logos/1105logo_website.ashx" width="136"> </p>
+<p align="center">8609 Westwood Center Drive, Suite 500<br>
+
+Vienna, VA 22182-2215<br>703-876-5100 <br><br><br>© 1996-2012 1105 Media, Inc. All Rights Reserved.</p>
+</div>
+        </div>
+        <br class="clear" />
+    </div>
+    <br class="clear" />
+    
+    
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.initialize();
+//]]>
+</script>
+</form>
+</body>
+</html>
