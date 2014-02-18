@@ -52,10 +52,20 @@ func FindLinks(html []byte) (links []Link, err error) {
 	return
 }
 
-func Pages(base *url.URL, html []byte) (links []Link, err error) {
+func Pages(start string, html []byte) (links []Link, err error) {
 	if links, err = FindLinks(html); err != nil {
 		return
 	}
+
+	if len(links) == 0 {
+		return
+	}
+
+	base, err := url.Parse(start)
+	if err != nil {
+		return
+	}
+
 	for i := len(links) - 1; i >= 0; i-- {
 		resolved := base.ResolveReference(links[i].Url)
 		if resolved.String() == base.String() {

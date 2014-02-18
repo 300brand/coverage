@@ -58,7 +58,7 @@ func TestSamples(t *testing.T) {
 		if err != nil {
 			t.Errorf("Problem reading %s: %s", index, err)
 		}
-		pages, err := Pages(index, html)
+		pages, err := Pages(index.String(), html)
 		if err != nil {
 			t.Errorf("Error finding pages: %s", err)
 		}
