@@ -70,6 +70,7 @@ func Pages(start string, html []byte) (links []Link, err error) {
 		resolved := base.ResolveReference(links[i].Url)
 		if resolved.String() == base.String() {
 			links = append(links[:i], links[i+1:]...)
+			continue
 		}
 		*links[i].Url = *resolved
 	}
