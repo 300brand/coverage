@@ -1,6 +1,7 @@
 package multipage
 
 import (
+	"fmt"
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xpath"
 	"net/url"
@@ -29,6 +30,10 @@ func FindLinks(html []byte) (links []Link, err error) {
 	defer doc.Free()
 
 	root := doc.Root()
+	if root == nil {
+		err = fmt.Errorf("No document root found")
+		return
+	}
 	defer root.Free()
 
 	nodes, err := root.Search(LinkXPath)
