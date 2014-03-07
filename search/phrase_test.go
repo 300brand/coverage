@@ -53,6 +53,12 @@ func TestPhrase(t *testing.T) {
 			true,
 			true,
 		},
+		{
+			[]byte("washington, march 6 "),
+			"SHI",
+			false,
+			false,
+		},
 	}
 	for i, test := range tests {
 		p := NewPhrase(test.Needle)

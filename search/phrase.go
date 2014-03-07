@@ -20,17 +20,26 @@ func NewPhrase(s string) *Phrase {
 
 func (p *Phrase) Insensitive(b []byte) bool {
 	s := bytes.ToLower(b)
-	i := bytes.Index(s, p.Lower)
-	for i > -1 && i < len(s) {
-		if i == 0 || unicode.IsSpace(rune(s[i-1])) {
-			return true
+	// Operate on slices of the whole and regain the index of the phrase at
+	// every loop
+	for i := bytes.Index(s, p.Lower); i > -1 && i < len(s); s, i = s[i+len(p.Lower):], bytes.Index(s[i+len(p.Lower):], p.Lower) {
+		// Beginning of string automatically means there's nothing preceeding;
+		// Check for alphanumerics and reslice if found
+		if i > 0 {
+			preRune := rune(s[i-1])
+			if unicode.IsLetter(preRune) || unicode.IsNumber(preRune) {
+				continue
+			}
 		}
-		// determine next slice origin
-		si := i + len(p.Lower) + 1
-		if si >= len(s) {
-			return false
+		// End of string automatically means there's nothing following; Check
+		// for alphanumerics and reslice if found
+		if i+len(p.Lower) < len(b) {
+			postRune := rune(s[i+len(p.Lower)])
+			if unicode.IsLetter(postRune) || unicode.IsNumber(postRune) {
+				continue
+			}
 		}
-		i = bytes.Index(s[si:], p.Lower) + si
+		return true
 	}
 	return false
 }
