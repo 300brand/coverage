@@ -18,6 +18,10 @@ func Search(html []byte, xpaths []string) (author string, err error) {
 	defer doc.Free()
 
 	root := doc.Root()
+	if root == nil {
+		err = fmt.Errorf("Document root was nil")
+		return
+	}
 	defer root.Free()
 
 	for i, path := range xpaths {
