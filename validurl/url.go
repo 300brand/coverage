@@ -13,12 +13,6 @@ var invalidDomains = []string{
 	"apex.oracle.com",
 	"www.aviationweek.com",
 	"aviationweek.com",
-	"blogs.ft.com",
-	"ftalphaville.ft.com",
-	"ft.com",
-	"www.ft.com",
-	"www.complianceweek.com",
-	"complianceweek.com",
 	"app.cvent.com",
 	"www.cvent.com",
 	"cvent.com",
@@ -65,9 +59,6 @@ var invalidDomains = []string{
 	"windowsitpro.com",
 	"www-nc.nytimes.com",
 	"myaccount.nytimes.com",
-	"www3.ambest.com",
-	"ambest.com",
-	"www.ambest.com",
 }
 
 func IsValid(u *url.URL) bool {
