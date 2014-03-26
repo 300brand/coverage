@@ -49,6 +49,10 @@ func Fetch(URL string) (r Response, err error) {
 	defer resp.Body.Close()
 
 	r.Code = resp.StatusCode
+	// Pull the remote URL out of the subscription service (if in use)
+	if xRemoteUrl := resp.Header.Get("X-Remote-Url"); xRemoteUrl != "" {
+		r.RealURL = xRemoteUrl
+	}
 
 	lr := io.LimitReader(resp.Body, MaxFileSize)
 	r.Body, err = ioutil.ReadAll(lr)
