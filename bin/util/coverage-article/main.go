@@ -60,7 +60,7 @@ func main() {
 	fmt.Printf("%s\n", out)
 }
 
-func fixURL(s string) *url.URL {
+func fixURL(s string) string {
 	if isFile {
 		if s[0] != '/' {
 			wd, err := os.Getwd()
@@ -77,5 +77,10 @@ func fixURL(s string) *url.URL {
 		fmt.Println(err)
 		os.Exit(2)
 	}
-	return u
+	return u.String()
 }
+  TRACE 2014/03/20 12:32:06.664513 handler.go:78: Adding header Set-Cookie = PBCSSESSIONID=773531241429511; domain=chicagobusiness.com; path=/
+  TRACE 2014/03/20 12:31:49.177699 handler.go:78: Adding header Set-Cookie = PBCSSESSIONID=773531241429511; domain=chicagobusiness.com; path=/
+  TRACE 2014/03/20 14:59:27.975806 handler.go:78: Adding header Set-Cookie = PBCSSESSIONID=1173531250367516; domain=chicagobusiness.com; path=/
+  TRACE 2014/03/20 14:59:26.985523 standard.go:51: Standard.Login: Cookie[1] = PBCSSESSIONID=473531250367026; Path=/; Domain=chicagobusiness.com
+  TRACE 2014/03/20 14:59:26.985486 standard.go:51: Standard.Login: Cookie[0] = PBCSPERMUSERID=473531250367026; Path=/; Domain=chicagobusiness.com; Expires=Fri, 20 Mar 2015 13:59:27 UTC

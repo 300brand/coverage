@@ -40,7 +40,7 @@ func main() {
 	}
 
 	f := coverage.NewFeed()
-	f.URL = u
+	f.URL = u.String()
 
 	if err := downloader.NewFeedService().Update(f); err != nil {
 		log.Fatalf("downloader: %s", err)
