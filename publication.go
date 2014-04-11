@@ -17,7 +17,7 @@ type Publication struct {
 	Log         logger.Entries
 	Added       time.Time
 	Updated     time.Time
-	XPaths      struct{ Author, Body, Date []string }
+	XPaths      struct{ Author, Body, Date, Title []string }
 }
 
 func NewPublication() (p *Publication) {
