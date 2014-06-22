@@ -19,12 +19,19 @@ type Article struct {
 	Updated       time.Time
 	LastCheck     time.Time
 	Published     time.Time
-	Queue         int       // Used for Article-queuing
-	Tries         int       // Used for article-queuing
-	Dequeue       time.Time // Used for article-queuing
+	PubDate       ArticlePubDate `bson:,omitempty`
+	Queue         int            // Used for Article-queuing
+	Tries         int            // Used for article-queuing
+	Dequeue       time.Time      // Used for article-queuing
 	Log           logger.Entries
 	Changelog     merger.Changelog
 }
+
+type ArticlePubDate struct {
+	Date int
+}
+
+var _ bson.Getter = new(Article)
 
 func NewArticle() (a *Article) {
 	a = &Article{
@@ -36,6 +43,12 @@ func NewArticle() (a *Article) {
 	a.Queue = a.Added.Second() / (60 / 4)
 	a.Log.Debug("Created: %s", a.ID.Hex())
 	return
+}
+
+func (a *Article) GetBSON() (out interface{}, err error) {
+	y, m, d := a.Published.Date()
+	a.PubDate.Date = y*1e4 + int(m)*1e2 + d
+	return a, nil
 }
 
 func (a *Article) Modified(fields ...string) {
