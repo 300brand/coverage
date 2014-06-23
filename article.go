@@ -48,7 +48,7 @@ func NewArticle() (a *Article) {
 func (a *Article) GetBSON() (out interface{}, err error) {
 	y, m, d := a.Published.Date()
 	a.PubDate.Date = y*1e4 + int(m)*1e2 + d
-	out = interface{}(a)
+	out = *a // must have a pointer-reciever in order to call GetBSON
 	return
 }
 
