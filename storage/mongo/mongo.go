@@ -57,11 +57,24 @@ func (m *Mongo) Connect() (err error) {
 }
 
 func (m *Mongo) Copy() collections {
-	return m.C
+	newSession := m.Session.Copy()
+	c := collections{
+		Articles:     newSession.DB(m.Prefix + ArticleCollection).C(ArticleCollection),
+		ArticleQ:     newSession.DB(m.Prefix + ArticleCollection).C(ArticleQueueCollection),
+		FeedQ:        newSession.DB(m.Prefix + FeedCollection).C(FeedQueueCollection),
+		Feeds:        newSession.DB(m.Prefix + FeedCollection).C(FeedCollection),
+		Keywords:     newSession.DB(m.Prefix + KeywordCollection).C(KeywordCollection),
+		Publications: newSession.DB(m.Prefix + PublicationCollection).C(PublicationCollection),
+		Search:       newSession.DB(m.Prefix + SearchCollection).C(SearchCollection),
+		GroupSearch:  newSession.DB(m.Prefix + SearchCollection).C(GroupSearchCollection),
+		URLs:         newSession.DB(m.Prefix + URLsCollection).C(URLsCollection),
+		session:      newSession,
+	}
+	return c
 }
 
 // NOOP - Copy -> Close creates too many open connections to mongo during
 // searches.
 func (c collections) Close() {
-	// c.session.Close()
+	c.session.Close()
 }
