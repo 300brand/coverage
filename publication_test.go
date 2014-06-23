@@ -1,7 +1,6 @@
 package coverage
 
 import (
-	"net/url"
 	"testing"
 )
 
