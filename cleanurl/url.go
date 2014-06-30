@@ -14,6 +14,8 @@ func Clean(u *url.URL) (out *url.URL) {
 
 	*out = *u
 
+	out.Fragment = ""
+
 	// For The VAR Guy - Drop down to http and normalize host
 	if strings.HasSuffix(u.Host, "thevarguy.com") {
 		out.Scheme, out.Host = "http", "thevarguy.com"
@@ -134,14 +136,13 @@ func Clean(u *url.URL) (out *url.URL) {
 			// Remove = parameters
 			k == "",
 			// Remove _r= parameters
-			k == "_r",
+			k == "_r":
 			// Get rid of type=companyNews
-			k == "type" && filter(v, "companyNews"):
+			// k == "type" && filter(v, "companyNews"):
 			values.Del(k)
 		}
 	}
 	out.RawQuery = values.Encode()
-	out.Fragment = ""
 
 	return
 }
