@@ -20,7 +20,8 @@ type Stats struct {
 
 const (
 	MaxRetries = 3
-	apiURL     = "http://api.sharedcount.com/"
+	apiURL     = "http://plus.sharedcount.com/"
+	apiKey     = "72bfb2aa6cf3c95994e382b9c300ad18b0da0538"
 )
 
 func Fetch(u *url.URL, s *Stats) (err error) {
@@ -37,6 +38,7 @@ func FetchString(u string, s *Stats) (err error) {
 	}
 	q := api.Query()
 	q.Set("url", u)
+	q.Set("apikey", apiKey)
 	api.RawQuery = q.Encode()
 
 	resp, err := http.Get(api.String())
