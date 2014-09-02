@@ -42,7 +42,14 @@ func Fetch(URL string) (r Response, err error) {
 		CheckRedirect: redirectPolicyFunc,
 	}
 
-	resp, err := client.Get(URL)
+	req, err := http.NewRequest("GET", URL, nil)
+	if err != nil {
+		return
+	}
+	// Fix for www.healthmgttech.com:
+	req.Header.Add("Accept-Encoding", "identity")
+
+	resp, err := client.Do(req)
 	if err != nil {
 		return
 	}
