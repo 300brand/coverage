@@ -2,7 +2,7 @@ package body
 
 import (
 	"bytes"
-	"code.google.com/p/go.net/html"
+	"golang.org/x/net/html"
 	"github.com/300brand/coverage/article/filter"
 	"github.com/300brand/logger"
 )
