@@ -45,7 +45,7 @@ func (es *ElasticSearch) SaveArticle(a *coverage.Article) (err error) {
 		Published:     a.Published,
 	}
 	args := map[string]interface{}{
-		"timestamp": a.Added,
+		"timestamp": a.Added.Format(time.RFC3339),
 	}
 	_, err = es.Conn.Index("articles", "article", a.ID.Hex(), args, ea)
 	if err != nil {
