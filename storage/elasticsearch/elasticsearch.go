@@ -28,7 +28,7 @@ func New(host string) (es *ElasticSearch) {
 	es = &ElasticSearch{Host: host}
 	logger.Trace.Printf("Connecting to %s", host)
 	es.Conn = elastic.NewConn()
-	hosts := strings.Split(host, ";")
+	hosts := strings.Split(host, ",")
 	es.Conn.SetHosts(hosts)
 	return
 }
