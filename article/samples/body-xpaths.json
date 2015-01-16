@@ -51,6 +51,19 @@
 		]
 	},
 	{
+		"File"  : "FCW.html",
+		"Expect": "FCW.body",
+		"XPaths": [
+			"//div[@id='content']/div[@id='pContent']/div[@id='level0']/div[@id='article']",
+			"//div[@id='pContent']/div[@id='level0']/div[@id='blogPost']/div[2]",
+			"-//div[@class='social_share']",
+			"-//div[@id='article']/p[@class='kicker']",
+			"-//h3[@id='ph_pcontent2_0_MainHeading']",
+			"-//ul[@id='ph_pcontent2_0_ByAuthor']",
+			"-//div[@class='aboutAuthor']"
+		]
+	},
+	{
 		"File"  : "Forbes.html",
 		"Expect": "Forbes.body",
 		"XPaths": [

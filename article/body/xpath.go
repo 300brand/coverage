@@ -3,10 +3,9 @@ package body
 import (
 	"fmt"
 	"github.com/300brand/coverage"
-	"github.com/300brand/coverage/article/filter"
 	"github.com/moovweb/gokogiri"
 	"github.com/moovweb/gokogiri/xml"
-	"html"
+	"strings"
 )
 
 func XPath(in []byte, xpaths []string, body *coverage.Body) (err error) {
@@ -49,10 +48,10 @@ func XPath(in []byte, xpaths []string, body *coverage.Body) (err error) {
 	// Clean out attributes
 	xpathRemoveAttrs(bodyNode)
 	body.HTML = []byte(bodyNode.String())
-	if false {
-		body.Text = []byte(filter.TranslateString(html.UnescapeString(bodyNode.Content())))
-	}
-	body.Text = []byte(bodyNode.Content())
+	// if false {
+	// 	body.Text = []byte(filter.TranslateString(html.UnescapeString(bodyNode.Content())))
+	// }
+	body.Text = []byte(strings.Trim(bodyNode.Content(), " \t\r\n") + "\n")
 	return
 }
 

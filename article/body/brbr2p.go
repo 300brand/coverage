@@ -41,6 +41,7 @@ func BrBr2P(root xml.Node) (err error) {
 			switch node.Name() {
 			case "p":
 				node.InsertAfter("\n")
+				p = node
 				continue
 			case "br":
 				node.SetName("p")
@@ -49,6 +50,7 @@ func BrBr2P(root xml.Node) (err error) {
 				continue
 			}
 			p.AddChild(node)
+			p.InsertAfter("\n")
 		}
 	}
 	cleanP(p)
